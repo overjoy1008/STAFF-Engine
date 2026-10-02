@@ -14,6 +14,12 @@
 # See: https://github.com/github/gitignore/tree/main/Global
 #
 .utmp/
+# OS-generated metadata (at any directory depth)
+.DS_Store
+.DS_Store.meta
+._*
+Thumbs.db
+Desktop.ini
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/

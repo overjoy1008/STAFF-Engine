@@ -1,0 +1,16 @@
+Unity Starter Assets - Third Person Armature
+Copyright Unity Technologies. Unity Companion License (NOT CC0).
+Official product: https://marketplace.unity.com/packages/3d/characters/first-person-third-person-character-controllers-196526
+License notice: license.txt in this directory.
+License terms: https://unity.com/legal/licenses/unity-companion-license
+
+Model and animation FBX files, including Unity's original import metadata,
+retrieved from the public Starter Assets sample:
+https://github.com/nrsharip/unity-third-person
+Pinned commit: e40c16b4ee994067ea61999e124a287e0f729248
+Source directory: Assets/StarterAssets/ThirdPersonController/Character
+Imported 2026-10-02 for use within this Unity-dependent project.
+
+Integration changes: silver URP material; 1.8m scene scale; dedicated copied
+animation clips without source-controller audio events. Existing STAFF movement,
+input and camera code retained. No Starter Assets controller scripts imported.

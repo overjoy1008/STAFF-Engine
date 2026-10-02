@@ -1,0 +1,19 @@
+RobotExpressive model and animations: CC0 1.0 Universal
+Author: Tomas Laulhe (Quaternius) https://quaternius.com/
+Original pack: https://quaternius.com/packs/animatedrobot.html
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
+Source distribution:
+https://github.com/mrdoob/three.js/tree/dev/examples/models/gltf/RobotExpressive
+The distribution's README explicitly identifies this model as CC0 1.0.
+Modifications by Don McCurdy: three facial morph targets, FBX2GLTF conversion,
+duplicate material removal, reduced material metalness.
+
+STAFF integration: converted GLB to FBX in Blender 5.1.2, preserved 14 animation
+tracks and facial blend shapes, removed a non-character scene helper, converted
+materials to Unity URP and normalized character height in a wrapper prefab.
+Imported 2026-10-02. No third-party controller code copied.
+
+Original GLB retained at Tools/CharacterAssets/RobotExpressive.glb.
+SHA-256: 047f5e5fb3bb6d378bd1df16ca6137f2a596c99b3a1b5690b4020c05aaf6f319
+Reproducible conversion script: Tools/CharacterAssets/convert_robot.py
