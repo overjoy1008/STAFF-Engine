@@ -104,8 +104,8 @@ namespace Staff.Characters.Editor
                     var material = AssetDatabase.LoadAssetAtPath<Material>(path);
                     if (!material)
                     {
-                        material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "Robot " + name };
-                        material.SetColor("_BaseColor", name.Contains("Main") ? new Color(.96f,.53f,.12f) : name.Contains("Black") ? new Color(.10f,.11f,.13f) : new Color(.40f,.44f,.48f));
+                        material = new Material(Shader.Find("Standard")) { name = "Robot " + name };
+                        material.SetColor("_Color", name.Contains("Main") ? new Color(.96f,.53f,.12f) : name.Contains("Black") ? new Color(.10f,.11f,.13f) : new Color(.40f,.44f,.48f));
                         material.SetFloat("_Metallic", .15f);
                         material.SetFloat("_Smoothness", .3f);
                         AssetDatabase.CreateAsset(material, path);

@@ -10,22 +10,22 @@ Shader "STAFF/Character Toon"
   [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull",Float)=0
  }
  SubShader {
-  Tags {"RenderPipeline"="UniversalPipeline" "RenderType"="TransparentCutout" "Queue"="AlphaTest"}
+  Tags {"RenderType"="TransparentCutout" "Queue"="AlphaTest"}
   Pass {
-   Tags {"LightMode"="UniversalForward"} Cull [_Cull]
+   Tags {"LightMode"="ForwardBase"} Cull [_Cull]
    HLSLPROGRAM
    #pragma vertex vert
    #pragma fragment frag
-   #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-   #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-   TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
+   #include "UnityCG.cginc"
+   #include "Lighting.cginc"
+   sampler2D _BaseMap;
    CBUFFER_START(UnityPerMaterial)
    float4 _BaseMap_ST, _BaseColor, _ShadowColor; float _Cutoff, _ToonEnabled, _Threshold;
    CBUFFER_END
    struct A {float4 positionOS:POSITION;float3 normalOS:NORMAL;float2 uv:TEXCOORD0;};
    struct V {float4 positionCS:SV_POSITION;float3 normalWS:TEXCOORD0;float2 uv:TEXCOORD1;};
-   V vert(A i){V o;o.positionCS=TransformObjectToHClip(i.positionOS.xyz);o.normalWS=TransformObjectToWorldNormal(i.normalOS);o.uv=TRANSFORM_TEX(i.uv,_BaseMap);return o;}
-   half4 frag(V i):SV_Target {half4 c=SAMPLE_TEXTURE2D(_BaseMap,sampler_BaseMap,i.uv)*_BaseColor;clip(c.a-_Cutoff);Light l=GetMainLight();half ndl=dot(normalize(i.normalWS),l.direction);half light=lerp(saturate(ndl*.5+.5),step(_Threshold,ndl),saturate(_ToonEnabled));return half4(c.rgb*lerp(_ShadowColor.rgb,half3(1,1,1),light),1);}
+   V vert(A i){V o;o.positionCS=UnityObjectToClipPos(i.positionOS);o.normalWS=UnityObjectToWorldNormal(i.normalOS);o.uv=TRANSFORM_TEX(i.uv,_BaseMap);return o;}
+   half4 frag(V i):SV_Target {half4 c=tex2D(_BaseMap,i.uv)*_BaseColor;clip(c.a-_Cutoff);half ndl=dot(normalize(i.normalWS),normalize(_WorldSpaceLightPos0.xyz));half light=lerp(saturate(ndl*.5+.5),step(_Threshold,ndl),saturate(_ToonEnabled));return half4(c.rgb*lerp(_ShadowColor.rgb,half3(1,1,1),light),1);}
    ENDHLSL
   }
  }

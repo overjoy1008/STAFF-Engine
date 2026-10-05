@@ -10,11 +10,11 @@ Shader "STAFF/Solid Skybox"
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "UnityCG.cginc"
             CBUFFER_START(UnityPerMaterial)
             half4 _Color;
             CBUFFER_END
-            float4 Vert(float4 positionOS : POSITION) : SV_POSITION { return TransformObjectToHClip(positionOS.xyz); }
+            float4 Vert(float4 positionOS : POSITION) : SV_POSITION { return UnityObjectToClipPos(positionOS); }
             half4 Frag() : SV_Target { return _Color; }
             ENDHLSL
         }

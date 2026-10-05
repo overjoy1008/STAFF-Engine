@@ -1,0 +1,8 @@
+HoyoToon 5.2.7, https://github.com/Hoyotoon/HoyoToon
+Authors: Meliodas, Manashiku, Tay and HoyoToon contributors. GPL-3.0; see LICENSE.
+STAFF modifications 2026-10-05: renamed shader, removed custom inspector dependency, corrected opacity cutout for public MMD textures.
+Runtime uses neutral packed masks and generic body shading for all MMD characters. This is a HoyoToon-based MMD compatibility preset, not a reconstruction of each game material. Original upstream source is retained in STAFF/3D Assets/Game Toon Shaders.
+
+Further STAFF modifications: neutral direct/ambient/additional lighting and neutral post tints; optional HSR-style two-tone shadow branch. Original texture colors are preserved.
+
+MMD material opacity is multiplied with texture alpha so hidden expression overlays remain hidden. Brightness control defaults to 0.8.

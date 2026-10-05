@@ -97,18 +97,11 @@ namespace Staff.Characters
         }
         public void UpdateRecentering(AdventurePlayer.Command command, bool grounded, float speed)
         {
-            if (!grounded) { Pov.m_HorizontalRecentering.m_enabled = false; return; }
-            if (command.move == Vector2.zero) return;
-            float angle = Mathf.Abs(Pov.m_VerticalAxis.Value);
-            bool backward = command.move.normalized == Vector2.down;
-            bool forward = command.move.normalized == Vector2.up;
-            bool enabled = !forward && (!backward || angle >= 80);
-            if (!enabled) { Pov.m_HorizontalRecentering.m_enabled = false; return; }
-            float seconds = angle > 80 ? (backward ? .5f : .3f) : 4;
-            if (backward && (command.walk || command.sprint)) seconds = 4;
-            Pov.m_HorizontalRecentering.m_enabled = true;
-            Pov.m_HorizontalRecentering.m_WaitTime = 0;
-            Pov.m_HorizontalRecentering.m_RecenteringTime = seconds * 5 / Mathf.Max(.1f, speed);
+            // Camera orientation stays under user control, including after movement stops.
+            Pov.m_HorizontalRecentering.m_enabled = false;
+            Pov.m_VerticalRecentering.m_enabled = false;
+            Pov.m_HorizontalRecentering.CancelRecentering();
+            Pov.m_VerticalRecentering.CancelRecentering();
         }
         void OnDestroy() { if (anchor) Destroy(anchor.gameObject); if (brain) Destroy(brain); }
     }

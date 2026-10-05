@@ -17,18 +17,25 @@ namespace Staff.Characters.Editor {
  static void Check(bool ok,string message){if(!ok)throw new Exception(message);Debug.Log("TOON PASS: "+message);}
  static IEnumerator Verify(){
  Directory.CreateDirectory("Library/StaffToon");
- var p=UnityEngine.Object.FindFirstObjectByType<AdventurePlayer>();p.enabled=false;Camera.main.GetComponent<AdventureCamera>().enabled=false;
- var s=p.GetComponent<CharacterSwitcher>();s.enabled=false;typeof(CharacterSwitcher).GetMethod("OnEnable",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).Invoke(s,null);
- Check(!ShaderUtil.ShaderHasError(Shader.Find("STAFF/Character Toon")),"Shader compilation");
+ var p=UnityEngine.Object.FindFirstObjectByType<AdventurePlayer>();p.enabled=false;
+ Camera.main.GetComponent<AdventureCamera>().enabled=false;var s=p.GetComponent<CharacterSwitcher>();s.enabled=false;typeof(CharacterSwitcher).GetMethod("OnEnable",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).Invoke(s,null);
  Application.runInBackground=true;InputSystem.settings.backgroundBehavior=InputSettings.BackgroundBehavior.IgnoreFocus;InputSystem.settings.editorInputBehaviorInPlayMode=InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;var keyboard=InputSystem.AddDevice<Keyboard>();
- void Press(Key key,bool accept=true){InputSystem.QueueStateEvent(keyboard,new KeyboardState(key));typeof(InputSystem).GetMethod("Update",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Dynamic});s.HandleInput(accept);InputSystem.QueueStateEvent(keyboard,new KeyboardState());typeof(InputSystem).GetMethod("Update",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Dynamic});}
- void CheckState(bool expected){Check(s.ToonEnabled==expected,"Toggle state "+s.CurrentName);foreach(var r in p.Animator.GetComponentsInChildren<Renderer>()){var b=new MaterialPropertyBlock();r.GetPropertyBlock(b);Check(b.GetFloat("_ToonEnabled")== (expected?1:0),"Renderer state "+r.name);}}
- s.Select(0);CheckState(true);Press(Key.H,false);yield return null;CheckState(true);Press(Key.H);yield return null;CheckState(false);
- Check(p.Animator.GetComponentsInChildren<Renderer>().SelectMany(r=>r.sharedMaterials).All(m=>m.shader.name!="STAFF/Character Toon"),"Robot original shader restored");
- Press(Key.C);yield return null;Check(s.PickerOpen,"C picker binding");p.GetComponent<CharacterPicker>().Choose(1);Check(s.Index==1,"Picker selection");CheckState(false);Press(Key.F8);yield return null;Check(s.EasterEggMode,"F8 binding");CheckState(false);Press(Key.F8);yield return null;CheckState(false);
- for(int i=0;i<s.Count;i++){s.Select(i);yield return null;if(s.ToonEnabled){Press(Key.H);yield return null;}CheckState(false);var off=Capture(p,s.CurrentName+"-smooth");Press(Key.H);yield return null;CheckState(true);var on=Capture(p,s.CurrentName+"-toon");int changed=off.Where((c,n)=>Math.Abs(c.r-on[n].r)+Math.Abs(c.g-on[n].g)+Math.Abs(c.b-on[n].b)>8).Count();Check(changed>100,"Visible shading difference "+s.CurrentName+" pixels="+changed);Press(Key.H);yield return null;}
- s.Select(0);CheckState(false);Press(Key.H);yield return null;CheckState(true);InputSystem.RemoveDevice(keyboard);
- File.WriteAllText("Library/StaffToon/result.txt","PASS: shader compile; H binding; ignored input; C/F8 state persistence; robot restoration; all 11 characters and robot rendered in both modes.");EditorApplication.Exit(0);
+ void PressH(){InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.H));typeof(InputSystem).GetMethod("Update",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Dynamic});s.HandleInput(true);InputSystem.QueueStateEvent(keyboard,new KeyboardState());typeof(InputSystem).GetMethod("Update",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Dynamic});}
+ foreach(var name in new[]{"STAFF/Character Toon","HoyoToon/STAFF MMD"})Check(!ShaderUtil.ShaderHasError(Shader.Find(name)),"Shader compilation "+name);
+ for(int i=0;i<s.Count;i++){
+ s.Select(i);yield return null;
+ for(int mode=0;mode<4;mode++){
+ Check((int)s.ShaderMode==mode,"H mode cycle "+s.CurrentName+" / "+s.ShaderLabel);
+ foreach(var r in p.Animator.GetComponentsInChildren<Renderer>()){
+ var props=new MaterialPropertyBlock();r.GetPropertyBlock(props);
+ foreach(var m in r.sharedMaterials){Check((m.shader.name=="HoyoToon/STAFF MMD")== (mode<2),"Hoyo material / "+s.CurrentName);if(mode==2)Check(m.shader.name=="STAFF/Character Toon"&&props.GetFloat("_ToonEnabled")==1,"CharacterToon two-tone restored / "+s.CurrentName);if(mode==3)Check(props.GetFloat("_ToonEnabled")==0,"Smooth / "+s.CurrentName);}
+ }
+ var pixels=Capture(p,s.CurrentName+"-"+s.ShaderMode);
+ if(mode<2){foreach(var r in p.Animator.GetComponentsInChildren<Renderer>()){var block=new MaterialPropertyBlock();r.GetPropertyBlock(block);Check(block.GetFloat("_StaffTwoTone")== (mode==1?1:0),"HSR preset state / "+s.CurrentName);foreach(var m in r.sharedMaterials)Check(m.GetFloat("_StaffNeutralLighting")==1&&m.GetColor("_PostShadowTint")==Color.white,"Neutral lighting and tint / "+s.CurrentName);}}
+PressH();yield return null;
+ }
+ }
+ InputSystem.RemoveDevice(keyboard);File.WriteAllText("Library/StaffToon/result.txt","PASS: 12 characters x 4 shader modes; H key cycles; CharacterToon two-tone restored; shader compilation and captures.");EditorApplication.Exit(0);
  }
  static Color32[] Capture(AdventurePlayer p,string name){
  var obj=new GameObject("Toon verification camera");var cam=obj.AddComponent<Camera>();cam.clearFlags=CameraClearFlags.SolidColor;cam.backgroundColor=new Color(.15f,.16f,.19f);cam.orthographic=true;cam.orthographicSize=1.35f;

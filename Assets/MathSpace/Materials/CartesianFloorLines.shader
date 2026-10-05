@@ -8,16 +8,16 @@ Shader "STAFF/Cartesian Floor Lines"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" "Queue"="Geometry" }
+        Tags { "RenderType"="Opaque"  "Queue"="Geometry" }
         Pass
         {
-            Tags { "LightMode"="UniversalForward" }
+            Tags { "LightMode"="ForwardBase" }
             Cull Off
             ZWrite On
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment Frag
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "UnityCG.cginc"
             CBUFFER_START(UnityPerMaterial)
                 half4 _BaseColor;
                 float _FadeStart;
@@ -28,8 +28,8 @@ Shader "STAFF/Cartesian Floor Lines"
             Varyings Vert(Attributes input)
             {
                 Varyings output;
-                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
-                output.positionCS = TransformWorldToHClip(output.positionWS);
+                output.positionWS = mul(unity_ObjectToWorld,input.positionOS).xyz;
+                output.positionCS = mul(UNITY_MATRIX_VP,float4(output.positionWS,1));
                 return output;
             }
             half4 Frag(Varyings input) : SV_Target

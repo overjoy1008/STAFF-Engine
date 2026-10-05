@@ -145,12 +145,21 @@ namespace Staff.Characters
         {
             if (!target) return;
             var player = target.GetComponent<AdventurePlayer>();
-            if (player && player.InputBlocked) return;
-            GUI.Box(new Rect(12, 12, 252, 52), GUIContent.none);
-            GUI.Label(new Rect(22, 18, 230, 24), version == CameraVersion.Current ? "Camera: Current" : "Camera: Wafflus / Cinemachine");
+            var roster = target.GetComponent<CharacterSwitcher>();
+            if (roster && roster.PickerOpen) return;
+            var dance = target.GetComponent<AdventureDance>();
+            var monochrome = Object.FindFirstObjectByType<Staff.MathSpace.MonochromeMode>();
+            GUI.Box(new Rect(12, 12, 340, 210), GUIContent.none);
+            GUI.Label(new Rect(22, 18, 320, 22), version == CameraVersion.Current ? "Camera: Current" : "Camera: Cinemachine / Wafflus");
             if (player && player.InputCaptured && Cursor.lockState == CursorLockMode.Locked)
-                GUI.Label(new Rect(22, 39, 230, 22), "F6: camera · Option/Alt: cursor");
-            else if (GUI.Button(new Rect(22, 38, 230, 22), "Switch camera (F6)")) ToggleVersion();
+                GUI.Label(new Rect(22, 40, 320, 22), "F6  Camera mode");
+            else if (GUI.Button(new Rect(22, 40, 320, 22), "F6  Switch camera")) ToggleVersion();
+            GUI.Label(new Rect(22, 63, 320, 22), "C   Character: " + (roster ? roster.CurrentName : "—"));
+            GUI.Label(new Rect(22, 86, 320, 22), "I    Background: " + (monochrome && monochrome.Inverted ? "White" : "Black"));
+            GUI.Label(new Rect(22, 109, 320, 22), "H   Shader: " + (roster ? roster.ShaderLabel : "—"));
+            GUI.Label(new Rect(22, 132, 320, 22), "1–8  Dance: " + (dance && dance.IsDancing ? dance.CurrentTitle : "Idle"));
+            GUI.Label(new Rect(22, 155, 320, 22), "Option / Alt  Hold to use cursor");
+            GUI.Label(new Rect(22, 178, 320, 22), "Built-in  ·  Move / jump cancels dance");
         }
         public void UpdateCursor(bool canCapture)
         {

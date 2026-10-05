@@ -68,7 +68,11 @@ namespace Staff.Characters.Editor
             deadline = Time.time + 2; while(Time.time < deadline) yield return null;
             Check(c.WafflusRig.ZoomTarget==6&&Mathf.Abs(c.WafflusRig.Body.m_CameraDistance-6)<.1f,"Wafflus zoom clamps and eases to maximum");
             c.NotifyMovement(new AdventurePlayer.Command{move=Vector2.right},true,5);
-            Check(c.WafflusRig.Pov.m_HorizontalRecentering.m_enabled,"Sideways movement enables recentering");
+            Check(!c.WafflusRig.Pov.m_HorizontalRecentering.m_enabled,"Sideways movement keeps automatic recentering disabled");
+            c.WafflusRig.SetView(110,20,6);
+            c.NotifyMovement(new AdventurePlayer.Command(),true,0);
+            deadline=Time.time+3;while(Time.time<deadline)yield return null;
+            Check(Mathf.Abs(Mathf.DeltaAngle(110,c.Yaw))<.1f,"Idle after sideways movement preserves camera heading");
             c.NotifyMovement(new AdventurePlayer.Command{move=Vector2.up},true,5);
             Check(!c.WafflusRig.Pov.m_HorizontalRecentering.m_enabled,"Forward movement disables recentering");
             c.NotifyMovement(new AdventurePlayer.Command{move=Vector2.right},false,5);

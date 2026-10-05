@@ -69,8 +69,8 @@ namespace Staff.Characters.Editor
             float scale = 1.8f / bounds.size.y;
             model.transform.localScale *= scale;
             model.transform.localPosition = new Vector3(0, -(bounds.min.y - visual.position.y) * scale, 0);
-            var silver = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "Starter Armature Silver" };
-            silver.SetColor("_BaseColor", new Color(.72f,.75f,.79f));
+            var silver = new Material(Shader.Find("Standard")) { name = "Starter Armature Silver" };
+            silver.SetColor("_Color", new Color(.72f,.75f,.79f));
             silver.SetFloat("_Metallic", .35f); silver.SetFloat("_Smoothness", .45f);
             AssetDatabase.CreateAsset(silver,"Assets/Characters/Materials/Starter Armature Silver.mat");
             foreach (var renderer in renderers) renderer.sharedMaterials = renderer.sharedMaterials.Select(_ => silver).ToArray();

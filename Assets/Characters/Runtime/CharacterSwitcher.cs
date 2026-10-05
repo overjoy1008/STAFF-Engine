@@ -19,7 +19,9 @@ namespace Staff.Characters
         CharacterPicker picker;
         public bool PickerOpen => picker && picker.IsOpen;
         CharacterToonToggle shading;
-        public bool ToonEnabled { get; private set; } = true;
+        public CharacterShaderMode ShaderMode { get; private set; } = CharacterShaderMode.HoyoToon;
+        public bool ToonEnabled => ShaderMode != CharacterShaderMode.Smooth;
+        public string ShaderLabel => ShaderMode == CharacterShaderMode.HoyoToon ? "HoyoToon (Neutral)" : ShaderMode == CharacterShaderMode.HoyoTwoTone ? "HoyoToon (HSR-style)" : ShaderMode == CharacterShaderMode.CharacterToon ? "CharacterToon (Two-tone)" : "CharacterToon (Smooth)";
         public int Index { get; private set; }
         public int Count => characters.Length + 1;
         public string CurrentName => Index == 0 ? "Silver Robot" : ActiveCharacters[Index - 1].name;
@@ -35,7 +37,7 @@ namespace Staff.Characters
             if (!originalModel && player.Animator) originalModel = player.Animator.gameObject;
             if (originalModel) originalAnimator = originalModel.GetComponent<Animator>();
             shading = new CharacterToonToggle();
-            if (originalModel) shading.Apply(originalModel, ToonEnabled);
+            if (originalModel) shading.Apply(originalModel, ShaderMode);
         }
         void Start()
         {
@@ -71,8 +73,8 @@ namespace Staff.Characters
         }
         public void ToggleToon()
         {
-            ToonEnabled = !ToonEnabled;
-            shading.Apply(Index == 0 ? originalModel : instance, ToonEnabled);
+            ShaderMode = (CharacterShaderMode)(((int)ShaderMode + 1) % 4);
+            shading.Apply(Index == 0 ? originalModel : instance, ShaderMode);
         }
         public void Cycle() => Select((Index + 1) % Count);
         public void ToggleEasterEgg()
@@ -100,7 +102,7 @@ namespace Staff.Characters
             originalModel.SetActive(index == 0);
             instance = index == 0 ? null : next;
             Index = index;
-            shading.Apply(next, ToonEnabled);
+            shading.Apply(next, ShaderMode);
         }
     }
 }

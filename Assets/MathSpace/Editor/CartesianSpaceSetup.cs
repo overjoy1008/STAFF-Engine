@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+
 using UnityEngine.SceneManagement;
 
 namespace Staff.MathSpace.Editor
@@ -127,7 +127,7 @@ namespace Staff.MathSpace.Editor
             origin.transform.rotation = camera.transform.rotation;
             origin.transform.localScale = new Vector3(.55f * texture.width / texture.height, .55f, 1);
             UnityEngine.Object.DestroyImmediate(origin.GetComponent<Collider>());
-            var glyphMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit")) { name = "LaTeX White Glyph", renderQueue = 3000 };
+            var glyphMaterial = new Material(Shader.Find("STAFF/Unlit")) { name = "LaTeX White Glyph", renderQueue = 3000 };
             glyphMaterial.SetTexture("_BaseMap", texture);
             glyphMaterial.SetColor("_BaseColor", Color.white);
             glyphMaterial.SetFloat("_Surface", 1);
@@ -223,12 +223,14 @@ namespace Staff.MathSpace.Editor
             var target = new RenderTexture(1600, 900, 24, RenderTextureFormat.ARGB32);
             var previous = RenderTexture.active;
             var aspect = camera.aspect;
+            var previousTarget = camera.targetTexture;
             Texture2D image = null;
             try
             {
                 camera.aspect = 1600f / 900;
                 target.Create();
-                RenderPipeline.SubmitRenderRequest(camera, new UniversalRenderPipeline.SingleCameraRequest { destination = target });
+                camera.targetTexture = target;
+                camera.Render();
                 RenderTexture.active = target;
                 image = new Texture2D(1600, 900, TextureFormat.RGB24, false);
                 image.ReadPixels(new Rect(0, 0, 1600, 900), 0, 0);
@@ -237,6 +239,7 @@ namespace Staff.MathSpace.Editor
             }
             finally
             {
+                camera.targetTexture = previousTarget;
                 camera.aspect = aspect;
                 RenderTexture.active = previous;
                 target.Release();
