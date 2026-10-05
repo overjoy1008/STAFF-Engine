@@ -1,0 +1,25 @@
+{
+  "bulletVersion": "3.25",
+  "commit": "2c204c49e56ed15ec5fcfa71d199ab6d6570b3f5",
+  "source": "https://github.com/bulletphysics/bullet3/tree/3.25",
+  "reference": "https://github.com/mrdoob/three.js/blob/r169/examples/jsm/animation/MMDPhysics.js",
+  "coordinates": "PMX left-handed -> right-handed: Z reflection; Blender x,z,-y / scale .08; Unity X reflection with measured FBX bind corrections",
+  "runtimeDefaults": {
+    "gravity": [
+      0,
+      -98,
+      0
+    ],
+    "step": 0.016666666666666666,
+    "solverIterations": 10,
+    "stopERP": 0.475,
+    "warmupSteps": 60
+  },
+  "scope": [
+    "JuFufu",
+    "TheHerta",
+    "Iuno"
+  ],
+  "artistParameterOverrides": false,
+  "gameInternalCodeClaim": false
+}
