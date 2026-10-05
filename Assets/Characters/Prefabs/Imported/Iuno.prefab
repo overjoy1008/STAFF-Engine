@@ -223,3 +223,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Characters.PmxPhysics
   source: {fileID: 4900000, guid: 1340b1c9bae8c43a4b6de16d45b716a6, type: 3}
   PhysicsEnabled: 1
+  MotionStrength: 0.7
+  MotionSmoothTime: 0.05

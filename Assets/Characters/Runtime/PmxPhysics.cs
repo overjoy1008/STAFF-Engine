@@ -11,6 +11,13 @@ namespace Staff.Characters {
   [Serializable] public class Profile {public string slug,sha256;public float unityMetersPerMmdUnit,unityRootScale;public Bone[] bones;public Body[] bodies;public Joint[] joints;}
   public TextAsset source;
   public bool PhysicsEnabled=true;
+  [Header("Secondary motion")]
+  [Tooltip("Overall PMX motion amplitude for every dynamic bone. 0 = animation only; 1 = full PMX amplitude.")]
+  [Range(0,1)] public float MotionStrength=.7f;
+  [Tooltip("Secondary motion smoothing time in seconds. Larger values soften rapid flutter; 0 disables smoothing. Body animation is unaffected.")]
+  [Range(0,.3f)] public float MotionSmoothTime=.05f;
+  readonly List<int> dynamicBoneIndices=new List<int>();
+  Vector3[] presentedDeltaP;Quaternion[] presentedDeltaQ;bool presentationReady;
   public int BodyCount=>data?.bodies.Length??0;
   public int JointCount=>data?.joints.Length??0;
   public int DynamicBoneCount=>dynamicBones.Count;
@@ -24,7 +31,8 @@ namespace Staff.Characters {
   readonly Dictionary<Transform,Vector3> localPositions=new Dictionary<Transform,Vector3>();
   readonly Dictionary<Transform,Quaternion> localRotations=new Dictionary<Transform,Quaternion>();
   readonly float[] positionBuffer=new float[3];float[] current,output;float unit,accumulator;bool reset=true,wasEnabled=true;
-  Vector3 lastRoot;
+  Vector3 lastRoot,animationRootP,previousAnimationRootP;
+  Quaternion animationRootQ,previousAnimationRootQ;
   Vector3[] animationP,previousAnimationP,solvedP,previousSolvedP;
   Quaternion[] animationQ,previousAnimationQ,solvedQ,previousSolvedQ;
   const float Step=1f/120f;
@@ -60,7 +68,7 @@ namespace Staff.Characters {
      var b=data.bodies[i];if(b.bone>=0&&!bones[b.bone])throw new Exception("Missing PMX bone: "+data.bones[b.bone].name);
      // PMX stores collision membership bits (1 = collide). Legacy JSON field is misnamed ignoreMask.
      if(sp_add_body(world,b.mode,b.shape,b.size,b.mass,b.linearDamping,b.angularDamping,b.restitution,b.friction,b.group,(~b.ignoreMask)&0xffff,b.pose)!=i)throw new Exception("Unsupported PMX shape");
-     if(b.mode!=0&&b.bone>=0){bodyOrder.Add(i);var t=bones[b.bone];if(!localPositions.ContainsKey(t)){dynamicBones.Add(t);localPositions[t]=t.localPosition;localRotations[t]=t.localRotation;}}
+     if(b.mode!=0&&b.bone>=0){bodyOrder.Add(i);var t=bones[b.bone];if(!localPositions.ContainsKey(t)){dynamicBones.Add(t);dynamicBoneIndices.Add(b.bone);localPositions[t]=t.localPosition;localRotations[t]=t.localRotation;}}
     }
     foreach(var j in data.joints)if(sp_add_joint(world,j.a,j.b,j.pose,j.limits,j.springs)<0)throw new Exception("Invalid PMX joint: "+j.name);
     sp_configure_unity(world);
@@ -68,6 +76,7 @@ namespace Staff.Characters {
     bodyOrder.Sort((a,b)=>{int d=Depth(bones[data.bodies[a].bone]).CompareTo(Depth(bones[data.bodies[b].bone]));return d!=0?d:a.CompareTo(b);});
     current=new float[BodyCount*7];output=new float[current.Length];lastRoot=transform.position;reset=true;
     animationP=new Vector3[bones.Length];previousAnimationP=new Vector3[bones.Length];animationQ=new Quaternion[bones.Length];previousAnimationQ=new Quaternion[bones.Length];
+    presentedDeltaP=new Vector3[dynamicBones.Count];presentedDeltaQ=new Quaternion[dynamicBones.Count];
     solvedP=new Vector3[dynamicBones.Count];previousSolvedP=new Vector3[dynamicBones.Count];solvedQ=new Quaternion[dynamicBones.Count];previousSolvedQ=new Quaternion[dynamicBones.Count];
    }catch(Exception e){Dispose();enabled=false;Debug.LogError("PMX physics initialization failed: "+e,this);}
   }
@@ -78,19 +87,24 @@ namespace Staff.Characters {
   void LateUpdate(){if(IsReady)Simulate(Time.deltaTime);}
   public void RequestReset(){reset=true;}
   void Targets(){for(int i=0;i<BodyCount;i++){var b=data.bodies[i];if(b.bone<0){var p=transform.TransformPoint(Reflect(V(b.pose))*data.unityMetersPerMmdUnit/data.unityRootScale);Put(current,i*7,Reflect(p)/unit,Reflect(transform.rotation)*Q(b.pose,3));continue;}var t=bones[b.bone];var q=Reflect(t.rotation)*correction[b.bone];var p0=Reflect(t.position)/unit;Put(current,i*7,p0+q*V(b.localPose),q*Q(b.localPose,3));}}
-  void CaptureAnimation(){for(int i=0;i<bones.Length;i++)if(bones[i]){animationP[i]=bones[i].localPosition;animationQ[i]=bones[i].localRotation;}}
-  void AnimationPose(float alpha){for(int i=0;i<bones.Length;i++)if(bones[i]){bones[i].localPosition=Vector3.Lerp(previousAnimationP[i],animationP[i],alpha);bones[i].localRotation=Quaternion.Slerp(previousAnimationQ[i],animationQ[i],alpha);}}
-  void SaveAnimation(){Array.Copy(animationP,previousAnimationP,bones.Length);Array.Copy(animationQ,previousAnimationQ,bones.Length);}
+  void CaptureAnimation(){animationRootP=transform.position;animationRootQ=transform.rotation;for(int i=0;i<bones.Length;i++)if(bones[i]){animationP[i]=bones[i].localPosition;animationQ[i]=bones[i].localRotation;}}
+  void AnimationPose(float alpha){
+   // Root translation/turning must be sampled on the same timeline as the bones.
+   // Otherwise 60 Hz movement drives 120 Hz Bullet anchors at alternating 2v / 0v.
+   transform.SetPositionAndRotation(Vector3.Lerp(previousAnimationRootP,animationRootP,alpha),Quaternion.Slerp(previousAnimationRootQ,animationRootQ,alpha));
+   for(int i=0;i<bones.Length;i++)if(bones[i]){bones[i].localPosition=Vector3.Lerp(previousAnimationP[i],animationP[i],alpha);bones[i].localRotation=Quaternion.Slerp(previousAnimationQ[i],animationQ[i],alpha);}}
+  void SaveAnimation(){previousAnimationRootP=animationRootP;previousAnimationRootQ=animationRootQ;Array.Copy(animationP,previousAnimationP,bones.Length);Array.Copy(animationQ,previousAnimationQ,bones.Length);}
   void SaveSolved(){for(int i=0;i<dynamicBones.Count;i++){solvedP[i]=dynamicBones[i].localPosition;solvedQ[i]=dynamicBones[i].localRotation;}}
   void PreviousSolved(){Array.Copy(solvedP,previousSolvedP,solvedP.Length);Array.Copy(solvedQ,previousSolvedQ,solvedQ.Length);}
   public void Simulate(float dt){
    if(!IsReady)return;
-   if(!PhysicsEnabled){RestoreAnimationPose();wasEnabled=false;return;}
+   if(!PhysicsEnabled){RestoreAnimationPose();wasEnabled=false;presentationReady=false;return;}
    if(!wasEnabled){reset=true;wasEnabled=true;}
    if(dt<=0)return;
    if(Vector3.Distance(transform.position,lastRoot)>3f)reset=true;
    lastRoot=transform.position;CaptureAnimation();
    if(reset){
+    presentationReady=false;
     SaveAnimation();Targets();sp_set_poses(world,current,1);
     // Settling follows exactly the same type-2 position correction as live steps.
     for(int n=0;n<120;n++){AnimationPose(1);Targets();sp_set_poses(world,current,0);sp_step(world,Step);ApplySolved();}
@@ -106,7 +120,21 @@ namespace Staff.Characters {
    SaveAnimation();AnimationPose(1);
    // Render interpolation is never fed back to Bullet, including at >120 Hz.
    float blend=Mathf.Clamp01(accumulator/Step);
-   for(int i=0;i<dynamicBones.Count;i++){dynamicBones[i].localPosition=Vector3.Lerp(previousSolvedP[i],solvedP[i],blend);dynamicBones[i].localRotation=Quaternion.Slerp(previousSolvedQ[i],solvedQ[i],blend);}
+   for(int i=0;i<dynamicBones.Count;i++){
+    var t=dynamicBones[i];int bone=dynamicBoneIndices[i];
+    var rawP=Vector3.Lerp(previousSolvedP[i],solvedP[i],blend);var rawQ=Quaternion.Slerp(previousSolvedQ[i],solvedQ[i],blend);
+    float strength=Mathf.Clamp01(MotionStrength);
+    var deltaP=(rawP-animationP[bone])*strength;
+    var deltaQ=Quaternion.Slerp(Quaternion.identity,Quaternion.Inverse(animationQ[bone])*rawQ,strength);
+    float tau=Mathf.Max(0,MotionSmoothTime);
+    float weight=!presentationReady||tau<=0?1:1-Mathf.Exp(-dt/tau);
+    presentedDeltaP[i]=Vector3.Lerp(presentedDeltaP[i],deltaP,weight);
+    presentedDeltaQ[i]=presentationReady?Quaternion.Slerp(presentedDeltaQ[i],deltaQ,weight):deltaQ;
+    // Filter only the secondary offset: animation stays immediate and the solver
+    // never receives the attenuated pose as collision/joint feedback.
+    t.localPosition=animationP[bone]+presentedDeltaP[i];t.localRotation=animationQ[bone]*presentedDeltaQ[i];
+   }
+   presentationReady=true;
   }
   void ApplySolved(){
    sp_get_poses(world,output);
