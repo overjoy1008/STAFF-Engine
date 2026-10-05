@@ -74,6 +74,9 @@ namespace Staff.Characters
         void Awake()
         {
             controller = GetComponent<CharacterController>(); spawn = transform.position;
+            // Cinemachine's collision filter already ignores Player: mark our own
+            // controller accordingly so a near-head orbit cannot hit the player.
+            if (CompareTag("Untagged")) gameObject.tag = "Player";
             dance = GetComponent<AdventureDance>();
             if (!dance) dance = gameObject.AddComponent<AdventureDance>();
             if (!followCamera && Camera.main) followCamera = Camera.main.GetComponent<AdventureCamera>();
@@ -124,9 +127,10 @@ namespace Staff.Characters
         {
             if (!actions) return;
             if (!InputBlocked && cancel.WasPressedThisFrame()) ReleaseInput();
-            else if (!InputBlocked && capture.WasPressedThisFrame()) CaptureInput();
+            else if (!InputBlocked && capture.WasPressedThisFrame() && (!followCamera || !followCamera.IsPointerOverControls)) CaptureInput();
             // Escape/unfocused Game view stops steering, but gravity keeps working.
             bool accept = !InputBlocked && inputCaptured && Application.isFocused;
+            if (followCamera) followCamera.UpdateCursor(accept);
             if (accept && followCamera)
                 followCamera.AddLook(lookMouse.ReadValue<Vector2>(), lookStick.ReadValue<Vector2>(),
                     zoom.ReadValue<float>(), recenter.WasPressedThisFrame(), Time.deltaTime);
@@ -149,6 +153,7 @@ namespace Staff.Characters
             dashRecovery = Mathf.Max(0, dashRecovery - dt);
             Grounded = verticalVelocity <= 0 && (controller.isGrounded || ProbeGround());
             dance?.NotifyGameplay(command, Grounded, HorizontalSpeed);
+            followCamera?.NotifyMovement(command, Grounded, HorizontalSpeed);
             sinceGround = Grounded ? 0 : sinceGround + dt;
             sinceJumpPress = command.jump ? 0 : sinceJumpPress + dt;
             if (Grounded && verticalVelocity < 0) verticalVelocity = -2;

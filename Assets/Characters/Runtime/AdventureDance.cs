@@ -10,6 +10,8 @@ namespace Staff.Characters
         AudioSource music;
         InputAction[] shortcuts;
         bool gameplayIntent;
+        readonly DanceFacePlayback face = new DanceFacePlayback();
+        public int FacialBindingCount => face.BindingCount;
         public int ActiveIndex { get; private set; } = -1;
         public bool IsDancing => ActiveIndex >= 0;
         public int Count => catalog ? catalog.dances.Length : 0;
@@ -61,6 +63,7 @@ namespace Staff.Characters
             int state=Animator.StringToHash("Base Layer.Dance_"+entry.id);
             if(!entry.clip || !player.Animator.HasState(0,state))return false;
             // Repeating a number restarts its dance; another number switches directly.
+            face.Begin(player.Animator,entry.id);
             ActiveIndex=index;
             player.Animator.SetInteger("Dance",index+1);
             player.Animator.CrossFadeInFixedTime(state,.10f,0,0);
@@ -70,6 +73,7 @@ namespace Staff.Characters
         }
         public void StopDance()
         {
+            face.Reset();
             if(!IsDancing)return;
             ActiveIndex=-1;
             if(music)music.Stop();
@@ -82,12 +86,15 @@ namespace Staff.Characters
         }
         void LateUpdate()
         {
-            if(!IsDancing || !music.clip)return;
+            if(!IsDancing)return;
             var animator=player.Animator;
             var state=animator.IsInTransition(0)?animator.GetNextAnimatorStateInfo(0):animator.GetCurrentAnimatorStateInfo(0);
             var entry=catalog.dances[ActiveIndex];
             if(!state.IsName("Dance_"+entry.id))return;
-            float time=entry.audioStart+Mathf.Repeat(state.normalizedTime,1)*entry.clip.length;
+            float phase=Mathf.Repeat(state.normalizedTime,1)*entry.clip.length;
+            face.Apply(phase);
+            if(!music.clip)return;
+            float time=entry.audioStart+phase;
             if(time>=music.clip.length){music.Stop();return;}
             if(!music.isPlaying || Mathf.Abs(music.time-time)>.15f)
             {music.time=time;if(!music.isPlaying)music.Play();}

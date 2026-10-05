@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c729f9fdaedf4af087ecd68067b54dc, type: 3}
+  m_Name: StaffDanceFaces
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Characters.DanceFaceCatalog
+  characters:
+  - avatar: {fileID: 9000000, guid: 6390a235589e64f62bb4aea1958759b5, type: 3}
+    samples: {fileID: 4900000, guid: 42f5c41a495f642ebbe3a3c14dd80654, type: 3}
+  - avatar: {fileID: 9000000, guid: 9d442ca01b1fa4223b02c750b39a51d1, type: 3}
+    samples: {fileID: 4900000, guid: 74c0e94071b1d4f378f7addfe3e576f6, type: 3}
+  - avatar: {fileID: 9000000, guid: 682e2425889f848a59da82d0adba5158, type: 3}
+    samples: {fileID: 4900000, guid: f7279ae312e394edd8f901f12dd4041c, type: 3}
+  - avatar: {fileID: 9000000, guid: 20ffadd8d1b2143b4ad62b4fe8677291, type: 3}
+    samples: {fileID: 4900000, guid: ba5f671692c8c480a9db7564713303c6, type: 3}
+  - avatar: {fileID: 9000000, guid: b7e08c87054b34d47b0ed2d9a92a1906, type: 3}
+    samples: {fileID: 4900000, guid: ee78305f736574d9d92708165e782f37, type: 3}
+  - avatar: {fileID: 9000000, guid: e1d621640ddbb43e5b6a29bc08dea8e6, type: 3}
+    samples: {fileID: 4900000, guid: b4bd630a3bde84892bb487addaa0a266, type: 3}
+  - avatar: {fileID: 9000000, guid: a5b74577de9c64b188eeabc0b1656ad1, type: 3}
+    samples: {fileID: 4900000, guid: a43c21393ce264210baf83d102761cfe, type: 3}
+  - avatar: {fileID: 9000000, guid: c792981ce1ac042bf8b56c9271f8a1f1, type: 3}
+    samples: {fileID: 4900000, guid: 8872e02a1c23041f7b3d1d4e993b21a6, type: 3}
+  - avatar: {fileID: 9000000, guid: 8dde018d5e57745da9e631843c80bf57, type: 3}
+    samples: {fileID: 4900000, guid: e0736d1732f6c449c859c36382d5b508, type: 3}
+  - avatar: {fileID: 9000000, guid: b2ec548018e7f4ffeab6f94379cd4be9, type: 3}
+    samples: {fileID: 4900000, guid: 06cd4f99d87264c5fbb922a357ffd8ed, type: 3}
+  - avatar: {fileID: 9000000, guid: 53732b86658a04db29f79238f1620b6d, type: 3}
+    samples: {fileID: 4900000, guid: 5f0fff37051dc449da3da6dca5f2fe44, type: 3}
