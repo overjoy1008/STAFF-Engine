@@ -1,0 +1,8 @@
+HIMEHINA 공식 모션과 공식 반주 배포본. Studio LaRa 창작 가이드라인 범위에서 이용할 수 있습니다. 공식 안내에 따라 발 IK를 끄고, VMD의 19프레임을 음원의 0초에 대응시켰습니다. 원본 보컬 음원은 포함하지 않았습니다. 가이드라인: https://himehina.jp/guideline
+
+모션: Studio LaRa / HIMEHINA
+안무: Nagisa / Gohgo / ATY
+원곡: HIMEHINA · 공식 반주
+배포: https://larainc.link/Aipai
+배포 영상: https://www.youtube.com/watch?v=bnofYmfKLeo
+안무 영상: https://www.youtube.com/watch?v=JWHqBNQL9xQ

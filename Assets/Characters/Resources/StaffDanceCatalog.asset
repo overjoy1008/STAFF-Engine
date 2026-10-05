@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711bd7c9c78944ca495d4f6b42a37eca, type: 3}
+  m_Name: StaffDanceCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Characters.DanceCatalog
+  dances:
+  - id: bbbb
+    title: Bling-Bang-Bang-Born
+    clip: {fileID: -623603649343465320, guid: aa0085a078fb74a3395569c873ba3951, type: 3}
+    music: {fileID: 8300000, guid: de9dfa0940e044d269262aa4e9b005c4, type: 3}
+    audioStart: 0
+  - id: bibbidiba
+    title: "BIBBIDIBA \xB7 \uBE44\uBE44\uB370\uBC14"
+    clip: {fileID: -623603649343465320, guid: f07c6dd3357894d16b768f0aab2f7ec7, type: 3}
+    music: {fileID: 8300000, guid: a89aef89b10a447c796b494080ef64f6, type: 3}
+    audioStart: 37
+  - id: gowild
+    title: Go Wild
+    clip: {fileID: -623603649343465320, guid: e8073791289574f7f9cac55e00006ed2, type: 3}
+    music: {fileID: 8300000, guid: fedc8fb27271045c8962614fe19ce667, type: 3}
+    audioStart: 0
+  - id: konko
+    title: "\uCF58\uCF54\uCF58\uCF58 \xB7 Konko Konkon"
+    clip: {fileID: -623603649343465320, guid: 3c019b8152c014c7bbcb3496ca1f252a, type: 3}
+    music: {fileID: 8300000, guid: 5b15a583445c34cd9b06f8cada2d5e1c, type: 3}
+    audioStart: 0
+  - id: chosaikyo
+    title: "\uCD08\uCD5C\uAC15 \xB7 \u8D85\u6700\u5F37"
+    clip: {fileID: -623603649343465320, guid: c490b1e022bdd45b5b768faa0827ad2a, type: 3}
+    music: {fileID: 8300000, guid: 95390234be02c45c1a124edff143fe0d, type: 3}
+    audioStart: 0
+  - id: shikanoko
+    title: "\uC2DC\uCE74\uB178\uCF54 \xB7 Shikanoko"
+    clip: {fileID: -623603649343465320, guid: 90028c5fa06da471f9793d5daf66564c, type: 3}
+    music: {fileID: 0}
+    audioStart: 0
+  - id: heartpie
+    title: "\uC560\uD3EC \uB304\uC2A4\uD640 \xB7 Heart Pie Dancehall"
+    clip: {fileID: -623603649343465320, guid: 48ac315648fe44081b6e4aeff282d384, type: 3}
+    music: {fileID: 8300000, guid: 2cc38867dfac04c71941acbfd003eef9, type: 3}
+    audioStart: 0
+  - id: wavefile
+    title: WAVEFILE
+    clip: {fileID: -623603649343465320, guid: 0a538925c65b5483f8ee8d4adfc12047, type: 3}
+    music: {fileID: 0}
+    audioStart: 0

@@ -1,0 +1,70 @@
+{
+  "characters": [
+    {
+      "slug": "Citlali",
+      "name": "시틀라리",
+      "label": "기본 의상 · 캐릭터 본체",
+      "game": "genshin"
+    },
+    {
+      "slug": "Lauma",
+      "name": "라우마",
+      "label": "기본 의상 · 캐릭터 본체",
+      "game": "genshin"
+    },
+    {
+      "slug": "Aino",
+      "name": "아이노",
+      "label": "기본 의상 · 캐릭터 본체",
+      "game": "genshin"
+    },
+    {
+      "slug": "Kafka_NoCoat",
+      "name": "카프카",
+      "label": "기본 의상 · 캐릭터 본체 · 외투 없음",
+      "game": "hsr"
+    },
+    {
+      "slug": "TheHerta",
+      "name": "더 헤르타",
+      "label": "기본 의상 · 캐릭터 본체",
+      "game": "hsr"
+    },
+    {
+      "slug": "Ellen_OnCampus",
+      "name": "엘렌 조",
+      "label": "On Campus · 캐릭터 본체",
+      "game": "zzz"
+    },
+    {
+      "slug": "Burnice",
+      "name": "버니스",
+      "label": "기본 의상 · 캐릭터 본체",
+      "game": "zzz"
+    },
+    {
+      "slug": "Nicole",
+      "name": "니콜 데마라",
+      "label": "기본 의상 · 캐릭터 본체",
+      "game": "zzz"
+    },
+    {
+      "slug": "JuFufu",
+      "name": "귤복복",
+      "label": "기본 의상 · 캐릭터 본체",
+      "game": "zzz"
+    },
+    {
+      "slug": "Iuno",
+      "name": "유노",
+      "label": "기본 의상 · 캐릭터 본체 · 공식 MMD 배포본",
+      "game": "wuwa"
+    },
+    {
+      "slug": "Aemeath",
+      "name": "에이메스",
+      "label": "기본 의상 · 캐릭터 본체 · 공식 MMD 배포본",
+      "game": "wuwa"
+    }
+  ]
+}

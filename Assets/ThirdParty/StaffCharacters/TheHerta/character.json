@@ -1,0 +1,463 @@
+{
+  "id": "73932b833cde1e105eb0",
+  "slug": "TheHerta",
+  "name": "더 헤르타",
+  "label": "기본 의상 · 캐릭터 본체",
+  "game": "hsr",
+  "source": "https://www.bilibili.com/blackboard/era/oEdf9S9dWjtnc5GE.html",
+  "humanBones": [
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "LeftShoulder",
+    "LeftUpperArm",
+    "LeftLowerArm",
+    "LeftHand",
+    "LeftUpperLeg",
+    "LeftLowerLeg",
+    "LeftFoot",
+    "LeftToes",
+    "LeftEye",
+    "LeftThumbProximal",
+    "LeftThumbIntermediate",
+    "LeftThumbDistal",
+    "LeftIndexProximal",
+    "LeftIndexIntermediate",
+    "LeftIndexDistal",
+    "LeftMiddleProximal",
+    "LeftMiddleIntermediate",
+    "LeftMiddleDistal",
+    "LeftRingProximal",
+    "LeftRingIntermediate",
+    "LeftRingDistal",
+    "LeftLittleProximal",
+    "LeftLittleIntermediate",
+    "LeftLittleDistal",
+    "RightShoulder",
+    "RightUpperArm",
+    "RightLowerArm",
+    "RightHand",
+    "RightUpperLeg",
+    "RightLowerLeg",
+    "RightFoot",
+    "RightToes",
+    "RightEye",
+    "RightThumbProximal",
+    "RightThumbIntermediate",
+    "RightThumbDistal",
+    "RightIndexProximal",
+    "RightIndexIntermediate",
+    "RightIndexDistal",
+    "RightMiddleProximal",
+    "RightMiddleIntermediate",
+    "RightMiddleDistal",
+    "RightRingProximal",
+    "RightRingIntermediate",
+    "RightRingDistal",
+    "RightLittleProximal",
+    "RightLittleIntermediate",
+    "RightLittleDistal"
+  ],
+  "materials": [
+    {
+      "name": "Mat_000",
+      "texture": "Mat_000.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_001",
+      "texture": "Mat_001.png",
+      "color": [
+        1,
+        1,
+        1,
+        0.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_002",
+      "texture": "Mat_002.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_003",
+      "texture": "Mat_003.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_004",
+      "texture": "Mat_004.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_005",
+      "texture": "Mat_005.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_006",
+      "texture": "Mat_006.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_007",
+      "texture": "Mat_007.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_008",
+      "texture": "Mat_008.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_009",
+      "texture": "Mat_009.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_010",
+      "texture": "Mat_010.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_011",
+      "texture": "Mat_011.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_012",
+      "texture": "Mat_012.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_013",
+      "texture": "Mat_013.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_014",
+      "texture": "Mat_014.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_015",
+      "texture": "Mat_015.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_016",
+      "texture": "Mat_016.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_017",
+      "texture": "Mat_017.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_018",
+      "texture": "Mat_018.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_019",
+      "texture": "Mat_019.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_020",
+      "texture": "Mat_020.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_021",
+      "texture": "Mat_021.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_022",
+      "texture": "Mat_022.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_023",
+      "texture": "Mat_023.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_024",
+      "texture": "Mat_024.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_025",
+      "texture": "Mat_025.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_026",
+      "texture": "Mat_026.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_027",
+      "texture": "Mat_027.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_028",
+      "texture": "Mat_028.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_029",
+      "texture": "Mat_029.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_030",
+      "texture": "Mat_030.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_031",
+      "texture": "Mat_031.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_032",
+      "texture": "Mat_032.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_033",
+      "texture": "Mat_033.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_034",
+      "texture": "Mat_034.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": false
+    },
+    {
+      "name": "Mat_035",
+      "texture": "Mat_035.png",
+      "color": [
+        1,
+        1,
+        1,
+        0.30000001192092896
+      ],
+      "doubleSided": false
+    }
+  ],
+  "missingTextures": [],
+  "targetHeight": 1.8
+}

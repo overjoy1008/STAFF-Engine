@@ -1,0 +1,265 @@
+{
+  "id": "e9dcfa6e210c91e24954",
+  "slug": "JuFufu",
+  "name": "귤복복",
+  "label": "기본 의상 · 캐릭터 본체",
+  "game": "zzz",
+  "source": "https://www.bilibili.com/blackboard/era/v77xPTuloXavtC2a.html",
+  "humanBones": [
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "LeftShoulder",
+    "LeftUpperArm",
+    "LeftLowerArm",
+    "LeftHand",
+    "LeftUpperLeg",
+    "LeftLowerLeg",
+    "LeftFoot",
+    "LeftToes",
+    "LeftEye",
+    "LeftThumbProximal",
+    "LeftThumbIntermediate",
+    "LeftThumbDistal",
+    "LeftIndexProximal",
+    "LeftIndexIntermediate",
+    "LeftIndexDistal",
+    "LeftMiddleProximal",
+    "LeftMiddleIntermediate",
+    "LeftMiddleDistal",
+    "LeftRingProximal",
+    "LeftRingIntermediate",
+    "LeftRingDistal",
+    "LeftLittleProximal",
+    "LeftLittleIntermediate",
+    "LeftLittleDistal",
+    "RightShoulder",
+    "RightUpperArm",
+    "RightLowerArm",
+    "RightHand",
+    "RightUpperLeg",
+    "RightLowerLeg",
+    "RightFoot",
+    "RightToes",
+    "RightEye",
+    "RightThumbProximal",
+    "RightThumbIntermediate",
+    "RightThumbDistal",
+    "RightIndexProximal",
+    "RightIndexIntermediate",
+    "RightIndexDistal",
+    "RightMiddleProximal",
+    "RightMiddleIntermediate",
+    "RightMiddleDistal",
+    "RightRingProximal",
+    "RightRingIntermediate",
+    "RightRingDistal",
+    "RightLittleProximal",
+    "RightLittleIntermediate",
+    "RightLittleDistal"
+  ],
+  "materials": [
+    {
+      "name": "Mat_000",
+      "texture": "Mat_000.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_001",
+      "texture": "Mat_001.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_002",
+      "texture": "Mat_002.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_003",
+      "texture": "Mat_003.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_004",
+      "texture": "Mat_004.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_005",
+      "texture": "Mat_005.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_006",
+      "texture": "Mat_006.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_007",
+      "texture": "Mat_007.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_008",
+      "texture": "Mat_008.png",
+      "color": [
+        1,
+        1,
+        1,
+        0.5
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_009",
+      "texture": "Mat_009.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_010",
+      "texture": "Mat_010.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_011",
+      "texture": "Mat_011.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_012",
+      "texture": "Mat_012.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_013",
+      "texture": "Mat_013.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_014",
+      "texture": "Mat_014.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_015",
+      "texture": "Mat_015.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_016",
+      "texture": "Mat_016.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    },
+    {
+      "name": "Mat_017",
+      "texture": "Mat_017.png",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "doubleSided": true
+    }
+  ],
+  "missingTextures": [],
+  "targetHeight": 1.35
+}

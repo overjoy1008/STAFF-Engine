@@ -28,6 +28,7 @@ namespace Staff.Characters
         [SerializeField] float jumpBuffer = .12f;
         [SerializeField] LayerMask groundMask = ~0;
         CharacterController controller;
+        AdventureDance dance;
         InputActionAsset actions;
         InputAction move, lookMouse, lookStick, jump, sprint, walk, zoom, recenter, cancel, capture;
         readonly RaycastHit[] groundHits = new RaycastHit[16];
@@ -42,6 +43,7 @@ namespace Staff.Characters
         public float HorizontalSpeed => horizontalVelocity.magnitude;
         public bool IsDashing => dashRemaining > 0;
         public bool InputCaptured => inputCaptured;
+        public bool InputBlocked { get; set; }
         public Animator Animator => animator;
         public Transform Visual => visual;
 
@@ -54,9 +56,26 @@ namespace Staff.Characters
         public void Configure(InputActionAsset input, Animator animation, Transform model, AdventureCamera camera)
         { inputActions = input; animator = animation; visual = model; followCamera = camera; }
 
+        public void ReplaceAnimator(Animator replacement)
+        {
+            bool wasDancing = dance && dance.IsDancing;
+            dance?.StopDance();
+            var state = animator.GetCurrentAnimatorStateInfo(0);
+            animator = replacement;
+            animator.applyRootMotion = false;
+            animator.Rebind();
+            animator.SetFloat("Speed", HorizontalSpeed);
+            animator.SetBool("Grounded", Grounded);
+            animator.SetFloat("VerticalSpeed", verticalVelocity);
+            animator.Play(wasDancing ? Animator.StringToHash("Base Layer.Locomotion") : state.fullPathHash, 0, wasDancing ? 0 : state.normalizedTime % 1f);
+            animator.Update(0);
+        }
+
         void Awake()
         {
             controller = GetComponent<CharacterController>(); spawn = transform.position;
+            dance = GetComponent<AdventureDance>();
+            if (!dance) dance = gameObject.AddComponent<AdventureDance>();
             if (!followCamera && Camera.main) followCamera = Camera.main.GetComponent<AdventureCamera>();
             if (followCamera && !followCamera.Target) followCamera.Configure(transform, visual);
         }
@@ -85,6 +104,7 @@ namespace Staff.Characters
         void OnApplicationFocus(bool focus) { if (!focus) ReleaseInput(); }
         public void CaptureInput()
         {
+            if (InputBlocked) return;
             inputCaptured = true;
             // Re-focusing while Shift/RMB is already held is not a fresh dash.
             sprintWasHeld = sprint != null && sprint.IsPressed();
@@ -94,6 +114,7 @@ namespace Staff.Characters
         public void ReleaseInput()
         {
             inputCaptured = false;
+            dance?.StopDance();
             dashRemaining = 0;
             horizontalVelocity = Vector3.zero;
             Cursor.lockState = CursorLockMode.None;
@@ -102,10 +123,10 @@ namespace Staff.Characters
         void Update()
         {
             if (!actions) return;
-            if (cancel.WasPressedThisFrame()) ReleaseInput();
-            else if (capture.WasPressedThisFrame()) CaptureInput();
+            if (!InputBlocked && cancel.WasPressedThisFrame()) ReleaseInput();
+            else if (!InputBlocked && capture.WasPressedThisFrame()) CaptureInput();
             // Escape/unfocused Game view stops steering, but gravity keeps working.
-            bool accept = inputCaptured && Application.isFocused;
+            bool accept = !InputBlocked && inputCaptured && Application.isFocused;
             if (accept && followCamera)
                 followCamera.AddLook(lookMouse.ReadValue<Vector2>(), lookStick.ReadValue<Vector2>(),
                     zoom.ReadValue<float>(), recenter.WasPressedThisFrame(), Time.deltaTime);
@@ -127,6 +148,7 @@ namespace Staff.Characters
             sprintWasHeld = command.sprint;
             dashRecovery = Mathf.Max(0, dashRecovery - dt);
             Grounded = verticalVelocity <= 0 && (controller.isGrounded || ProbeGround());
+            dance?.NotifyGameplay(command, Grounded, HorizontalSpeed);
             sinceGround = Grounded ? 0 : sinceGround + dt;
             sinceJumpPress = command.jump ? 0 : sinceJumpPress + dt;
             if (Grounded && verticalVelocity < 0) verticalVelocity = -2;
@@ -197,6 +219,7 @@ namespace Staff.Characters
         }
         public void Respawn()
         {
+            dance?.StopDance();
             controller.enabled = false;
             transform.position = spawn;
             controller.enabled = true;
