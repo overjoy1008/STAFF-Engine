@@ -15,11 +15,19 @@ namespace Staff.Characters
         AdventurePlayer player;
         Animator originalAnimator;
         GameObject instance;
-        InputAction nextCharacter, toggleEasterEgg, toggleToon, invertMonochrome, closePicker;
+        InputAction togglePhysics, nextCharacter, toggleEasterEgg, toggleToon, invertMonochrome, closePicker;
         CharacterPicker picker;
         public bool PickerOpen => picker && picker.IsOpen;
         CharacterToonToggle shading;
         public CharacterShaderMode ShaderMode { get; private set; } = CharacterShaderMode.HoyoToon;
+        public bool PhysicsEnabled { get; private set; } = true;
+        public void TogglePhysics()
+        {
+            PhysicsEnabled = !PhysicsEnabled;
+            var model = Index == 0 ? originalModel : instance;
+            var physics = model ? model.GetComponent<PmxPhysics>() : null;
+            if (physics) physics.PhysicsEnabled = PhysicsEnabled;
+        }
         public bool ToonEnabled => ShaderMode != CharacterShaderMode.Smooth;
         public string ShaderLabel => ShaderMode == CharacterShaderMode.HoyoToon ? "HoyoToon (Neutral)" : ShaderMode == CharacterShaderMode.HoyoTwoTone ? "HoyoToon (HSR-style)" : ShaderMode == CharacterShaderMode.CharacterToon ? "CharacterToon (Two-tone)" : "CharacterToon (Smooth)";
         public int Index { get; private set; }
@@ -49,6 +57,8 @@ namespace Staff.Characters
         public void TogglePicker() { if (picker) picker.SetOpen(!picker.IsOpen); }
         void OnEnable()
         {
+            togglePhysics = new InputAction("ToggleSecondaryPhysics", InputActionType.Button, "<Keyboard>/p");
+            togglePhysics.Enable();
             nextCharacter = new InputAction("NextCharacter", InputActionType.Button, "<Keyboard>/c");
             nextCharacter.Enable();
             toggleEasterEgg = new InputAction("ToggleEasterEgg", InputActionType.Button, "<Keyboard>/f8");
@@ -58,7 +68,7 @@ namespace Staff.Characters
             invertMonochrome = new InputAction("InvertMonochrome", InputActionType.Button, "<Keyboard>/i"); invertMonochrome.Enable();
             closePicker = new InputAction("ClosePicker", InputActionType.Button, "<Keyboard>/escape"); closePicker.Enable();
         }
-        void OnDisable() { if (picker) picker.SetOpen(false, false); invertMonochrome?.Dispose(); closePicker?.Dispose(); nextCharacter?.Dispose(); nextCharacter = null; toggleEasterEgg?.Dispose(); toggleEasterEgg = null; toggleToon?.Dispose(); toggleToon = null; }
+        void OnDisable() { togglePhysics?.Dispose(); togglePhysics = null; if (picker) picker.SetOpen(false, false); invertMonochrome?.Dispose(); closePicker?.Dispose(); nextCharacter?.Dispose(); nextCharacter = null; toggleEasterEgg?.Dispose(); toggleEasterEgg = null; toggleToon?.Dispose(); toggleToon = null; }
         void OnDestroy() => shading?.Dispose();
         void Update() => HandleInput(player && Application.isFocused && (player.InputCaptured || PickerOpen));
         public void HandleInput(bool accept)
@@ -66,6 +76,7 @@ namespace Staff.Characters
             if (!accept) return;
             if (nextCharacter != null && nextCharacter.WasPressedThisFrame()) { TogglePicker(); return; }
             if (PickerOpen) { if (closePicker.WasPressedThisFrame()) picker.SetOpen(false); return; }
+            if (togglePhysics != null && togglePhysics.WasPressedThisFrame()) TogglePhysics();
             if (toggleToon != null && toggleToon.WasPressedThisFrame()) ToggleToon();
             if (invertMonochrome != null && invertMonochrome.WasPressedThisFrame())
                 Object.FindFirstObjectByType<MonochromeMode>()?.Toggle();
@@ -97,6 +108,8 @@ namespace Staff.Characters
                 Debug.LogError("Character switch rejected: invalid Humanoid avatar.", this); return;
             }
             next.SetActive(true);
+            var physics = next.GetComponent<PmxPhysics>();
+            if (physics) physics.PhysicsEnabled = PhysicsEnabled;
             player.ReplaceAnimator(animation);
             if (instance) { instance.SetActive(false); Destroy(instance); }
             originalModel.SetActive(index == 0);
