@@ -1,11 +1,41 @@
-# STAFF - Unity Engine
-[기획서 · STAFF (Notion)](https://app.notion.com/p/STAFF-3ce0c92994a080c99306d9338c436406?source=copy_link)
+<h1 align="center">STAFF — Unity Engine</h1>
 
-**미지수에 침식된 영혼을, 진리로 해방하는 사람들의 이야기.**
+<p align="center">
+  <img src="docs/images/staff-logo.png" alt="STAFF 로고" width="860" />
+</p>
+
+<p align="center">
+  <strong>미지수에 침식된 영혼을, 진리로 해방하는 사람들의 이야기.</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Unity-6000.3.11f1-111111?style=flat-square&amp;logo=unity&amp;logoColor=white" alt="Unity 6000.3.11f1" />
+  <img src="https://img.shields.io/badge/Genre-3D_Action-57546B?style=flat-square" alt="3D Action" />
+  <img src="https://img.shields.io/badge/Status-In_Development-81719A?style=flat-square" alt="In Development" />
+</p>
+
+<p align="center">
+  <a href="https://app.notion.com/p/STAFF-3ce0c92994a080c99306d9338c436406?source=copy_link"><img src="https://img.shields.io/badge/Notion-기획서_열기-111111?style=for-the-badge&amp;logo=notion&amp;logoColor=white" alt="Notion에서 STAFF 기획서 열기" /></a>
+</p>
+
+<p align="center">
+  <a href="#world">세계관</a> ·
+  <a href="#story">인물과 이야기</a> ·
+  <a href="#weapons">무기 디자인</a> ·
+  <a href="#development">개발 현황</a> ·
+  <a href="#pipeline">제작 파이프라인</a> ·
+  <a href="#getting-started">실행하기</a>
+</p>
+
+---
 
 STAFF는 수학적 개념을 초월적 능력으로 표현하는 캐릭터 중심의 3D 액션 게임을 개발하는 프로젝트입니다. 자신의 한계를 마주한 주인공 한율이 스승 슈아를 만나, 두려움에 잠식되는 사람들을 구하며 자신이 알던 세계 너머로 나아갑니다.
 
 수학은 능력의 형태와 가능성, 전투의 연출을 만드는 언어입니다. 이야기의 중심에는 인물의 성장과 관계가 있습니다. 처음에는 매력적인 인물과 서로 다른 능력을 알아가는 재미로 시작하고, 점차 진리와 두려움, 믿음과 희생을 둘러싼 질문으로 확장합니다.
+
+---
+
+<a id="world"></a>
 
 ## 세계관
 
@@ -38,7 +68,7 @@ STAFF는 Axiom을 가진 사람들이 모인 집단입니다. 이들의 목적�
 
 구성원들은 자신의 Theorem이 깃든 지팡이, **staff**를 지닙니다. 지팡이는 불가능해 보이는 경계를 다루는 도구이자 각자의 능력을 드러내는 무기입니다.
 
-조직은 **델타(Delta)**와 **엡실론(Epsilon)**의 관계로 이루어집니다.
+조직은 `델타(Delta)`와 `엡실론(Epsilon)`의 관계로 이루어집니다.
 
 - **델타**: 멘토이자 목자, 스승. 엡실론을 보호하고 가르치는 존재입니다.
 - **엡실론**: 멘티이자 양, 제자. 델타와의 관계 속에서 배우고 성장합니다.
@@ -55,6 +85,10 @@ STAFF는 Axiom을 가진 사람들이 모인 집단입니다. 이들의 목적�
 RNA는 진리에 접근할 자격을 소수에게만 허락하고, 돈과 권력에 따른 입시 부정과 이해관계에 따라 교육과 공개 범위를 바꿔 왔습니다. 진리를 밝히려는 기관이 오히려 진리를 독점하며 두려움을 키우는 모순이 세계관의 주요 갈등입니다.
 
 </details>
+
+---
+
+<a id="story"></a>
 
 ## 인물과 이야기
 
@@ -74,6 +108,24 @@ Story Bible은 다음과 같은 확장을 구상하고 있습니다.
 전투 구상에는 순간의 변화율을 읽는 미분, 흩어진 힘을 누적하는 적분, 수열과 함수의 성질을 활용한 공격과 회피 등이 있습니다. 이는 설계 문서의 아이디어이며, 현재 모두 구현된 기능을 뜻하지는 않습니다.
 
 
+---
+
+<a id="weapons"></a>
+
+## 무기 디자인
+
+각자의 Theorem이 깃든 지팡이, **staff**의 디자인 스터디입니다. 함수·수열·극한·적분의 모티프를 서로 다른 무기 실루엣으로 표현합니다.
+
+![STAFF 무기 디자인 — 함수, 수열, 극한과 적분의 모티프](docs/images/staff-weapon-designs.png)
+
+<p align="center"><sub>Quadratic · Polynomial · Rational · Radical · Exponential · Trigonometric<br />Arithmetic Sequence · Geometric Sequence · Limit · Integral</sub></p>
+
+<p align="center"><a href="docs/designs/Staff_Designs.pdf">무기 디자인 원본 PDF 보기 ↗</a></p>
+
+---
+
+<a id="development"></a>
+
 ## 개발 현황
 
 Unity에서의 실제 플레이 화면입니다.
@@ -85,6 +137,10 @@ Unity에서의 실제 플레이 화면입니다.
 화면의 **더 헤르타**는 구현 확인용 캐릭터이며, STAFF의 이야기 속 한율·슈아와는 별개입니다. 스크린샷은 **CharacterToon (Smooth)** 셰이더가 적용된 상태입니다.
 
 환경은 두 가지 셰이더 표현(Real, Abstract)을 지원하는 방향으로 개발할 예정이며, 캐릭터 셰이더는 환경 전환의 영향을 받지 않도록 분리합니다. 현재는 지하철 배치와 조작을 확인하는 단계로, 환경 모드 전환·열차 문 상호작용·반사 품질 및 성능 개선은 후속 작업입니다.
+
+---
+
+<a id="pipeline"></a>
 
 ## Tripo & Astra 3D 생성 파이프라인
 
@@ -164,6 +220,10 @@ Unity에서의 실제 플레이 화면입니다.
 원본 지하철 에셋: `../STAFF/3D Studio/Tripo/Subway/PBR Glow/`  
 Unity 모델: `Assets/StaffSubway/Models/Train/TrainPBRGlow.fbx`  
 [씬 구성·스케일·에셋 상세](Assets/StaffSubway/Documentation/README.md)
+
+---
+
+<a id="getting-started"></a>
 
 ## 실행과 조작
 
