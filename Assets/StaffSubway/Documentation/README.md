@@ -29,7 +29,7 @@ Wayfinding textures are generated for legibility. The platform numeral uses actu
 
 ## Explore
 
-Play starts with the same character roster, humanoid animator, AdventurePlayer input/movement, CharacterSwitcher and AdventureCamera/Wafflus rig as SampleScene. The default character remains Kafka_NoCoat. Click the Game view to capture input.
+Play starts with the same character roster, humanoid animator, AdventurePlayer input/movement, CharacterSwitcher and AdventureCamera/Wafflus rig as SampleScene. The default character is TheHerta in both scenes. Click the Game view to capture input.
 
 - WASD: move; Left Ctrl: walk; Space: jump.
 - Shift or right mouse button: dash.

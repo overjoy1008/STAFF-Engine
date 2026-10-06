@@ -51,7 +51,7 @@ namespace Staff.Characters
         {
             picker = gameObject.AddComponent<CharacterPicker>();
             picker.Initialize(this, player);
-            for (int i=0;i<characters.Length;i++) if (characters[i].name == "Kafka_NoCoat") { Select(i+1); break; }
+            for (int i=0;i<characters.Length;i++) if (characters[i].name == "TheHerta") { Select(i+1); break; }
         }
         public string NameAt(int index) => index == 0 ? "Silver Robot" : characters[index-1].name;
         public void TogglePicker() { if (picker) picker.SetOpen(!picker.IsOpen); }
