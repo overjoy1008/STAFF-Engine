@@ -1,0 +1,31 @@
+Black bench world dimensions (0.670, 0.870, 2.450) bottom 0.000
+Black bench world dimensions (0.670, 0.870, 2.450) bottom 0.000
+Black bench world dimensions (0.670, 0.870, 2.450) bottom 0.000
+Black bench world dimensions (0.670, 0.870, 2.450) bottom 0.000
+PBR Glow car 1 world dimensions (3.100, 3.850, 20.200) bottom -1.060
+PBR Glow car 2 world dimensions (3.100, 3.850, 20.200) bottom -1.060
+PBR Glow car 3 world dimensions (3.100, 3.850, 20.200) bottom -1.060
+PBR Glow car 4 world dimensions (3.100, 3.850, 20.200) bottom -1.060
+PBR Glow car 5 world dimensions (3.100, 3.850, 20.200) bottom -1.060
+Human scale marker - 1.70m world dimensions (0.570, 1.700, 0.220) bottom 0.000
+Human scale marker - 1.70m world dimensions (0.570, 1.700, 0.220) bottom 0.000
+Human scale marker - 1.70m world dimensions (0.570, 1.700, 0.220) bottom 0.000
+Rear_Door_Mounting_Plate yMin=0.074 yMax=2.307
+RearDoor_Leaf yMin=0.193 yMax=2.082
+RearDoor_FixedFrame yMin=0.137 yMax=2.131
+SideDoor_L_01_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_L_01_RearLeaf yMin=-0.028 yMax=1.983
+SideDoor_L_02_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_L_02_RearLeaf yMin=-0.028 yMax=1.983
+SideDoor_L_03_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_L_03_RearLeaf yMin=-0.028 yMax=1.983
+SideDoor_L_04_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_L_04_RearLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_01_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_01_RearLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_02_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_02_RearLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_03_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_03_RearLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_04_FrontLeaf yMin=-0.028 yMax=1.983
+SideDoor_R_04_RearLeaf yMin=-0.028 yMax=1.983

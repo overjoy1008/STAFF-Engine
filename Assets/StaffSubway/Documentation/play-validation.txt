@@ -1,0 +1,14 @@
+PASS: SampleScene player and follow camera linked
+PASS: Valid humanoid avatar and locomotion animator
+PASS: One active audio listener
+PASS: Original input actions assigned
+PASS: Grounded on station platform
+PASS: Run distance: 7.40m in 1s
+PASS: Jump and landing; apex 1.19m
+PASS: Original Shift dash starts
+PASS: Column blocks movement at x=-1.88
+PASS: Platform edge blocks movement and dash
+PASS: Original character roster loaded: 12
+PASS: Character switching retains humanoid animator
+PASS: Floor reflection migrated to gameplay camera
+PASS: Live station reflection rendered

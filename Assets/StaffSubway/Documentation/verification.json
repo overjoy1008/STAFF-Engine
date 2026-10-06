@@ -1,0 +1,15 @@
+{
+  "scene": "Assets/Scenes/STAFF_Subway_Reference.unity",
+  "protected_files_unchanged": {
+    "Assets/Scenes/SampleScene.unity": true,
+    "Packages/manifest.json": true,
+    "Packages/packages-lock.json": true,
+    "ProjectSettings/GraphicsSettings.asset": true,
+    "ProjectSettings/QualitySettings.asset": true
+  },
+  "play_mode": "PASS: real Unity Play mode; active fly camera; live planar reflection render target; three scale markers; frame 12",
+  "source": "STAFF/3D Studio/Tripo; Train: Subway/PBR Glow",
+  "render": "Unity Camera.Render, saved scene reopened",
+  "human_height_m": 1.7,
+  "train_cars": 5
+}

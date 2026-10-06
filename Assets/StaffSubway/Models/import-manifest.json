@@ -1,0 +1,206 @@
+[
+  {
+    "name": "Bench",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Black Subway Bench/Black Subway Bench.glb",
+    "blenderBounds": [
+      [
+        -0.4891858398914337,
+        -0.17890231311321259,
+        0.0
+      ],
+      [
+        0.4888501465320587,
+        0.17900915443897247,
+        0.4918889105319977
+      ]
+    ],
+    "vertices": 8211,
+    "materials": [
+      {
+        "name": "Bench_Material_0",
+        "baseTexture": "Bench_0_tripo_rgb_24410c44-539e-416f-947f-c05e4a9c30cf.png",
+        "normalTexture": "Bench_0_extracted_normal_tripo_node_93be0df7-c2c9-4f8e-b367-65302566fa80.png"
+      }
+    ]
+  },
+  {
+    "name": "BlueBench",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Blue Station Bench/Blue Station Bench.glb",
+    "blenderBounds": [
+      [
+        -0.4990234375,
+        -0.1513672173023224,
+        0.0
+      ],
+      [
+        0.4990234375,
+        0.1513672173023224,
+        0.447265625
+      ]
+    ],
+    "vertices": 5102,
+    "materials": [
+      {
+        "name": "BlueBench_Material_0",
+        "baseTexture": "BlueBench_0_tripo_rgb_2ee4f056-ff49-4209-9ac3-8cfbc18983e8.png",
+        "normalTexture": "BlueBench_0_extracted_normal_tripo_node_6e996ae1-04f9-49ee-ba16-2935a68e86c1.png"
+      }
+    ]
+  },
+  {
+    "name": "Column",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Station Column/Station+Column.glb",
+    "blenderBounds": [
+      [
+        -0.0908203199505806,
+        -0.0908203199505806,
+        0.0
+      ],
+      [
+        0.0908203199505806,
+        0.0908203199505806,
+        0.998046875
+      ]
+    ],
+    "vertices": 2426,
+    "materials": [
+      {
+        "name": "Column_Material_0",
+        "baseTexture": "Column_0_tripo_rgb_5d467b9d-ae90-40fa-8670-b30374d082ae.png",
+        "normalTexture": "Column_0_extracted_normal_tripo_node_30ea5472-3aab-4821-8331-366416a0f461.png"
+      }
+    ]
+  },
+  {
+    "name": "Tactile",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Tactile Paving/Tactile Paving.glb",
+    "blenderBounds": [
+      [
+        -0.48950204253196716,
+        -0.1876983344554901,
+        0.0
+      ],
+      [
+        0.48947152495384216,
+        0.18766793608665466,
+        0.06671142578125
+      ]
+    ],
+    "vertices": 26806,
+    "materials": []
+  },
+  {
+    "name": "PlatformEdge",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Platform Edge/Platform Edge.glb",
+    "blenderBounds": [
+      [
+        -0.4903259873390198,
+        -0.1517486870288849,
+        0.0
+      ],
+      [
+        0.4904480576515198,
+        0.1518860161304474,
+        0.1332550048828125
+      ]
+    ],
+    "vertices": 26157,
+    "materials": []
+  },
+  {
+    "name": "Floor",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Platform Floor/Platform Floor.glb",
+    "blenderBounds": [
+      [
+        -0.489959716796875,
+        -0.48989877104759216,
+        0.0
+      ],
+      [
+        0.48986828327178955,
+        0.48989877104759216,
+        0.06872940063476562
+      ]
+    ],
+    "vertices": 19870,
+    "materials": []
+  },
+  {
+    "name": "Sign",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Hanging Sign/Hanging Sign.glb",
+    "blenderBounds": [
+      [
+        -0.4905090928077698,
+        -0.05805213376879692,
+        0.0
+      ],
+      [
+        0.4903565049171448,
+        0.05647272244095802,
+        0.3117218017578125
+      ]
+    ],
+    "vertices": 23449,
+    "materials": []
+  },
+  {
+    "name": "LED",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Linear LED Light/Linear LED Light.glb",
+    "blenderBounds": [
+      [
+        -0.4900513291358948,
+        -0.05643076077103615,
+        0.0
+      ],
+      [
+        0.4898987412452698,
+        0.0564841665327549,
+        0.2780609130859375
+      ]
+    ],
+    "vertices": 27463,
+    "materials": []
+  },
+  {
+    "name": "Display",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Station Display/Station Display (game asset).glb",
+    "blenderBounds": [
+      [
+        -0.48833250999450684,
+        -0.048588141798973083,
+        0.0
+      ],
+      [
+        0.48854607343673706,
+        0.048908598721027374,
+        0.23513907194137573
+      ]
+    ],
+    "vertices": 5375,
+    "materials": [
+      {
+        "name": "Display_Material_0",
+        "baseTexture": "",
+        "normalTexture": "Display_0_tripo_node_0f087266-6fdf-4ecc-b1f4-b4ca2999bd64_Normal_Bake.png"
+      }
+    ]
+  },
+  {
+    "name": "Railing",
+    "source": "/Users/gradient/Documents/GitHub/STAFF/3D Studio/Tripo/Railing Segment/Railing Segment.glb",
+    "blenderBounds": [
+      [
+        -0.4885559678077698,
+        -0.04558569937944412,
+        0.0
+      ],
+      [
+        0.4884949326515198,
+        0.0456429198384285,
+        0.4668426513671875
+      ]
+    ],
+    "vertices": 31005,
+    "materials": []
+  }
+]
