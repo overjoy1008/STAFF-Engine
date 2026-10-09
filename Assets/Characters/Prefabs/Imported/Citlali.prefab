@@ -171,5 +171,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 20ffadd8d1b2143b4ad62b4fe8677291, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5244736962924216094}
   m_SourcePrefab: {fileID: 100100000, guid: 20ffadd8d1b2143b4ad62b4fe8677291, type: 3}
+--- !u!1 &8278416010110180114 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 20ffadd8d1b2143b4ad62b4fe8677291, type: 3}
+  m_PrefabInstance: {fileID: 9089317732184958531}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5244736962924216094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8278416010110180114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777f413d614634d8eb995f42b1991f16, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Characters.PmxPhysics
+  source: {fileID: 4900000, guid: 345d31c68233748c89cc4897511a78de, type: 3}
+  PhysicsEnabled: 1
+  MotionStrength: 0.7
+  MotionSmoothTime: 0.05
+  RecoveryStrength: 0.35
+  RecoveryTime: 0.5

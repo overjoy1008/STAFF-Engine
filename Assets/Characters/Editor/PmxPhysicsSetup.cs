@@ -1,11 +1,29 @@
 using System;using System.IO;using UnityEngine;using UnityEditor;
 namespace Staff.Characters.Editor {
  public static class PmxPhysicsSetup {
-  [MenuItem("Tools/Characters/Apply Original PMX Physics (3 Characters)")]
-  public static void Apply(){foreach(var slug in new[]{"JuFufu","TheHerta","Iuno"}){
-   string path="Assets/Characters/Prefabs/Imported/"+slug+".prefab";var go=PrefabUtility.LoadPrefabContents(path);
-   try{var component=go.GetComponent<PmxPhysics>()??go.AddComponent<PmxPhysics>();component.source=AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/ThirdParty/StaffPmxPhysics/Data/"+slug+".json");if(!component.source)throw new Exception("Missing PMX profile "+slug);component.PhysicsEnabled=true;PrefabUtility.SaveAsPrefabAsset(go,path);}finally{PrefabUtility.UnloadPrefabContents(go);}
-  }AssetDatabase.SaveAssets();Debug.Log("Original PMX physics attached to JuFufu, TheHerta and Iuno.");}
+  const string DataFolder="Assets/ThirdParty/StaffPmxPhysics/Data";
+  [MenuItem("Tools/Characters/Apply Original PMX Physics (Imported Characters)")]
+  public static void Apply(){
+   var profiles=new System.Collections.Generic.List<string>();
+   foreach(var guid in AssetDatabase.FindAssets("t:TextAsset",new[]{DataFolder})){
+    var path=AssetDatabase.GUIDToAssetPath(guid);if(Path.GetExtension(path)==".json")profiles.Add(path);
+   }
+   profiles.Sort(StringComparer.Ordinal);
+   if(profiles.Count==0)throw new Exception("No PMX physics profiles in "+DataFolder);
+   foreach(var profilePath in profiles){
+    string slug=Path.GetFileNameWithoutExtension(profilePath),path="Assets/Characters/Prefabs/Imported/"+slug+".prefab";
+    var source=AssetDatabase.LoadAssetAtPath<TextAsset>(profilePath);
+    if(!AssetDatabase.LoadAssetAtPath<GameObject>(path))throw new Exception("Missing imported prefab "+slug);
+    var go=PrefabUtility.LoadPrefabContents(path);
+    try{
+     var component=go.GetComponent<PmxPhysics>()??go.AddComponent<PmxPhysics>();
+     component.source=source;
+     // New components use runtime defaults; retain existing user parameters.
+     PrefabUtility.SaveAsPrefabAsset(go,path);
+    }finally{PrefabUtility.UnloadPrefabContents(go);}
+   }
+   AssetDatabase.SaveAssets();Debug.Log("Original PMX physics attached to "+profiles.Count+" imported characters.");
+  }
  }
  [InitializeOnLoad] public static class PmxPhysicsDeployment {
   static PmxPhysicsDeployment(){EditorApplication.update+=Poll;}
