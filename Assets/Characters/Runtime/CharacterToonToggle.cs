@@ -28,7 +28,7 @@ namespace Staff.Characters {
        for(int j=1;j<=5;j++)result.SetColor(j==1?"_Color":"_Color"+j,tint);
        lightMask=lightMask?lightMask:Solid(new Color(.5f,.5f,.5f,1));dataMask=dataMask?dataMask:Solid(new Color(.9f,0,0,0));dataMask2=dataMask2?dataMask2:Solid(new Color(1,.25f,0,0));
        result.SetTexture("_LightTex",lightMask);result.SetTexture("_OtherDataTex",dataMask);result.SetTexture("_OtherDataTex2",dataMask2);
-       result.SetFloat("_UseBumpMap",0);result.SetFloat("_SpecIntensity",0);result.SetFloat("_DoubleSided",0);result.SetFloat("_DoubleUV",0);result.SetFloat("_UseAlpha",1);result.SetFloat("_AlphaCutoff",.1f);result.SetFloat("_AlbedoSmoothness",.18f);
+       result.SetFloat("_UseBumpMap",0);result.SetFloat("_SpecIntensity",0);result.SetFloat("_DoubleSided",0);result.SetFloat("_DoubleUV",0);result.SetFloat("_UseAlpha",1);result.SetFloat("_AlphaCutoff",source.HasProperty("_Cutoff")?source.GetFloat("_Cutoff"):.1f);result.SetFloat("_Cull",source.HasProperty("_Cull")?source.GetFloat("_Cull"):0);result.SetFloat("_AlbedoSmoothness",.18f);
        foreach(var name in new[]{"_PostShallowTint","_PostShallowFadeTint","_PostShadowTint","_PostShadowFadeTint","_PostFrontTint","_PostSssTint"})result.SetColor(name,Color.white);
        result.SetFloat("_StaffNeutralLighting",1);
        result.SetFloat("_StaffExposure",.8f);

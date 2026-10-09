@@ -1,0 +1,70 @@
+{
+  "characters": [
+    {
+      "character": "Citlali",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Lauma",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Aino",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Kafka_NoCoat",
+      "materials": [
+        "Mat_014"
+      ]
+    },
+    {
+      "character": "TheHerta",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Ellen_OnCampus",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Burnice",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Nicole",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "JuFufu",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Iuno",
+      "materials": [
+        "Mat_000"
+      ]
+    },
+    {
+      "character": "Aemeath",
+      "materials": [
+        "Mat_009"
+      ]
+    }
+  ]
+}

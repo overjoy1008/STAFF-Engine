@@ -57,6 +57,7 @@ namespace Staff.Characters
             return new Vector3(targetOffset.x, focusHeight, targetOffset.z);
         }
         float currentDistance;
+        readonly CharacterCameraClearance clearance = new CharacterCameraClearance();
         bool initialized;
         public enum CameraVersion { Current, Wafflus }
         [SerializeField] CameraVersion version = CameraVersion.Wafflus;
@@ -155,7 +156,9 @@ namespace Staff.Characters
                 GUI.Label(new Rect(22, 40, 320, 22), "F6  Camera mode");
             else if (GUI.Button(new Rect(22, 40, 320, 22), "F6  Switch camera")) ToggleVersion();
             GUI.Label(new Rect(22, 63, 320, 22), "C   Character: " + (roster ? roster.CurrentName : "—"));
-            GUI.Label(new Rect(22, 86, 320, 22), "I    Background: " + (monochrome && monochrome.Inverted ? "White" : "Black"));
+            var environmentMode = GetComponent<Staff.Subway.AbstractEnvironment>();
+            GUI.Label(new Rect(22, 86, 320, 22), environmentMode ? "I    Environment: " + environmentMode.Mode : "I    Background: " + (monochrome && monochrome.Inverted ? "White" : "Black"));
+            if(Object.FindFirstObjectByType<Staff.Subway.SubwayDoors>()) GUI.Label(new Rect(22, 194, 380, 22), "O    Doors / R    Reset / [ Arrive / ] Depart");
             GUI.Label(new Rect(22, 109, 320, 22), "H   Shader: " + (roster ? roster.ShaderLabel : "—"));
             GUI.Label(new Rect(22, 132, 320, 22), "1–8  Dance: " + (dance && dance.IsDancing ? dance.CurrentTitle : "Idle"));
             GUI.Label(new Rect(22, 155, 320, 22), "Option / Alt  Hold to use cursor");
@@ -187,11 +190,18 @@ namespace Staff.Characters
         public void Snap()
         {
             if (!target) return;
+            clearance.Reset();
             pivot = FocusPoint;
             velocity = Vector3.zero;
             currentDistance = distance;
             initialized = true;
             Simulate(0);
+        }
+        void ApplyCharacterClearance(float dt)
+        {
+            if (!output) output = GetComponent<Camera>();
+            var player = target.GetComponent<AdventurePlayer>();
+            clearance.Apply(output, target, player ? player.Animator : null, collisionMask, dt);
         }
         void LateUpdate() => Simulate(Time.deltaTime);
         public void Simulate(float dt)
@@ -201,6 +211,7 @@ namespace Staff.Characters
             if (version == CameraVersion.Wafflus && wafflus)
             {
                 wafflus.Simulate(target, facing, FocusOffset(), dt);
+                ApplyCharacterClearance(dt);
                 currentDistance = Vector3.Distance(FocusPoint, transform.position);
                 return;
             }
@@ -216,6 +227,7 @@ namespace Staff.Characters
             // Pull in immediately at an obstacle; ease back out once it clears.
             currentDistance = allowed < currentDistance || dt <= 0 ? allowed : Mathf.Lerp(currentDistance, allowed, 1 - Mathf.Exp(-8 * dt));
             transform.SetPositionAndRotation(pivot + backwards * currentDistance, rotation);
+            ApplyCharacterClearance(dt);
         }
     }
 }

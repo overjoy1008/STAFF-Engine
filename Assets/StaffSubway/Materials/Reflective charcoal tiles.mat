@@ -37,7 +37,7 @@ Material:
     - _Grid: 1
     - _Metallic: 0.2
     - _ReflectionStrength: 0.22
-    - _TileSize: 1.25
+    - _TileSize: 1.875
     - _UseVertexColor: 0
     m_Colors:
     - _Color: {r: 0.1, g: 0.115, b: 0.138, a: 1}

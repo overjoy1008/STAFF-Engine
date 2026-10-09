@@ -81,6 +81,8 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
 
     // MMD opacity includes material tint alpha (hidden blush/eye overlays).
     float alpha = diffuse.w * _Color.a;
+    // Opacity must agree across base, stencil and additive lights.
+    if(_UseAlpha) clip(alpha - max(_AlphaCutoff, 0.001f));
     // diffuse color shifting
     if(_EnableHueShift && _EnableColorHue)
     {
@@ -371,8 +373,8 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
         #if defined(POINT) || defined(SPOT)
             light_direction = normalize(_WorldSpaceLightPos0.xyz - i.ws_pos.xyz);
         #endif
-        float shadow_area = dot(normal, light_direction);
-        if(_MaterialType == 1) shadow_area = shadow_area_face(_LightTex, i.test, light_direction);
+        float shadow_area = saturate(dot(normal, normalize(light_direction)));
+        if(_MaterialType == 1) shadow_area = saturate(shadow_area_face(_LightTex, i.test, light_direction));
 
         float light_intesnity = max(0.001f, (0.299f * _LightColor0.r + 0.587f * _LightColor0.g + 0.114f * _LightColor0.b));
         float3 neutralLight = _StaffNeutralLighting > .5 ? dot(_LightColor0.rgb,float3(.2126,.7152,.0722)).xxx : _LightColor0.rgb;
@@ -492,6 +494,7 @@ float4 ps_outline(vs_out i) : SV_TARGET
 
     // sample textures
     float4 diffuse = _MainTex.Sample(sampler_linear_clamp, uv_a.xy);
+    if(_UseAlpha) clip(diffuse.a * _Color.a - max(_AlphaCutoff, 0.001f));
     float other_data = _OtherDataTex.Sample(sampler_linear_clamp, uv_a.xy).x; 
     if(_MaterialType == 1) other_data = i.bit_flag.z;
 
@@ -535,5 +538,7 @@ shadow_out vs_shadow(shadow_in v)
 float4 ps_shadow(shadow_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
 {
     if(_MaterialType == 3) clip(-1);
-    return 0.0f;
+    float alpha = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy).a * _Color.a;
+    if(_UseAlpha) clip(alpha - max(_AlphaCutoff, 0.001f));
+    SHADOW_CASTER_FRAGMENT(i)
 }

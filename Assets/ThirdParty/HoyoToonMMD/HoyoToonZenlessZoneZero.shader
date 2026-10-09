@@ -564,7 +564,7 @@ Shader "HoyoToon/STAFF MMD"
             // Blend [_SrcBlend] [_DstBlend]
             HLSLPROGRAM
             
-            #pragma multi_compile_fwdbase
+            #pragma multi_compile_shadowcaster
             
             #pragma vertex vs_shadow
             #pragma fragment ps_shadow

@@ -40,9 +40,9 @@ struct shadow_in
 
 struct shadow_out
 {
-    float4 pos : SV_POSITION;
-    float4 uv_a : TEXCOORD0;
+    V2F_SHADOW_CASTER;
+    float4 uv_a : TEXCOORD1;
     float3 normal : NORMAL;
-    float4 ws_pos : TEXCOORD1;
-    float3 view : TEXCOORD2;
+    float4 ws_pos : TEXCOORD2;
+    float3 view : TEXCOORD3;
 };

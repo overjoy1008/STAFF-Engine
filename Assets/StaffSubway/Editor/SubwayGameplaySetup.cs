@@ -54,6 +54,7 @@ namespace Staff.Subway.Editor {
    } finally {EditorSceneManager.CloseScene(source,true);SceneManager.SetActiveScene(scene);}
    EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);
    File.WriteAllText("Library/StaffSubway/gameplay-install.txt","PASS: SampleScene Characters and AdventureCamera copied with input, animator, roster and character shaders intact; player-camera references remapped; collision volumes added. Source scene not saved.");
+   AbstractEnvironmentSetup.Install();
    Debug.Log("Subway gameplay installed.");
   }
  }

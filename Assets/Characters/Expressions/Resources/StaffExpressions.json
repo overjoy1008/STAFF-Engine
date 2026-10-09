@@ -1,0 +1,4537 @@
+{
+  "schemaVersion": 1,
+  "transitionSeconds": 0.45,
+  "characters": [
+    {
+      "modelId": "d59d66f505fe74bdb57b",
+      "character": "Citlali",
+      "title": "시틀라리",
+      "morphNames": [
+        "ω",
+        "あ",
+        "あ２",
+        "い",
+        "い１",
+        "い２",
+        "う",
+        "え",
+        "お",
+        "じと目",
+        "じと目2",
+        "てへぺろ",
+        "なごみ",
+        "なごみ右",
+        "なごみ左",
+        "にこり",
+        "にこり右",
+        "にこり左",
+        "にやり",
+        "にやり２",
+        "にやり３",
+        "びっくり",
+        "ぺろっ",
+        "まばたき",
+        "もぐもぐ",
+        "もぐもぐ口",
+        "ん",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "ジト目",
+        "ワ",
+        "上",
+        "上右",
+        "上左",
+        "下",
+        "下右",
+        "下左",
+        "下眼上",
+        "前",
+        "前右",
+        "前左",
+        "口下",
+        "口横広げ",
+        "口横狭め",
+        "口角上げ",
+        "口角下げ",
+        "困る",
+        "困る右",
+        "困る左",
+        "怒り",
+        "怒り右",
+        "怒り左",
+        "怒り目",
+        "恥ずかしい",
+        "恥ずかしい右",
+        "恥ずかしい左",
+        "悲しむ",
+        "眼角上",
+        "眼角下",
+        "笑い",
+        "舌広げ"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "怒り目",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "恥ずかしい",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "56d02ba3eaedaedf7b6c",
+      "character": "Lauma",
+      "title": "라우마",
+      "morphNames": [
+        "ω",
+        "あ",
+        "あ２",
+        "い",
+        "い１",
+        "い２",
+        "う",
+        "え",
+        "お",
+        "じと目",
+        "てへぺろ",
+        "なごみ",
+        "なごみ右",
+        "なごみ左",
+        "にこり",
+        "にこり右",
+        "にこり左",
+        "にやり",
+        "にやり２",
+        "にやり３",
+        "びっくり",
+        "ぺろっ",
+        "まばたき",
+        "ん",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "ジト目",
+        "ワ",
+        "上",
+        "上右",
+        "上左",
+        "下",
+        "下右",
+        "下左",
+        "下眼上",
+        "前",
+        "前右",
+        "前左",
+        "口横広げ",
+        "口横狭め",
+        "口角上げ",
+        "口角下げ",
+        "困る",
+        "困る右",
+        "困る左",
+        "怒り",
+        "怒り右",
+        "怒り左",
+        "怒り目",
+        "恥ずかしい",
+        "恥ずかしい右",
+        "恥ずかしい左",
+        "悲しむ",
+        "真面目",
+        "眼角上",
+        "眼角下",
+        "笑い",
+        "舌広げ"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "怒り目",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "恥ずかしい",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "ba13a62c462a61a6e1bb",
+      "character": "Aino",
+      "title": "아이노",
+      "morphNames": [
+        "ω",
+        "◆",
+        "あ",
+        "あ２",
+        "い",
+        "い１",
+        "い２",
+        "う",
+        "え",
+        "お",
+        "じと目",
+        "てへぺろ",
+        "なごみ",
+        "なごみ右",
+        "なごみ左",
+        "にこり",
+        "にこり右",
+        "にこり左",
+        "にやり",
+        "にやり２",
+        "にやり３",
+        "びっくり",
+        "ぺろっ",
+        "まばたき",
+        "もぐもぐ",
+        "ん",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "ジト目",
+        "ワ",
+        "上",
+        "上右",
+        "上左",
+        "下",
+        "下右",
+        "下左",
+        "下眼上",
+        "八重歯",
+        "前",
+        "前右",
+        "前左",
+        "口横広げ",
+        "口横狭め",
+        "口角上げ",
+        "口角下げ",
+        "困る",
+        "困る右",
+        "困る左",
+        "怒り",
+        "怒り右",
+        "怒り左",
+        "怒り目",
+        "恥ずかしい",
+        "恥ずかしい右",
+        "恥ずかしい左",
+        "悲しむ",
+        "真面目",
+        "眼角上",
+        "眼角下",
+        "笑い",
+        "舌広げ"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "怒り目",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "恥ずかしい",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "6278c2c13ca0bd9e164c",
+      "character": "Kafka_NoCoat",
+      "title": "카프카",
+      "morphNames": [
+        "□",
+        "□1",
+        "□2",
+        "□3",
+        "□4",
+        "□5",
+        "あ",
+        "あ２",
+        "い",
+        "い1",
+        "う",
+        "え",
+        "お",
+        "お1",
+        "じと目",
+        "なごみ",
+        "にこり",
+        "にやり２",
+        "にやり２1",
+        "はぅ",
+        "はちゅ目",
+        "びっくり",
+        "びっくり1",
+        "まばたき",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ワ",
+        "ワ1",
+        "ワ2",
+        "上",
+        "下",
+        "倒ω",
+        "口上",
+        "口下",
+        "口横広げ",
+        "口横缩げ",
+        "口角上げ",
+        "口角下げ",
+        "口角下げ0",
+        "口角下げ1",
+        "口角下げ2",
+        "口角下げ3",
+        "口角下げ4",
+        "口角下げ5",
+        "口角下げ6",
+        "口角下げ7",
+        "口角下げ8",
+        "口角下げ9",
+        "困る",
+        "怒り",
+        "恐ろしい子！",
+        "照れ",
+        "真面目",
+        "瞳小",
+        "瞳縦潰れ",
+        "笑い",
+        "笑い1",
+        "ｳｨﾝｸ２右",
+        "ｷﾘｯ",
+        "ｷﾘｯ1",
+        "ｷﾘｯ2",
+        "ｷﾘｯ3",
+        "ｷﾘｯ4",
+        "ｷﾘｯ5",
+        "ｷﾘｯ6",
+        "ｷﾘｯ7"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "ｷﾘｯ",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "73932b833cde1e105eb0",
+      "character": "TheHerta",
+      "title": "더 헤르타",
+      "morphNames": [
+        "11+",
+        "111",
+        "1111",
+        "∧",
+        "あ",
+        "い",
+        "い2",
+        "う",
+        "え",
+        "え2",
+        "え3",
+        "えー",
+        "お",
+        "お2",
+        "じと目",
+        "じと目2",
+        "なごみ",
+        "にやり",
+        "にやり２",
+        "にやり３",
+        "はぁと",
+        "はぅ",
+        "はちゅ目",
+        "びっくり",
+        "まばたき",
+        "やっかい",
+        "ん",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ムッ",
+        "ワ",
+        "ワ1",
+        "ワ2",
+        "上",
+        "下",
+        "倒ω",
+        "口",
+        "口上",
+        "口下",
+        "口横広げ",
+        "口横缩げ",
+        "口横缩げ2",
+        "口角上げ",
+        "口角下げ",
+        "口角下げ2",
+        "喜び",
+        "喜び2",
+        "困る",
+        "大口",
+        "心配する",
+        "心配する2",
+        "怒",
+        "怒った",
+        "怒った2",
+        "怒り",
+        "怒り右",
+        "悲しい",
+        "慈愛",
+        "慈愛2",
+        "手前",
+        "星目 ",
+        "汗",
+        "汗颜",
+        "涙",
+        "痛み",
+        "痛み2",
+        "痛み3",
+        "真面目",
+        "笑い",
+        "笑い2",
+        "脸红",
+        "驚かす",
+        "！",
+        "！！",
+        "？",
+        "ｳｨﾝｸ２右",
+        "ｷﾘｯ",
+        "ｷﾘｯ2"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しい",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "ｷﾘｯ",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "ムッ",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "681bec506be0c44a0189",
+      "character": "Ellen_OnCampus",
+      "title": "엘렌 조",
+      "morphNames": [
+        "□",
+        "□２",
+        "□３",
+        "▲",
+        "あ",
+        "い",
+        "い２",
+        "う",
+        "え",
+        "え２",
+        "お",
+        "お２",
+        "じと目",
+        "にこり",
+        "にやり",
+        "びっくり右",
+        "びっくり左",
+        "まばたき",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "ヘ",
+        "ワ",
+        "ワ２",
+        "上",
+        "上右",
+        "上左",
+        "下",
+        "下眼上",
+        "口上",
+        "口下",
+        "口右",
+        "口左",
+        "口横広げ",
+        "口横狭め",
+        "口角上げ",
+        "口角下げ",
+        "困る",
+        "怒り",
+        "怒り目",
+        "怒り目２",
+        "悲しむ",
+        "挑発する",
+        "真面目",
+        "眼角下",
+        "笑い"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "怒り目",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり左",
+              "weight": 75
+            },
+            {
+              "name": "びっくり右",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "2fdd1e96f95ca58739d9",
+      "character": "Burnice",
+      "title": "버니스",
+      "morphNames": [
+        "□",
+        "▲",
+        "あ",
+        "い",
+        "い２",
+        "う",
+        "え",
+        "え２",
+        "お",
+        "お２",
+        "じと目",
+        "にやり３",
+        "びっくり",
+        "びっくり右",
+        "びっくり左",
+        "まばたき",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "ワ",
+        "ワ２",
+        "上",
+        "下",
+        "下眼上",
+        "口上",
+        "口下",
+        "口右",
+        "口左",
+        "口横広げ",
+        "口横広げ右",
+        "口横広げ左",
+        "口横狭め",
+        "口横狭め右",
+        "口横狭め左",
+        "口角上げ",
+        "口角上げ右",
+        "口角上げ左",
+        "口角下げ",
+        "口角下げ右",
+        "口角下げ左",
+        "怒り目",
+        "怒り目２",
+        "悲しむ",
+        "眼角下",
+        "笑い"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り目",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "6c51ebc612d39ddef127",
+      "character": "Nicole",
+      "title": "니콜 데마라",
+      "morphNames": [
+        "□",
+        "▲",
+        "あ",
+        "あ２",
+        "い",
+        "い２",
+        "う",
+        "え",
+        "え２",
+        "お",
+        "お２",
+        "じと目",
+        "にこり",
+        "にやり",
+        "びっくり",
+        "びっくり右",
+        "びっくり左",
+        "まばたき",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "ワ",
+        "ワ２",
+        "上",
+        "下",
+        "下眼上",
+        "口上",
+        "口下",
+        "口右",
+        "口左",
+        "口横広げ",
+        "口横広げ右",
+        "口横広げ左",
+        "口横狭め",
+        "口横狭め右",
+        "口横狭め左",
+        "口角上げ",
+        "口角上げ右",
+        "口角上げ左",
+        "口角下げ",
+        "口角下げ右",
+        "口角下げ左",
+        "困る",
+        "大□",
+        "怒り",
+        "怒り目",
+        "怒り目２",
+        "悲しむ",
+        "真面目",
+        "眼角下",
+        "笑い"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "怒り目",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "e9dcfa6e210c91e24954",
+      "character": "JuFufu",
+      "title": "귤복복",
+      "morphNames": [
+        "あ",
+        "い",
+        "い２",
+        "う",
+        "え",
+        "え２",
+        "お",
+        "お２",
+        "じと目",
+        "にやり",
+        "にやり２",
+        "びっくり",
+        "びっくり右",
+        "びっくり左",
+        "まばたき",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "ワ",
+        "ワ２",
+        "ワ３",
+        "下眼上",
+        "口上",
+        "口下",
+        "口右",
+        "口左",
+        "口横広げ",
+        "口横狭め",
+        "口角上げ",
+        "口角下げ",
+        "怒り目",
+        "怒り目２",
+        "悲しむ",
+        "眼角下",
+        "笑い"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り目",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しむ",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "35f471fa80921dc7b103",
+      "character": "Iuno",
+      "title": "유노",
+      "morphNames": [
+        "#",
+        "#2",
+        "Down",
+        "Left",
+        "Right",
+        "Up",
+        "ZZZ",
+        "……",
+        "∧",
+        "□",
+        "あ",
+        "ああ",
+        "あ２",
+        "い",
+        "い２",
+        "う",
+        "う２",
+        "え",
+        "お",
+        "お２",
+        "じと目",
+        "じと目右",
+        "じと目左",
+        "たれ目",
+        "たれ目右",
+        "たれ目左",
+        "なんで",
+        "にこり",
+        "にこり右",
+        "にこり左",
+        "にこり２",
+        "にこり２右",
+        "にこり２左",
+        "はぁと",
+        "はぁと2",
+        "はちゅ",
+        "びっくり",
+        "びっくり右",
+        "びっくり左",
+        "まばたき",
+        "ん",
+        "ん２",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "ウィンク２右",
+        "カメラ目",
+        "キリッ",
+        "キリッ右",
+        "キリッ左",
+        "ハイライト消",
+        "ハイライト消右",
+        "ハイライト消左",
+        "ワ",
+        "上",
+        "上右",
+        "上左",
+        "下",
+        "下右",
+        "下左",
+        "入",
+        "入右",
+        "入左",
+        "口上",
+        "口下",
+        "口右",
+        "口左",
+        "口横広げ2右",
+        "口横広げ2左",
+        "口横広げ右",
+        "口横広げ左",
+        "口横縮小",
+        "口角上げ右",
+        "口角上げ左",
+        "口角下げ右",
+        "口角下げ左",
+        "口角前",
+        "唇中",
+        "困る",
+        "困る右",
+        "困る左",
+        "平行",
+        "平行右",
+        "平行左",
+        "怒り",
+        "怒り右",
+        "怒り左",
+        "恐ろしい子！",
+        "恐ろしい子！右",
+        "恐ろしい子！左",
+        "悲しい目",
+        "悲しい目右",
+        "悲しい目左",
+        "惊",
+        "星目",
+        "星目2",
+        "汗",
+        "涙",
+        "照れ",
+        "照れ2",
+        "瞳小",
+        "瞳小右",
+        "瞳小左",
+        "笑い",
+        "笑い目",
+        "笑い目右",
+        "笑い目左",
+        "鼻上",
+        "鼻下",
+        "齶上",
+        "齶前",
+        "齶右",
+        "齶左",
+        "！",
+        "？"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ左",
+              "weight": 65
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ左",
+              "weight": 65
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ左",
+              "weight": 70
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ左",
+              "weight": 70
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ左",
+              "weight": 70
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 70
+            },
+            {
+              "name": "ワ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ左",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ左",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "悲しい目",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ左",
+              "weight": 60
+            },
+            {
+              "name": "口角下げ右",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "キリッ",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ左",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ右",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ左",
+              "weight": 25
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "う",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ左",
+              "weight": 30
+            },
+            {
+              "name": "口角下げ右",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ左",
+              "weight": 30
+            },
+            {
+              "name": "口角下げ右",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ左",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ右",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelId": "e03ea80abe958e16b6fb",
+      "character": "Aemeath",
+      "title": "에이메스",
+      "morphNames": [
+        "(○｀ε´○)",
+        "C_Down_Face",
+        "C_Up_Face",
+        "C_ZL_Face",
+        "C_ZR_Face",
+        "L_B",
+        "L_B_U",
+        "L_F",
+        "L_F_U",
+        "L_P",
+        "L_Up",
+        "L_Up_U",
+        "M",
+        "R_B",
+        "R_B_U",
+        "R_F",
+        "R_F_U",
+        "R_P",
+        "R_Up",
+        "R_Up_U",
+        "Scda_Body01",
+        "down",
+        "emo3上",
+        "emo3右",
+        "emo3左",
+        "left",
+        "lip back2",
+        "lip thick",
+        "lip thick2",
+        "lip thin",
+        "lip thin3",
+        "right",
+        "up",
+        "д",
+        "д2",
+        "∧",
+        "∧2",
+        "あ",
+        "あ3",
+        "あ4",
+        "あ２",
+        "い",
+        "い2",
+        "い3",
+        "い4",
+        "いい",
+        "いい4",
+        "いい5",
+        "いい6",
+        "う",
+        "う2",
+        "う3",
+        "え",
+        "お",
+        "お2",
+        "ごめん～",
+        "じと目",
+        "じと目2",
+        "じと目L",
+        "じと目R",
+        "てへぺろ",
+        "なごみ",
+        "なごみL",
+        "なごみR",
+        "にこり",
+        "にこり2",
+        "にこりL",
+        "にこりR",
+        "にやり",
+        "はぁと",
+        "はぅ",
+        "はちゅ目",
+        "びっくり",
+        "ぺろっ",
+        "まばたき",
+        "ウィンク",
+        "ウィンク右",
+        "ウィンク２",
+        "上",
+        "上L",
+        "上R",
+        "下",
+        "下L",
+        "下R",
+        "中",
+        "口",
+        "口2",
+        "口上",
+        "口下",
+        "口右",
+        "口右斜",
+        "口左",
+        "口左斜",
+        "口後",
+        "口横広げ",
+        "口横狭め",
+        "口角上げ",
+        "口角下げ",
+        "右口横広げ",
+        "右口角上げ",
+        "右口角上げ2",
+        "右口角下げ",
+        "困る",
+        "困るL",
+        "困るR",
+        "垂れ目",
+        "垂れ目３",
+        "左口横広げ",
+        "左口角上げ",
+        "左口角上げ2",
+        "左口角下げ",
+        "平口",
+        "平行",
+        "怒り",
+        "怒りL",
+        "怒りR",
+        "怪訝右",
+        "怪訝左",
+        "星目",
+        "歯上げ",
+        "歯下げ",
+        "照れ",
+        "照れ2",
+        "眉没",
+        "真面目",
+        "真面目L",
+        "真面目R",
+        "瞳小",
+        "瞳小L",
+        "瞳小R",
+        "笑い",
+        "笑い目",
+        "組合_O_0?",
+        "組合_ee",
+        "組合_ei~",
+        "組合_en?",
+        "組合_heihei",
+        "組合_kaixin",
+        "組合_kaixin2",
+        "組合_mumu~",
+        "組合_uu",
+        "舌上",
+        "舌下",
+        "髮調整",
+        "鼻上",
+        "鼻下",
+        "ｳｨﾝｸ２右",
+        "ｷﾘｯ"
+      ],
+      "presets": [
+        {
+          "id": "basic",
+          "title": "기본",
+          "blush": 0,
+          "weights": []
+        },
+        {
+          "id": "smile",
+          "title": "미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "smile-closed",
+          "title": "눈 감은 미소",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 65
+            },
+            {
+              "name": "笑い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "joy",
+          "title": "기쁨",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "あ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy",
+          "title": "활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 75
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "あ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "happy-closed",
+          "title": "눈 감고 활짝 웃기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "笑い",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 70
+            },
+            {
+              "name": "あ",
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "wink-left",
+          "title": "윙크 · 왼쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "wink-right",
+          "title": "윙크 · 오른쪽",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "ウィンク右",
+              "weight": 100
+            },
+            {
+              "name": "口角上げ",
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "sad",
+          "title": "슬픔",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 75
+            },
+            {
+              "name": "口角下げ",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "angry",
+          "title": "화남",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "怒り",
+              "weight": 65
+            },
+            {
+              "name": "ｷﾘｯ",
+              "weight": 70
+            },
+            {
+              "name": "口角下げ",
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "shy",
+          "title": "부끄러움",
+          "blush": 75,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 40
+            },
+            {
+              "name": "口角上げ",
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "pout",
+          "title": "삐짐",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 65
+            },
+            {
+              "name": "(○｀ε´○)",
+              "weight": 45
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "surprised",
+          "title": "놀람",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "びっくり",
+              "weight": 75
+            },
+            {
+              "name": "お",
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "worried",
+          "title": "걱정",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "困る",
+              "weight": 65
+            },
+            {
+              "name": "口角下げ",
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "sleepy",
+          "title": "졸림",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 80
+            },
+            {
+              "name": "まばたき",
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "smug",
+          "title": "장난스러움",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "じと目",
+              "weight": 30
+            },
+            {
+              "name": "口角上げ",
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "kiss",
+          "title": "뽀뽀",
+          "blush": 25,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 70
+            },
+            {
+              "name": "まばたき",
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "closed",
+          "title": "눈 감기",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "まばたき",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "a",
+          "title": "아 · A",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "あ",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "i",
+          "title": "이 · I",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "い",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "u",
+          "title": "우 · U",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "う",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "e",
+          "title": "에 · E",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "え",
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "o",
+          "title": "오 · O",
+          "blush": 0,
+          "weights": [
+            {
+              "name": "お",
+              "weight": 100
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

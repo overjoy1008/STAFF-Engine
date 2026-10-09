@@ -79,7 +79,11 @@ namespace Staff.Characters
             if (togglePhysics != null && togglePhysics.WasPressedThisFrame()) TogglePhysics();
             if (toggleToon != null && toggleToon.WasPressedThisFrame()) ToggleToon();
             if (invertMonochrome != null && invertMonochrome.WasPressedThisFrame())
-                Object.FindFirstObjectByType<MonochromeMode>()?.Toggle();
+                {
+                var environment=Object.FindFirstObjectByType<Staff.Subway.AbstractEnvironment>();
+                if(environment)environment.CycleMode();
+                else Object.FindFirstObjectByType<MonochromeMode>()?.Toggle();
+                }
             if (toggleEasterEgg != null && toggleEasterEgg.WasPressedThisFrame()) ToggleEasterEgg();
         }
         public void ToggleToon()

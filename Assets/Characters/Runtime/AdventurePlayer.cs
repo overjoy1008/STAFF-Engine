@@ -123,6 +123,11 @@ namespace Staff.Characters
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        public bool HandleResetInput(bool accept)
+        {
+            if (!accept || Keyboard.current == null || !Keyboard.current.rKey.wasPressedThisFrame) return false;
+            Respawn(); return true;
+        }
         void Update()
         {
             if (!actions) return;
@@ -130,6 +135,7 @@ namespace Staff.Characters
             else if (!InputBlocked && capture.WasPressedThisFrame() && (!followCamera || !followCamera.IsPointerOverControls)) CaptureInput();
             // Escape/unfocused Game view stops steering, but gravity keeps working.
             bool accept = !InputBlocked && inputCaptured && Application.isFocused;
+            if (HandleResetInput(accept)) return;
             if (followCamera) followCamera.UpdateCursor(accept);
             if (accept && followCamera)
                 followCamera.AddLook(lookMouse.ReadValue<Vector2>(), lookStick.ReadValue<Vector2>(),
