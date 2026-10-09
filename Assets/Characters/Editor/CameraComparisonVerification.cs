@@ -40,18 +40,10 @@ namespace Staff.Characters.Editor
             var cam=Camera.main; var c=cam.GetComponent<AdventureCamera>();var d=p.GetComponent<AdventureDance>();
             p.enabled=false;var switcher=p.GetComponent<CharacterSwitcher>();switcher.enabled=false;
             p.Respawn();for(int i=0;i<60;i++){p.Simulate(new AdventurePlayer.Command(),1f/60);yield return null;}
-            Check(c.Version==AdventureCamera.CameraVersion.Wafflus,"Cinemachine starts by default");
-            c.SetVersion(AdventureCamera.CameraVersion.Current);
-            var shortcut=(InputAction)typeof(AdventureCamera).GetField("toggleVersion",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(c);
-            Check(shortcut.enabled&&shortcut.bindings[0].path=="<Keyboard>/f6","F6 shortcut enabled");
-            c.AddLook(new Vector2(100,40),Vector2.zero,120,false,1f/60);c.Simulate(1f/60);
-            float yaw=c.Yaw,pitch=c.Pitch,distance=c.Distance,fov=cam.fieldOfView;
-            Check(d.StartDance(0),"Start dance before camera comparison");
-            Capture(cam,"current.png");
-            c.ToggleVersion();yield return null;
-            Capture(cam,"wafflus.png");
-            Check(c.Version==AdventureCamera.CameraVersion.Wafflus,"Toggle activates Wafflus");
-            Check(d.IsDancing,"Switch preserves dance");
+            Check(c.WafflusRig && c.WafflusRig.VirtualCamera.enabled,"Cinemachine starts as the only camera");
+            Check(typeof(AdventureCamera).GetMethod("ToggleVersion")==null,"Camera switching removed");
+            Check(d.StartDance(0),"Start dance with Cinemachine");
+            Capture(cam,"cinemachine.png");
             Check(cam.GetComponent<CinemachineBrain>()&&c.WafflusRig.Pov&&c.WafflusRig.Body,"Actual Cinemachine pipeline is active");
             Check(Mathf.Abs(cam.fieldOfView-60)<.01f,"Wafflus FOV is 60");
             Check(Mathf.Abs(c.WafflusRig.ZoomTarget-6)<.01f,"Wafflus initial distance is 6");
@@ -80,7 +72,7 @@ namespace Staff.Characters.Editor
             var wall=GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall.name="Camera collision verification wall";
             var rotation=Quaternion.Euler(c.Pitch,c.Yaw,0);
-            var origin=p.transform.position+Vector3.up*1.25f;
+            var origin=c.FocusPoint;
             wall.transform.SetPositionAndRotation(origin+rotation*Vector3.back*3,rotation);
             wall.transform.localScale=new Vector3(4,4,.3f);Physics.SyncTransforms();
             for(int i=0;i<10;i++)yield return null;
@@ -88,37 +80,34 @@ namespace Staff.Characters.Editor
             UnityEngine.Object.DestroyImmediate(wall);
             deadline=Time.time+2;while(Time.time<deadline)yield return null;
             Check(c.Distance>5.5f,"Cinemachine restores distance after wall clears");
+            var originalRig=c.WafflusRig;
             float wyaw=c.Yaw,wpitch=c.Pitch;
-            c.SetVersion(AdventureCamera.CameraVersion.Current);yield return null;
-            Check(c.Version==AdventureCamera.CameraVersion.Current,"Toggle restores current camera");
-            Check(Mathf.Abs(c.Yaw-yaw)<.01f&&Mathf.Abs(c.Pitch-pitch)<.01f&&Mathf.Abs(c.Distance-distance)<.1f,"Current orbit and zoom are restored");
-            Check(Mathf.Abs(cam.fieldOfView-fov)<.01f,"Current FOV restored");
-            Check(!cam.GetComponent<CinemachineBrain>().enabled,"Current camera has no competing Brain");
-            Check(d.IsDancing,"Return toggle preserves dance");
-            c.ToggleVersion();yield return null;
-            Check(Mathf.Abs(Mathf.DeltaAngle(wyaw,c.Yaw))<.01f&&Mathf.Abs(wpitch-c.Pitch)<.01f,"Wafflus view is restored");
+            c.enabled=false;yield return null;
+            Check(!cam.GetComponent<CinemachineBrain>().enabled,"Disabling camera disables Brain");
+            c.enabled=true;yield return null;
+            Check(c.WafflusRig==originalRig && cam.GetComponents<CinemachineBrain>().Length==1,"Reenable reuses one Cinemachine rig");
+            Check(Mathf.Abs(Mathf.DeltaAngle(wyaw,c.Yaw))<.01f&&Mathf.Abs(wpitch-c.Pitch)<.01f,"Reenable preserves view");
             p.Simulate(new AdventurePlayer.Command{move=Vector2.up},1f/60);
             Check(!d.IsDancing,"Movement still cancels dance in Wafflus mode");
             p.Respawn();for(int i=0;i<60;i++){p.Simulate(new AdventurePlayer.Command(),1f/60);yield return null;}
             Check(d.StartDance(1),"Can dance after settling");
             p.Simulate(new AdventurePlayer.Command{jump=true},1f/60);
             Check(!d.IsDancing&&!p.Grounded,"Jump still cancels dance in Wafflus mode");
-            c.SetVersion(AdventureCamera.CameraVersion.Current);
             InputSystem.settings.backgroundBehavior=InputSettings.BackgroundBehavior.IgnoreFocus;
             InputSystem.settings.editorInputBehaviorInPlayMode=InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
             var keyboard=InputSystem.AddDevice<Keyboard>();
             void Keys(params Key[] keys)
             {InputSystem.QueueStateEvent(keyboard,new KeyboardState(keys));typeof(InputSystem).GetMethod("Update",BindingFlags.NonPublic|BindingFlags.Static,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Dynamic});keyboard.MakeCurrent();}
-            foreach(var mode in new[]{AdventureCamera.CameraVersion.Wafflus,AdventureCamera.CameraVersion.Current})
+            const string mode="Cinemachine";
             {
-                c.SetVersion(mode);p.Respawn();
+                p.Respawn();
                 for(int i=0;i<60;i++){p.Simulate(new AdventurePlayer.Command(),1f/60);yield return null;}
                 Check(d.StartDance(0),"Dance starts for cursor hold / "+mode);
                 c.AddLook(new Vector2(40,10),Vector2.zero,0,false,Time.deltaTime);yield return null;
                 Keys(Key.LeftAlt,Key.RightAlt);c.CursorHold.Update(true,true);
                 Check(Cursor.visible&&Cursor.lockState==CursorLockMode.None,"Option releases cursor / "+mode);
                 float beforeYaw=c.Yaw,beforePitch=c.Pitch;
-                if(mode==AdventureCamera.CameraVersion.Wafflus)c.NotifyMovement(new AdventurePlayer.Command{move=Vector2.right},true,5);
+                c.NotifyMovement(new AdventurePlayer.Command{move=Vector2.right},true,5);
                 for(int i=0;i<10;i++){Keys(Key.LeftAlt,Key.RightAlt);c.CursorHold.Update(c.CursorHold.OptionHeld,true);c.AddLook(new Vector2(300,200),Vector2.one,0,true,Time.deltaTime);yield return null;}
                 Check(Mathf.Abs(Mathf.DeltaAngle(beforeYaw,c.Yaw))<.01f&&Mathf.Abs(c.Pitch-beforePitch)<.01f,"Option freezes look, momentum and recenter / "+mode+" before="+beforeYaw+","+beforePitch+" after="+c.Yaw+","+c.Pitch+" held="+c.CursorHold.OptionHeld);
                 Check(d.IsDancing,"Option preserves dancing / "+mode);
@@ -128,19 +117,15 @@ namespace Staff.Characters.Editor
                 Check(!Cursor.visible,"Option release requests capture / "+mode);
                 c.AddLook(new Vector2(50000,-50000),Vector2.zero,0,false,Time.deltaTime);
                 Check(Mathf.Abs(Mathf.DeltaAngle(beforeYaw,c.Yaw))<.01f&&Mathf.Abs(c.Pitch-beforePitch)<.01f,"Relock delta cannot jump camera / "+mode);
-                if(mode==AdventureCamera.CameraVersion.Wafflus)c.NotifyMovement(new AdventurePlayer.Command{move=Vector2.up},true,5);
+                c.NotifyMovement(new AdventurePlayer.Command{move=Vector2.up},true,5);
                 yield return null;
                 for(int i=0;i<10;i++){Keys();c.AddLook(new Vector2(20,0),Vector2.zero,0,false,Time.deltaTime);yield return null;}
                 Check(Mathf.Abs(Mathf.DeltaAngle(beforeYaw,c.Yaw))>.1f,"Relative mouse continues from preserved view / "+mode+" before="+beforeYaw+" after="+c.Yaw+" paused="+c.CursorHold.LookPaused+" held="+c.CursorHold.OptionHeld);
                 Keys(Key.LeftAlt);c.CursorHold.Update(true,true);Keys();c.CursorHold.Update(false,false);
                 Check(Cursor.visible&&Cursor.lockState==CursorLockMode.None,"Uncaptured input does not relock / "+mode);
-                c.ToggleVersion();Check(c.Version!=mode,"F6 switches to the other remaining mode / "+mode);
-                c.ToggleVersion();Check(c.Version==mode,"F6 cycles back with only two modes / "+mode);
             }
             InputSystem.RemoveDevice(keyboard);
-            Check(Enum.GetValues(typeof(AdventureCamera.CameraVersion)).Length==2,"Only two camera modes remain");
             Check(Type.GetType("Staff.Characters.MouseMovementCamera, Assembly-CSharp")==null,"MouseMovement implementation removed");
-            c.SetVersion(AdventureCamera.CameraVersion.Current);
             Directory.CreateDirectory("Library/StaffCamera");
             File.WriteAllText("Library/StaffCamera/result.json","{\"pass\":true,\"checks\":"+checks+",\"cinemachine\":\"2.8.4\"}");
             EditorApplication.Exit(0);yield break;

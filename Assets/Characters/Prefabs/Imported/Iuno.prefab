@@ -225,3 +225,5 @@ MonoBehaviour:
   PhysicsEnabled: 1
   MotionStrength: 0.7
   MotionSmoothTime: 0.05
+  RecoveryStrength: 0.35
+  RecoveryTime: 0.5

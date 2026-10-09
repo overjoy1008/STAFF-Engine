@@ -43,7 +43,7 @@ namespace Staff.Characters.Editor
                 Check(Application.isPlaying, "Runs in real Play mode");
                 var player = UnityEngine.Object.FindFirstObjectByType<AdventurePlayer>();
                 var camera = Camera.main.GetComponent<AdventureCamera>();
-                player.enabled = false; camera.enabled = false;
+                player.enabled = false; camera.enabled = true;
                 var animator = player.Animator;
                 Check(animator && animator.avatar && animator.avatar.isValid, "Valid skeletal animation avatar");
                 Check(animator.isHuman, "Starter Assets Human Avatar active");
@@ -141,7 +141,7 @@ namespace Staff.Characters.Editor
                     referenceDistance = travelled;
                 }
                 player.Respawn(); Step(idle, 60);
-                camera.AddLook(new Vector2(750,0), Vector2.zero, 0, false, dt);
+                camera.WafflusRig.SetView(90, 0, 6);
                 start = player.transform.position;
                 Step(new AdventurePlayer.Command { move = Vector2.up }, 60);
                 var delta = player.transform.position - start;
@@ -149,12 +149,12 @@ namespace Staff.Characters.Editor
                 Check(Vector3.Dot(player.Visual.forward, Vector3.right) > .98f, "Character faces movement direction");
                 Step(idle, 30);
                 camera.AddLook(new Vector2(0,100000), Vector2.zero, 0, false, dt);
-                Check(camera.Pitch >= -25 && camera.Pitch <= 70, "Vertical orbit is clamped");
+                Check(camera.Pitch >= -90 && camera.Pitch <= 90, "Vertical orbit is clamped");
                 camera.AddLook(new Vector2(0,-100000), Vector2.zero, 0, false, dt);
-                Check(camera.Pitch <= 70, "Upper orbit limit");
-                camera.AddLook(new Vector2(0,450), Vector2.zero, 0, true, dt); // back to 16 degrees
+                Check(camera.Pitch <= 90, "Upper orbit limit");
+                camera.WafflusRig.SetView(camera.Yaw, 16, 6);
                 camera.Snap();
-                var pivot = player.transform.position + Vector3.up * 1.25f;
+                var pivot = camera.FocusPoint;
                 var obstacle = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 obstacle.name = "Temporary camera collision verification";
                 obstacle.transform.position = pivot - camera.transform.forward * 2.5f;

@@ -34,7 +34,7 @@ Play starts with the same character roster, humanoid animator, AdventurePlayer i
 - WASD: move; Left Ctrl: walk; Space: jump.
 - Shift or right mouse button: dash.
 - Mouse: orbit; wheel: zoom; middle mouse button: recenter.
-- C: character picker; H: character shader; F6: camera version; 1–8: existing dances.
+- C: character picker; H: character shader; 1–8: existing dances.
 - I: Real → Abstract → Imaginary; O: train doors open / close.
 - Escape: release cursor; left click: capture again; Alt: existing cursor hold.
 

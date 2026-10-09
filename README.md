@@ -273,5 +273,5 @@ Unity의 **Project** 창에서 `Assets/Scenes/STAFF_Subway_Reference.unity`를 �
 | Shift 또는 마우스 우클릭 | 대시 |
 | 마우스 / 휠 / 가운데 버튼 | 시점 회전 / 줌 / 시점 정렬 |
 | C | 캐릭터 선택 |
-| H / F6 | 캐릭터 셰이더 / 카메라 방식 전환 |
+| H | 캐릭터 셰이더 전환 |
 | Esc / 마우스 좌클릭 | 커서 해제 / 다시 잡기 |
