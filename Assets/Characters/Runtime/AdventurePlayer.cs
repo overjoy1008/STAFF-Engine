@@ -136,7 +136,7 @@ namespace Staff.Characters
             // Escape/unfocused Game view stops steering, but gravity keeps working.
             bool accept = !InputBlocked && inputCaptured && Application.isFocused;
             if (HandleResetInput(accept)) return;
-            if (followCamera) followCamera.UpdateCursor(accept);
+            if (followCamera) { followCamera.UpdateCursor(accept); followCamera.HandlePerspectiveInput(accept); }
             if (accept && followCamera)
                 followCamera.AddLook(lookMouse.ReadValue<Vector2>(), lookStick.ReadValue<Vector2>(),
                     zoom.ReadValue<float>(), recenter.WasPressedThisFrame(), Time.deltaTime);
@@ -196,11 +196,21 @@ namespace Staff.Characters
                     direction * (command.walk ? walkSpeed : runSpeed), acceleration * dt);
             if (visual)
             {
-                Vector3 heading = dashing ? dashDirection : direction;
+                bool firstPerson = followCamera && followCamera.IsFirstPerson;
+                float bodyYaw = visual.eulerAngles.y;
+                if (firstPerson && followCamera.Mode != AdventureCamera.FirstPersonMode.Classic && input.sqrMagnitude < .001f && !dashing)
+                {
+                    float turn = Mathf.DeltaAngle(bodyYaw, yaw);
+                    // Idle free-look uses the neck first. Only turn the body once
+                    // the comfortable head-turn range has been exceeded.
+                    bodyYaw += Mathf.Sign(turn) * Mathf.Max(0, Mathf.Abs(turn) - 65);
+                }
+                else bodyYaw = yaw;
+                Vector3 heading = firstPerson ? Quaternion.Euler(0, bodyYaw, 0) * Vector3.forward : dashing ? dashDirection : direction;
                 if (heading.sqrMagnitude < .001f) heading = Vector3.ProjectOnPlane(visual.forward, Vector3.up);
                 if (heading.sqrMagnitude > .001f)
                     visual.rotation = Quaternion.Slerp(visual.rotation,
-                        Quaternion.LookRotation(heading) * Quaternion.Euler(dashing ? dashLean : 0, 0, 0),
+                        Quaternion.LookRotation(heading) * Quaternion.Euler(dashing && !firstPerson ? dashLean : 0, 0, 0),
                         1 - Mathf.Exp(-turnSharpness * dt));
             }
             verticalVelocity = Mathf.Max(verticalVelocity - gravity * dt, -40);
