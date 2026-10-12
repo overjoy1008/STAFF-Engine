@@ -1,0 +1,157 @@
+{
+  "blender": "5.1.2",
+  "buildHash": "ec6e62d40fa9",
+  "colorSpace": "Linear Rec.709",
+  "viewTransform": "AgX",
+  "look": "None",
+  "lutSize": 48,
+  "lutMinEV": -12,
+  "lutMaxEV": 16,
+  "sunRotation": 75,
+  "sunSize": 0.545,
+  "air": 1,
+  "aerosols": 1,
+  "ozone": 1,
+  "samples": 8,
+  "records": [
+    {
+      "name": "Daylight_Single",
+      "model": "SINGLE_SCATTERING",
+      "elevation": 35,
+      "exposure": -3,
+      "width": 2048,
+      "height": 1024,
+      "peakPixel": [
+        711,
+        1450
+      ],
+      "maxRadiance": 2383779.0,
+      "ambientSky": [
+        1.0269419905207142,
+        1.4880032984463203,
+        2.5053245962375956
+      ],
+      "ambientHorizon": [
+        5.670321380714418,
+        6.35644925793531,
+        6.213500276468039
+      ]
+    },
+    {
+      "name": "Daylight_Multiple",
+      "model": "MULTIPLE_SCATTERING",
+      "elevation": 35,
+      "exposure": -3,
+      "width": 2048,
+      "height": 1024,
+      "peakPixel": [
+        711,
+        1450
+      ],
+      "maxRadiance": 2542094.25,
+      "ambientSky": [
+        1.1853700935342293,
+        2.297971531369428,
+        4.5910435830498475
+      ],
+      "ambientHorizon": [
+        9.26993802381785,
+        12.15386664518458,
+        14.50775384482245
+      ]
+    },
+    {
+      "name": "GoldenHour_Single",
+      "model": "SINGLE_SCATTERING",
+      "elevation": 5,
+      "exposure": -2,
+      "width": 2048,
+      "height": 1024,
+      "peakPixel": [
+        540,
+        1450
+      ],
+      "maxRadiance": 1175854.375,
+      "ambientSky": [
+        0.39258410978612274,
+        0.6003480794190759,
+        0.8465887888911089
+      ],
+      "ambientHorizon": [
+        5.088945631741614,
+        4.5457366195639,
+        2.342221622431738
+      ]
+    },
+    {
+      "name": "GoldenHour_Multiple",
+      "model": "MULTIPLE_SCATTERING",
+      "elevation": 5,
+      "exposure": -2,
+      "width": 2048,
+      "height": 1024,
+      "peakPixel": [
+        540,
+        1450
+      ],
+      "maxRadiance": 1165170.5,
+      "ambientSky": [
+        0.4342216020170315,
+        0.764999278901974,
+        1.4067822662065737
+      ],
+      "ambientHorizon": [
+        6.455414497188813,
+        6.138797722060059,
+        4.507141715662043
+      ]
+    },
+    {
+      "name": "Twilight_Single",
+      "model": "SINGLE_SCATTERING",
+      "elevation": -4,
+      "exposure": 0,
+      "width": 2048,
+      "height": 1024,
+      "peakPixel": [
+        537,
+        1450
+      ],
+      "maxRadiance": 0.2759774327278137,
+      "ambientSky": [
+        0.008577048228081122,
+        0.01057841094016112,
+        0.016685987290437458
+      ],
+      "ambientHorizon": [
+        0.051999769904293905,
+        0.04247420419035558,
+        0.028128359716792825
+      ]
+    },
+    {
+      "name": "Twilight_Multiple",
+      "model": "MULTIPLE_SCATTERING",
+      "elevation": -4,
+      "exposure": 0,
+      "width": 2048,
+      "height": 1024,
+      "peakPixel": [
+        527,
+        1449
+      ],
+      "maxRadiance": 0.4129708707332611,
+      "ambientSky": [
+        0.007749703136548816,
+        0.01580027701721719,
+        0.06011691787837374
+      ],
+      "ambientHorizon": [
+        0.07399587711804467,
+        0.09425634594630927,
+        0.19058984062909645
+      ]
+    }
+  ],
+  "note": "Native pre-rendered skies, not runtime scattering. Gallery lighting is an approximation."
+}

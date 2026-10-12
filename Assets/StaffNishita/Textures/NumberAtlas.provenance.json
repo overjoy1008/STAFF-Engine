@@ -1,0 +1,9 @@
+{
+  "characters": "0123456789-.:",
+  "source": "symbol.tex",
+  "renderer": "actual LaTeX via STAFF Engine/Tools/MathTypography/render_latex.py",
+  "cellWidth": 81,
+  "height": 94,
+  "sha256": "5b9c8eaf4205fbfee13f82bbbb294f9a86b5be1c9fb1d960beefdb647c19406d",
+  "latexSource": "NumberAtlas.tex"
+}

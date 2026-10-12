@@ -1,0 +1,17 @@
+#pragma kernel GatherLighting
+#include "Common.hlsl"
+float _Horizon;
+[numthreads(1,1,1)] void GatherLighting(uint3 id:SV_DispatchThreadID){
+ float3 zenith=0,horizon=0;
+ for(int i=0;i<8;i++){
+  int x=(i*_Width)/8;
+  zenith+=_Sky[int2(x,_Height-2)].xyz*32;
+  horizon+=_Sky[int2(x,_Height/2+max(_Height/16,1))].xyz*32;
+ }
+ _SunData[2]=float4(XYZToRGB(zenith),1);
+ _SunData[3]=float4(XYZToRGB(horizon),1);
+ float radius=_Diameter*.5;
+ float visibility=saturate((_Elevation-_Horizon+radius)/max(_Diameter,1e-5));
+ float solidAngle=4*M_PI_F*sqr(sin(radius*.5));
+ _SunData[4]=float4(XYZToRGB((_SunData[0].xyz+_SunData[1].xyz)*128)*solidAngle*visibility,1);
+}

@@ -1,0 +1,71 @@
+NISHITA / LIVE SKY STUDY
+
+Open Scenes/Nishita Comparison.unity and press Play. Compare displays Single
+Scattering left and Multiple Scattering right. Parameters opens the live controls.
+The Solar day timeline, Play/Pause, and day duration control a continuous cycle.
+Right-drag looks around; scroll zooms; Face sun points at the current solar disc.
+Presets select solar times and pause playback. Reset atmosphere resets densities,
+altitude, disc radius, intensity, brightness and exposure.
+
+This version ports the native Blender v5.1.2 scattering code to GPU compute HLSL.
+Single Scattering is the renamed classic Nishita model. Multiple Scattering uses
+Fernando Garcia Linan's spectral approximation as integrated into Blender.
+https://github.com/blender/blender/tree/v5.1.2/intern/sky/source
+https://developer.blender.org/docs/release_notes/5.0/rendering/
+
+INPUTS
+Air density, aerosol/dust density, ozone density: multipliers, default 1, range 0-1000.
+Altitude: meters above sea level, input 0-100000; upstream model limits are
+59999 meters for Single and 99999 meters for Multiple.
+Sun disc: visibility. Sun radius: angular radius in degrees, default 0.2725.
+Blender's Sun Size is the angular DIAMETER, twice this radius (default 0.545).
+Sun intensity: solar-disc radiance multiplier. Brightness: entire sky/world
+radiance multiplier. Exposure: shared camera exposure in stops, before AgX.
+Manual sun elevation: degrees above horizon. Rotation: azimuth degrees, clockwise
+from Unity +Z toward +X. Disable Solar day to edit these angles directly.
+
+Solar day uses local SOLAR time, not a timezone/civil clock. Latitude, solar
+ declination and north rotation define the path; the default declination is the
+ equinox. Noon is upper culmination. Sunrise/sunset depend on latitude/declination.
+Midnight wraps continuously. A full day defaults to 240 seconds. Declination is
+manual; no calendar, longitude, timezone, atmospheric refraction, Moon or stars.
+Night can therefore be black. Sun direction is evaluated each frame; the sky is
+recomputed at about 15 Hz by default with interpolation between successive LUTs.
+The GPU quality settings are available on Lighting / NishitaAtmosphere.
+
+FIDELITY AND VALIDATION
+Single retains the native 21 wavelengths, 32 ray steps and 8 optical-depth samples.
+Multiple retains the native four-wavelength fit and 64 ray steps. The default
+sky LUT is 256 x 128, with a 256 x 64 transmittance LUT for Multiple. This is a
+runtime sampling approximation, not a pixel-identical Blender render. Native
+multiple scattering itself uses an analytical fit for Earth's atmosphere.
+AgX uses a 48-cubed sampled Blender AgX/None/sRGB transform with explicit
+trilinear interpolation. Solar discs use native limb darkening.
+
+Validation on Unity 6000.3.11f1 / Metal compared 16 daylight directions against
+native Blender EXRs: mean RGB relative error 0.95% Single, 4.03% Multiple. Density,
+ozone, height and elevation changes affected both models; solar radius, intensity,
+brightness, rotation, 1441 solar minute directions, seven rendered day/night times,
+and extreme inputs were checked. These sampled checks are not a global error bound.
+
+Gallery directional and ambient lighting are illustrative approximations, not
+Cycles path tracing or calibrated dynamic IBL. Both sky cameras share parameters.
+The six original EXRs are retained as reference/fallback assets, with their exact
+native Blender settings in Textures/BakeManifest.json. Without compute support,
+only these fixed fallback panoramas are available, not a live atmosphere.
+
+SOURCE AND LICENSES
+The accompanying STAFF workspace Source/Blender-5.1.2 contains unmodified source
+files and SHA-256 hashes. Source/port_blender.py generates the two compute ports.
+Single: Blender Authors, Apache-2.0.
+Multiple: Fernando Garcia Linan and Blender Authors, MIT; the incorporated
+ray/sun helpers from sky_math.h are Blender Authors, GPL-2.0-or-later. Thus the
+combined Multiple.compute carries MIT AND GPL-2.0-or-later requirements.
+LiveSky solar interpolation is adapted from Cycles svm/sky.h, Apache-2.0.
+Full license texts are in Licenses/. Original notices remain in generated code.
+Adaptations include GPU resource bindings, coordinate/LUT mapping and numerical
+guards for zero radii and extreme transmittance. Source equations are retained.
+The numeric UI atlas was typeset from actual LaTeX. Its .tex and provenance JSON
+are retained beside Textures/NumberAtlas.png.
+
+The scene is not automatically added to Player build settings.
