@@ -67,13 +67,13 @@ namespace Staff.Characters {
   void LateUpdate()=>Refresh();
   public void Refresh(){if(!head)return;
    foreach(var b in bindings){if(!b.renderer)continue;block.Clear();b.renderer.GetPropertyBlock(block);
-    block.SetFloat("_StaffFaceEnabled",b.face?1:0);block.SetFloat("_StaffSkinStrength",b.skin?1:0);
+    block.SetFloat("_StaffFaceEnabled",b.face && CharacterToonToggle.IsCharacterToon(mode)?1:0);block.SetFloat("_StaffSkinStrength",b.skin && CharacterToonToggle.IsCharacterToon(mode)?1:0);
     // Linear RGB ratio of Herta's warm neck base (248,232,224) to cool skin base (232,228,228).
     block.SetVector("_StaffSkinScale",new Vector4(1.157f,1.040f,.962f,1));
     block.SetVector("_StaffFaceCenter",head.TransformPoint(center));block.SetVector("_StaffFaceRight",head.TransformDirection(right));block.SetVector("_StaffFaceUp",head.TransformDirection(up));block.SetVector("_StaffFaceForward",head.TransformDirection(forward));block.SetVector("_StaffFaceRadius",new Vector4(radii.x,radii.y,0,0));
     block.SetVector("_StaffLeftEyePatch",leftEyePatch);block.SetVector("_StaffRightEyePatch",rightEyePatch);block.SetVector("_StaffMouthPatch",mouthPatch);
     block.SetVector("_StaffLeftEyeNormal",head.TransformDirection(leftEyeNormal));block.SetVector("_StaffRightEyeNormal",head.TransformDirection(rightEyeNormal));block.SetVector("_StaffMouthNormal",head.TransformDirection(mouthNormal));
-    block.SetFloat("_StaffTwoTone",mode==CharacterShaderMode.HoyoTwoTone?1:0);block.SetFloat("_ToonEnabled",mode==CharacterShaderMode.CharacterToon?1:0);b.renderer.SetPropertyBlock(block,b.index);
+    block.SetFloat("_StaffTwoTone",0);block.SetFloat("_ToonEnabled",mode==CharacterShaderMode.CharacterToonTwoTone?1:0);b.renderer.SetPropertyBlock(block,b.index);
    }
   }
   void OnDisable(){foreach(var b in bindings)if(b.renderer)b.renderer.SetPropertyBlock(null,b.index);}

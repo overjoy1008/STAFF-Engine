@@ -1,0 +1,26 @@
+HoyoToon 5.2.7, https://github.com/Hoyotoon/HoyoToon
+Upstream commit d9e5ca2f312bf16fba89dee67d32c08b482dcda4.
+Authors: Meliodas, Manashiku, Tay and HoyoToon contributors.
+GPL-3.0: see LICENSE.txt. These are STAFF URP adaptations, not an official URP release.
+
+Separate Genshin, Star Rail, Zenless Zone Zero and Wuthering Waves implementations.
+Game HLSL include files retain upstream contents. ShaderLab changes provide URP
+engine inputs, pass tags, and a source UV/alpha-coverage wrapper. The external
+HoyoToon custom inspector is not included. StaffURPBridge translates Built-in APIs.
+
+The runtime PMX adapter copies source albedo, tint, culling, UV transform and cutoff.
+It uses Base material defaults because the existing PMX sources do not supply
+per-game SDF/packed maps. Optional game outlines are disabled on these PMX materials:
+their vertex data and scale do not match the game-authored outline convention.
+No generated neutral masks or custom Smooth/TwoTone branch is applied.
+At user request, the previous brightness/color-temperature settings are retained:
+exposure 0.8, neutral direct/probe illumination, and white ZZZ post-tint values.
+These controls live in the URP/surface adapter and material settings; each game
+retains its own shading equations.
+
+This is a six-mode shader comparison, not reconstruction of the original games'
+complete character materials. Game-specific face/hair setup requires matching maps.
+URP currently schedules the base, stencil and outline passes; Built-in ForwardAdd
+is not used. Specialized game effects require further integration and source data.
+The old HoyoToonMMD folder/template is retained for existing asset references, but
+CharacterToonToggle no longer reads or uses that template.

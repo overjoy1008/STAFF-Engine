@@ -1,3 +1,11 @@
+2026-10-12 update: H now cycles CharacterToon Smooth, CharacterToon TwoTone,
+HoyoToon Genshin, Star Rail, Zenless Zone Zero, Wuthering Waves.
+The old MMD template is no longer used by the runtime switcher. At user request,
+its exposure 0.8, neutral lighting and white ZZZ post-tints are retained, without
+the custom HSR-style TwoTone branch.
+See Assets/ThirdParty/HoyoToonGames/NOTICE.txt for upstream provenance and limits.
+The notes below describe the earlier URP migration.
+
 STAFF Engine — URP migration, 2026-10-12
 
 Target: Unity 6000.3.11f1 / URP 17.3.0 / Forward rendering / native Render Graph.
