@@ -23,19 +23,31 @@ namespace Staff.Characters.Editor {
  void PressH(){InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.H));typeof(InputSystem).GetMethod("Update",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Dynamic});s.HandleInput(true);InputSystem.QueueStateEvent(keyboard,new KeyboardState());typeof(InputSystem).GetMethod("Update",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Static,null,new[]{typeof(InputUpdateType)},null).Invoke(null,new object[]{InputUpdateType.Dynamic});}
  foreach(var name in new[]{"STAFF/Character Toon","HoyoToon/STAFF MMD"})Check(!ShaderUtil.ShaderHasError(Shader.Find(name)),"Shader compilation "+name);
  for(int i=0;i<s.Count;i++){
- s.Select(i);yield return null;
+ s.Select(i);var expressions=p.GetComponent<AdventureExpressions>();if(expressions){expressions.RefreshModel();expressions.Release();}yield return null;
+ var overlays=p.Animator.GetComponentsInChildren<Renderer>().Where(r=>r.name=="Expression cheek blush").ToDictionary(r=>r,r=>r.sharedMaterials);
+ if(i>0)Check(overlays.Count>0,"Expression overlays created before shader switch / "+s.CurrentName);
  for(int mode=0;mode<4;mode++){
  Check((int)s.ShaderMode==mode,"H mode cycle "+s.CurrentName+" / "+s.ShaderLabel);
  foreach(var r in p.Animator.GetComponentsInChildren<Renderer>()){
+ if(overlays.TryGetValue(r,out var originalOverlay)){Check(r.sharedMaterials.SequenceEqual(originalOverlay)&&r.sharedMaterials.All(m=>m.shader.name=="STAFF/ExpressionCheekBlush"),"Expression shader and material preserved / "+s.CurrentName+" / "+s.ShaderMode);continue;}
  var props=new MaterialPropertyBlock();r.GetPropertyBlock(props);
  foreach(var m in r.sharedMaterials){Check((m.shader.name=="HoyoToon/STAFF MMD")== (mode<2),"Hoyo material / "+s.CurrentName);if(mode==2)Check(m.shader.name=="STAFF/Character Toon"&&props.GetFloat("_ToonEnabled")==1,"CharacterToon two-tone restored / "+s.CurrentName);if(mode==3)Check(props.GetFloat("_ToonEnabled")==0,"Smooth / "+s.CurrentName);}
  }
+ if(i>0){
+ var frame=p.Animator.GetComponent<CharacterFaceLighting>();Check(frame!=null,"Face frame exists / "+s.CurrentName);frame.Refresh();int faces=0;
+ foreach(var r in p.Animator.GetComponentsInChildren<Renderer>())for(int slot=0;slot<r.sharedMaterials.Length;slot++){
+ var block=new MaterialPropertyBlock();r.GetPropertyBlock(block,slot);if(block.GetFloat("_StaffFaceEnabled")<.5f)continue;faces++;
+ var center=(Vector3)block.GetVector("_StaffFaceCenter");var radius=block.GetVector("_StaffFaceRadius");
+ Check(Vector3.Distance(center,p.Animator.GetBoneTransform(HumanBodyBones.Head).position)<.4f && radius.x>.02f && radius.x<.3f && radius.y>.02f && radius.y<.3f,"Face frame scale / "+s.CurrentName);
+ Check(block.GetFloat("_StaffTwoTone")== (mode==1?1:0)&&block.GetFloat("_ToonEnabled")== (mode==2?1:0),"Face slot mode / "+s.CurrentName);
+ }Check(faces>0,"Face material bound / "+s.CurrentName);
+ }
  var pixels=Capture(p,s.CurrentName+"-"+s.ShaderMode);
- if(mode<2){foreach(var r in p.Animator.GetComponentsInChildren<Renderer>()){var block=new MaterialPropertyBlock();r.GetPropertyBlock(block);Check(block.GetFloat("_StaffTwoTone")== (mode==1?1:0),"HSR preset state / "+s.CurrentName);foreach(var m in r.sharedMaterials)Check(m.GetFloat("_StaffNeutralLighting")==1&&m.GetColor("_PostShadowTint")==Color.white,"Neutral lighting and tint / "+s.CurrentName);}}
+ if(mode<2){foreach(var r in p.Animator.GetComponentsInChildren<Renderer>().Where(r=>!overlays.ContainsKey(r))){var block=new MaterialPropertyBlock();r.GetPropertyBlock(block);Check(block.GetFloat("_StaffTwoTone")== (mode==1?1:0),"HSR preset state / "+s.CurrentName);foreach(var m in r.sharedMaterials)Check(m.GetFloat("_StaffNeutralLighting")==1&&m.GetColor("_PostShadowTint")==Color.white,"Neutral lighting and tint / "+s.CurrentName);}}
 PressH();yield return null;
  }
  }
- InputSystem.RemoveDevice(keyboard);File.WriteAllText("Library/StaffToon/result.txt","PASS: 12 characters x 4 shader modes; H key cycles; CharacterToon two-tone restored; shader compilation and captures.");EditorApplication.Exit(0);
+ InputSystem.RemoveDevice(keyboard);File.WriteAllText("Library/StaffToon/result.txt","PASS: 12 characters x 4 shader modes; H key cycles; CharacterToon two-tone restored; shader compilation and captures; expression overlay material identity preserved across all modes.");EditorApplication.Exit(0);
  }
  static Color32[] Capture(AdventurePlayer p,string name){
  var obj=new GameObject("Toon verification camera");var cam=obj.AddComponent<Camera>();cam.clearFlags=CameraClearFlags.SolidColor;cam.backgroundColor=new Color(.15f,.16f,.19f);cam.orthographic=true;cam.orthographicSize=1.35f;

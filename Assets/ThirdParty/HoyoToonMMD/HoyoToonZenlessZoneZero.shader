@@ -3,6 +3,7 @@ Shader "HoyoToon/STAFF MMD"
 {
     Properties 
     {
+        [Enum(UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 2
         _StaffExposure ("Brightness", Range(0, 2)) = 0.8
         [Toggle] _StaffNeutralLighting ("Neutral Lighting", Float) = 1
         [Toggle] _StaffTwoTone ("HSR-style Two Tone", Float) = 0 
@@ -472,7 +473,7 @@ Shader "HoyoToon/STAFF MMD"
             ZWrite [_ZWrite]
             ZTest [_ZTesting]
             ZClip [_ZClip]
-            Cull Off
+            Cull [_Cull]
             HLSLPROGRAM
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
@@ -496,7 +497,7 @@ Shader "HoyoToon/STAFF MMD"
                 Comp [_StencilCompB]
 				Pass [_StencilPassB]
             }
-            Cull Off
+            Cull [_Cull]
             HLSLPROGRAM
             #define _IS_STENCIL
             #pragma multi_compile _IS_PASS_BASE

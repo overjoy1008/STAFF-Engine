@@ -1,3 +1,4 @@
+#include "Assets/Characters/Shaders/StaffFaceLighting.hlsl"
 vs_out vs_model(vs_in v)
 {
     // fix potential compiler errors
@@ -52,6 +53,7 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
 {
     // intialize inputs : 
     float3 normal = normalize(i.normal);
+    if(_StaffTwoTone>.5)normal=StaffFaceNormal(i.ws_pos.xyz,normal);
     float3 view = normalize(i.view);
     float2 uv_a = i.uv_a.xy;
     float2 uv_b = i.uv_b.xy;
@@ -71,7 +73,8 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
     UNITY_LIGHT_ATTENUATION(atten, i, i.ws_pos.xyz);
 
     // sample textures
-    float4 diffuse = _MainTex.Sample(sampler_linear_repeat, main_uv * _MainTex_ST.xy + _MainTex_ST.zw);
+    float4 diffuse = _MainTex.Sample(sampler_linear_repeat, main_uv);
+    diffuse.rgb=StaffSkinColor(diffuse.rgb);
     float4 light = _LightTex.Sample(sampler_linear_repeat, light_uv); // rg normal, b diffuse bias
     float4 other_data = _OtherDataTex.Sample(sampler_linear_repeat, light_uv); // r mat id, g metallic, b specular mask
     float4 other_data2 = _OtherDataTex2.Sample(sampler_linear_repeat, light_uv); // r transparency, g smoothness, b emission mask 
@@ -143,7 +146,7 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
         float skin_id = Material_Detect(other_data.x).x;
 
         // normal mapping : 
-        float3 bumped = (_MaterialType != 1 && _UseBumpMap) ? normal_mapping(light.rgb, i.normal, i.tangent, vface) : i.normal;
+        float3 bumped = (_MaterialType != 1 && _UseBumpMap) ? normal_mapping(light.rgb, i.normal, i.tangent, vface) : normal;
         bumped = normalize(bumped);
 
         float ndotl = dot(bumped, _WorldSpaceLightPos0.xyz);
@@ -402,9 +405,6 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
      final_color.rgb+=diffuse.rgb*_Color.rgb*lc*ndl*extra.distanceAttenuation*extra.shadowAttenuation*_StaffExposure;
     }
     #endif
-    #if !defined(_IS_STENCIL)
-    final_color.a = alpha;
-    #endif
     return final_color;
 }
 
@@ -506,7 +506,7 @@ float4 ps_outline(vs_out i) : SV_TARGET
     float2 uv_b = i.uv_b.xy;
 
     // sample textures
-    float4 diffuse = _MainTex.Sample(sampler_linear_clamp, uv_a.xy * _MainTex_ST.xy + _MainTex_ST.zw);
+    float4 diffuse = _MainTex.Sample(sampler_linear_clamp, uv_a.xy);
     if(_UseAlpha) clip(diffuse.a * _Color.a - max(_AlphaCutoff, 0.001f));
     float other_data = _OtherDataTex.Sample(sampler_linear_clamp, uv_a.xy).x; 
     if(_MaterialType == 1) other_data = i.bit_flag.z;
@@ -551,7 +551,7 @@ shadow_out vs_shadow(shadow_in v)
 float4 ps_shadow(shadow_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
 {
     if(_MaterialType == 3) clip(-1);
-    float alpha = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy * _MainTex_ST.xy + _MainTex_ST.zw).a * _Color.a;
+    float alpha = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy).a * _Color.a;
     if(_UseAlpha) clip(alpha - max(_AlphaCutoff, 0.001f));
     SHADOW_CASTER_FRAGMENT(i)
 }

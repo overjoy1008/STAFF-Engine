@@ -1,4 +1,3 @@
-float4 _MainTex_ST;
 float _StaffExposure;
 float _StaffNeutralLighting;
 float _StaffTwoTone;

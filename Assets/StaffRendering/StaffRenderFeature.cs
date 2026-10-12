@@ -41,7 +41,7 @@ public sealed class StaffRenderFeature:ScriptableRendererFeature {
    string tex=original.HasProperty("_BaseMap")?"_BaseMap":"_MainTex";
    if(original.HasProperty(tex)){m.SetTexture("_MainTex",original.GetTexture(tex));m.SetTextureScale("_MainTex",original.GetTextureScale(tex));m.SetTextureOffset("_MainTex",original.GetTextureOffset(tex));}
    string col=original.HasProperty("_BaseColor")?"_BaseColor":"_Color";m.SetColor("_Color",original.HasProperty(col)?original.GetColor(col):Color.white);
-   m.SetFloat("_Excluded",excluded?1:0);m.SetFloat("_AlphaClip",excluded?1:original.HasProperty("_AlphaClip")?original.GetFloat("_AlphaClip"):0);m.SetFloat("_Cutoff",original.HasProperty("_AlphaCutoff")?Mathf.Max(original.GetFloat("_AlphaCutoff"),.001f):original.HasProperty("_Surface")&&original.GetFloat("_Surface")>.5f?.001f:original.HasProperty("_Cutoff")?Mathf.Max(original.GetFloat("_Cutoff"),.001f):.1f);return m;
+   m.SetFloat("_Excluded",excluded?1:0);m.SetFloat("_AlphaClip",excluded?1:original.HasProperty("_AlphaClip")?original.GetFloat("_AlphaClip"):0);m.SetFloat("_Cutoff",original.HasProperty("_AlphaCutoff")?Mathf.Max(original.GetFloat("_AlphaCutoff"),.001f):.1f);return m;
   }
   public override void RecordRenderGraph(RenderGraph graph,ContextContainer frame){
    var resources=frame.Get<UniversalResourceData>();var camera=frame.Get<UniversalCameraData>().camera;
