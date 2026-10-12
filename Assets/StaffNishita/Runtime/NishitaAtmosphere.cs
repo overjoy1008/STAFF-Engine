@@ -23,6 +23,24 @@ namespace Staff.Nishita
   [Range(-89,89)] public float latitude=37;
   [Range(-23.44f,23.44f)] public float solarDeclination=0;
   [Range(0,360)] public float northRotation=0;
+  [Header("Elevation art direction")]
+  public bool elevationSunSize=false;
+  [Range(1,1.5f)] public float horizonRadiusMultiplier=1.18f;
+  [Range(1,45)] public float horizonRadiusFadeDegrees=20;
+  [Tooltip("When enabled, the elevation curve overrides the manual Ozone Density input.")]
+  public bool elevationOzone=false;
+  [Range(0,1000)] public float horizonOzone=.6f,noonOzone=45;
+  [Range(0,1000)] public float middleOzone=10;
+  [Range(1,89)] public float ozoneMiddleDegrees=20;
+  [Range(0,80)] public float ozoneStartDegrees=10;
+  [Range(1,90)] public float ozoneFullDegrees=60;
+  public float EffectiveSunRadius=>sunRadius*(elevationSunSize?Mathf.Lerp(Mathf.Clamp(horizonRadiusMultiplier,1,1.5f),1,Mathf.SmoothStep(0,1,Mathf.InverseLerp(0,Mathf.Max(1,horizonRadiusFadeDegrees),effectiveElevation))):1);
+  public float EffectiveOzone {get {
+   if(!elevationOzone)return ozoneDensity;
+   float mid=Mathf.Max(ozoneStartDegrees+.1f,ozoneMiddleDegrees),end=Mathf.Max(mid+.1f,ozoneFullDegrees);
+   if(effectiveElevation<=mid)return Mathf.Lerp(horizonOzone,middleOzone,Mathf.SmoothStep(0,1,Mathf.InverseLerp(ozoneStartDegrees,mid,effectiveElevation)));
+   return Mathf.Lerp(middleOzone,noonOzone,Mathf.SmoothStep(0,1,Mathf.InverseLerp(mid,end,effectiveElevation)));
+  }}
   [Header("GPU quality")]
   [Range(64,1024)] public int skyWidth=256;
   [Range(.02f,.5f)] public float updateInterval=.0667f;
@@ -53,7 +71,7 @@ namespace Staff.Nishita
   void OnDisable(){Release();}
   void Update(){
    double now=Time.realtimeSinceStartupAsDouble;
-   if(Application.isPlaying&&useDayCycle&&animate)timeOfDay=Mathf.Repeat(timeOfDay+(float)Math.Min(now-lastClock,.2)*24/Mathf.Max(dayDurationSeconds,10),24);
+   if(useDayCycle&&animate)timeOfDay=Mathf.Repeat(timeOfDay+(float)Math.Min(now-lastClock,.2)*24/Mathf.Max(dayDurationSeconds,10),24);
    lastClock=now;Tick(false);
   }
   public static Vector3 SolarDirection(float hour,float lat,float declination,float north){
@@ -67,8 +85,8 @@ namespace Staff.Nishita
    if(useDayCycle){SunDirection=SolarDirection(timeOfDay,latitude,solarDeclination,northRotation);effectiveElevation=Mathf.Asin(Mathf.Clamp(SunDirection.y,-1,1))*Mathf.Rad2Deg;effectiveRotation=Mathf.Repeat(Mathf.Atan2(SunDirection.x,SunDirection.z)*Mathf.Rad2Deg,360);}
    else {effectiveElevation=Mathf.Clamp(sunElevation,-90,90);effectiveRotation=Mathf.Repeat(sunRotation,360);SunDirection=Quaternion.Euler(-effectiveElevation,effectiveRotation,0)*Vector3.forward;}
    if(!EnsureResources())return;
-   var density=new Vector4(airDensity,aerosolDensity,ozoneDensity,altitude);
-   var solar=new Vector2(effectiveElevation,sunRadius);
+   var density=new Vector4(airDensity,aerosolDensity,EffectiveOzone,altitude);
+   var solar=new Vector2(effectiveElevation,EffectiveSunRadius);
    double now=Time.realtimeSinceStartupAsDouble;
    bool dirty=density!=lastDensity||solar!=lastSun;
    if(force||(dirty&&now-lastUpdate>=updateInterval)){
@@ -100,7 +118,7 @@ namespace Staff.Nishita
   }
   void Parameters(ComputeShader c,int width){
    c.SetInt("_Width",width);c.SetInt("_Height",width/2);c.SetFloat("_Elevation",effectiveElevation*Mathf.Deg2Rad);
-   c.SetFloat("_Altitude",altitude);c.SetFloat("_Air",airDensity);c.SetFloat("_Aerosols",aerosolDensity);c.SetFloat("_Ozone",ozoneDensity);c.SetFloat("_Diameter",sunRadius*2*Mathf.Deg2Rad);
+   c.SetFloat("_Altitude",altitude);c.SetFloat("_Air",airDensity);c.SetFloat("_Aerosols",aerosolDensity);c.SetFloat("_Ozone",EffectiveOzone);c.SetFloat("_Diameter",EffectiveSunRadius*2*Mathf.Deg2Rad);
   }
   float Horizon(Model m){float radius=m.multiple?6371000:6360000;float h=Mathf.Clamp(altitude,1,m.multiple?99999:59999);return -Mathf.Acos(radius/(radius+h));}
   void Render(Model m,bool opticalDirty,bool first){
@@ -123,7 +141,7 @@ namespace Staff.Nishita
   void ConfigureMaterial(Model m,float blend){
    var mat=m.material;mat.SetTexture("_SkyCurrent",m.current);mat.SetTexture("_SkyPrevious",m.previous);mat.SetBuffer("_SunData",m.sun);
    mat.SetVector("_LutSize",new Vector4(m.current.width,m.current.height,0,0));mat.SetVector("_SunDir",SunDirection);
-   mat.SetFloat("_Rotation",effectiveRotation*Mathf.Deg2Rad);mat.SetFloat("_Elevation",effectiveElevation*Mathf.Deg2Rad);mat.SetFloat("_Radius",sunRadius*Mathf.Deg2Rad);
+   mat.SetFloat("_Rotation",effectiveRotation*Mathf.Deg2Rad);mat.SetFloat("_Elevation",effectiveElevation*Mathf.Deg2Rad);mat.SetFloat("_Radius",EffectiveSunRadius*Mathf.Deg2Rad);
    mat.SetFloat("_SunIntensity",sunIntensity);mat.SetFloat("_SunDisc",sunDisc?1:0);mat.SetFloat("_Horizon",Horizon(m));mat.SetFloat("_Brightness",brightness);mat.SetFloat("_Blend",blend);
   }
   public Material GetSky(bool multi)=>Ready?(multi?multiple:single).material:null;

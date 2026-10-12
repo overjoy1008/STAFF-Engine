@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: b3bd6bb16df33417d88c91131cae40f2, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -19843,6 +19843,19 @@ MonoBehaviour:
   current: 1
   skyWeather:
     clouds: 1
+    cloudMotionMultiplier: 4
+    cloudColors:
+      enabled: 1
+      strength: 0.9
+      daylight: {r: 1, g: 0.97, b: 0.92, a: 1}
+      dayShadow: {r: 0.53, g: 0.68, b: 0.88, a: 1}
+      dawnLight: {r: 1, g: 0.79, b: 0.56, a: 1}
+      dawnShadow: {r: 0.59, g: 0.61, b: 0.78, a: 1}
+      sunsetLight: {r: 1, g: 0.3, b: 0.2, a: 1}
+      sunsetShadow: {r: 0.63, g: 0.27, b: 0.4, a: 1}
+      twilightLight: {r: 0.72, g: 0.58, b: 0.86, a: 1}
+      twilightShadow: {r: 0.35, g: 0.39, b: 0.65, a: 1}
+      nightShadow: {r: 0.24, g: 0.34, b: 0.57, a: 1}
     seed: 2718
     cloudCoverage: 0.48
     cloudDensity: 1.1
@@ -19852,11 +19865,60 @@ MonoBehaviour:
     windMetersPerSecond: 1.2
     windHeading: 75
     stars: 1
-    starBrightness: 1
-    starRevolutionSeconds: 14400
+    starBackend: 0
+    starMagnitudeLimit: 6.5
+    starSize: 0.65
+    starMap: {fileID: 0}
+    starExposure: 0
+    starBrightness: 0.55
+    starRevolutionSeconds: 1800
     starPhaseDegrees: 0
     animate: 1
-  exposure: -3
+  solarEffects:
+    lensFlare: 1
+    sunRays: 1
+    flareIntensity: 0.55
+    glareSize: 0.3
+    flareSize: 0.003
+    starPoints: 5
+    animateStarPoints: 1
+    starIntensityVariation: 0.75
+    starAnimationAmount: 0.35
+    starAnimationSpeed: 0.7
+    starAnimationSeed: 2718
+    previewStarAnimation: 1
+    ghostScale: 0.25
+    secondaryGhosts: 1
+    hexGhostCount: 6
+    roundGhostCount: 3
+    hexGhostOpacity: 0.53
+    roundGhostOpacity: 1
+    hexGhostSize: 1.3
+    roundGhostSize: 1.8
+    anamorphic: 0
+    solarRayStrength: 0.3
+    rayDensity: 0.0078125
+    rayMaxOpacity: 0.3
+    raySteps: 48
+    rayDistance: 80
+    distanceAttenuation: 2
+    rayColor: {r: 1, g: 0.9, b: 0.7, a: 1}
+    localLights: 1
+    trainEndRayStrength: 0.4
+    interiorRayStrength: 0.05
+    fluorescentRays: 1
+    trainEmissionRays: 1
+    localLightBudget: 3
+    localRaySteps: 32
+    localRayDensity: 0.025
+    localRayIntensity: 0.6
+    trainRayIntensity: 0.65
+    trainLedRange: 3
+    trainLampRange: 8
+    trainLedColor: {r: 0.12, g: 0.4, b: 1, a: 1}
+    trainLampColor: {r: 1, g: 0.85, b: 0.65, a: 1}
+  continuousSolarLighting: 1
+  exposure: -1.7695812
 --- !u!114 &547016255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19869,23 +19931,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49877256a7bce4b609fc1a853907d318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Nishita.NishitaAtmosphere
-  airDensity: 1.2
-  aerosolDensity: 0.3
+  airDensity: 1.8
+  aerosolDensity: 2.6129317
   ozoneDensity: 2.5
   altitude: 1523
   sunDisc: 1
   sunRadius: 0.941
-  sunIntensity: 1.22
-  brightness: 0.35
+  sunIntensity: 1
+  brightness: 0.27
   sunElevation: 60
   sunRotation: 180
-  useDayCycle: 0
-  animate: 0
-  timeOfDay: 17.5
+  useDayCycle: 1
+  animate: 1
+  timeOfDay: 18.448292
   dayDurationSeconds: 240
   latitude: 37
   solarDeclination: 0
   northRotation: 0
+  elevationSunSize: 1
+  horizonRadiusMultiplier: 1.18
+  horizonRadiusFadeDegrees: 20
+  elevationOzone: 1
+  horizonOzone: 0.6
+  noonOzone: 45
+  middleOzone: 10
+  ozoneMiddleDegrees: 20
+  ozoneStartDegrees: 10
+  ozoneFullDegrees: 60
   skyWidth: 256
   updateInterval: 0.0667
   singleCompute: {fileID: 7200000, guid: 47288199198254671bc95ee5dda41292, type: 3}
@@ -23176,7 +23248,7 @@ Skybox:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581668941}
   m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: b3bd6bb16df33417d88c91131cae40f2, type: 2}
+  m_CustomSkybox: {fileID: 0}
 --- !u!1 &582746565
 GameObject:
   m_ObjectHideFlags: 0
@@ -29382,6 +29454,7 @@ GameObject:
   - component: {fileID: 796395943}
   - component: {fileID: 796395944}
   - component: {fileID: 796395945}
+  - component: {fileID: 796395946}
   m_Layer: 30
   m_Name: Environment
   m_TagString: Untagged
@@ -45922,6 +45995,19 @@ MonoBehaviour:
   - {x: 8.495, y: 1.8000001, z: 103.13752}
   travelDistance: 420
   travelSeconds: 16
+--- !u!114 &796395946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796395942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f663eadcc6772438da43f16de615745d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SubwayOpenTracks
+  extensionMetres: 60
 --- !u!1 &797640917
 GameObject:
   m_ObjectHideFlags: 0
@@ -57359,7 +57445,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 11.4, y: 3, z: 0.15}
   m_Center: {x: 0, y: 0, z: 0}
@@ -83931,7 +84017,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 11.4, y: 3, z: 0.15}
   m_Center: {x: 0, y: 0, z: 0}
@@ -87042,8 +87128,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 1
-  m_Color: {r: 0.85, g: 0.92, b: 1, a: 1}
-  m_Intensity: 0.35
+  m_Color: {r: 0.7304188, g: 0.6346084, b: 0.7603644, a: 1}
+  m_Intensity: 0.08451727
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -93532,7 +93618,7 @@ MonoBehaviour:
   surfaceShader: {fileID: 4800000, guid: bac644a32d4f4480917ea2a33e975f01, type: 3}
   geometryShader: {fileID: 4800000, guid: d4e28f3a00f1467cb48f0faa4a462a15, type: 3}
   edgeShader: {fileID: 4800000, guid: a0e06a15e3e24e0fb5f6383a3637d0ab, type: 3}
-  abstractSkybox: {fileID: 2100000, guid: f9f6e019eadfb46b38b51ac506dbe8b4, type: 2}
+  abstractSkybox: {fileID: 0}
   startAbstract: 0
   lineWidth: 1
   normalThreshold: 0.18
@@ -93545,7 +93631,7 @@ Skybox:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498957212}
   m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: b3bd6bb16df33417d88c91131cae40f2, type: 2}
+  m_CustomSkybox: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

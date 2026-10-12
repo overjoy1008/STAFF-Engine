@@ -14,6 +14,7 @@ Shader "STAFF/Subway/Live Nishita Presets"
  #include "UnityCG.cginc"
  Texture2D<float4> _SkyCurrent,_SkyPrevious;
  StructuredBuffer<float4> _SunData;
+ float4 _StaffSunTint;float _StaffSunset;
  sampler2D _Lut;float _Exposure,_DiscOnly;
  float3 lut(float3 p){p=min(p,47);return tex2Dlod(_Lut,float4((p.b*48+p.r+.5)/2304,(p.g+.5)/48,0,0)).rgb;}
  float3 agx(float3 rgb){rgb=max(rgb*exp2(_Exposure+8),exp2(-12));float3 p=saturate((log2(rgb)+12)/28)*47;float3 b=floor(p),f=frac(p);float3 low=lerp(lerp(lut(b),lut(b+float3(1,0,0)),f.r),lerp(lut(b+float3(0,1,0)),lut(b+float3(1,1,0)),f.r),f.g);float3 high=lerp(lerp(lut(b+float3(0,0,1)),lut(b+float3(1,0,1)),f.r),lerp(lut(b+float3(0,1,1)),lut(b+float3(1,1,1)),f.r),f.g);return GammaToLinearSpace(lerp(low,high,f.b));}
@@ -45,7 +46,10 @@ Shader "STAFF/Subway/Live Nishita Presets"
    xyz+=lerp(_SunData[0].xyz,_SunData[1].xyz,y)*_SunIntensity*limb*coverage;
   }
   float3 rgb=float3(dot(xyz,float3(3.2404542,-1.5371385,-.4985314)),dot(xyz,float3(-.969266,1.8760108,.041556)),dot(xyz,float3(.0556434,-.2040259,1.0572252)));
-  return float4(weatherComposite(agx(max(rgb,0)*_Brightness),d,i.position.xy),1);
+  float3 display=agx(max(rgb,0)*_Brightness);
+  display*=lerp(float3(1,1,1),float3(1.12,.82,.76),_StaffSunset);
+  if(_SunDisc>0&&elevation>_Horizon)display*=lerp(float3(1,1,1),_StaffSunTint.rgb,coverage);
+  return float4(weatherComposite(display,d,i.position.xy),1);
  }
  ENDCG
  }

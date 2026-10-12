@@ -60,6 +60,7 @@ MonoBehaviour:
   - {fileID: 4365315514769752017}
   - {fileID: -8225915618898676817}
   - {fileID: -1695636764946073635}
+  - {fileID: 8978819825617706285}
   m_RendererFeatureMap: 
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
@@ -127,3 +128,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Rendering.StaffRenderFeature
   m_Active: 1
   geometryShader: {fileID: 4800000, guid: 47fbd6f38cbf44d16b5ab0bb8e0ae783, type: 3}
+--- !u!114 &8978819825617706285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a3804d82ecf4bcdb0492ad055b711e, type: 3}
+  m_Name: Local Godrays - Station and Train F10
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.LocalGodraysFeature
+  m_Active: 1
+  opticsShader: {fileID: 4800000, guid: d96c69a7425b841c1a72afda2356fde1, type: 3}
+  shadowShader: {fileID: 4800000, guid: edc351d2610174a9d87ea39829391807, type: 3}
+  shadowResolution: 128

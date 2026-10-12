@@ -2,7 +2,7 @@
 #define URP_VOLUMETRIC_CLOUDS_DEFINES_HLSL
 
 CBUFFER_START(UnityPerMaterial)
-float4 _StaffSunDirection, _StaffSunColor, _StaffAmbientFloor;
+float4 _StaffSunDirection, _StaffSunColor, _StaffAmbientFloor, _StaffCloudAmbientTop, _StaffCloudAmbientBottom;
 float _Seed;
 half _NumPrimarySteps;
 half _NumLightSteps;

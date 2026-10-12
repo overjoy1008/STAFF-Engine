@@ -4,7 +4,7 @@ Shader "Hidden/STAFF/SolarOptics" {
  #include "UnityCG.cginc"
  sampler2D _MainTex,_SolarSceneDepth,_SolarShadow,_SolarVisibility,_SolarRays,_VolumetricCloudsLightingTexture;
  float4 _MainTex_TexelSize,_SolarScreen,_SolarSunUV,_FlareParameters,_FlareOptions,_RayParameters,_RayColor,_SolarRaysSize;
- float3 _SolarCamera,_SolarSun;float _SolarExtent,_SolarClouds,_RaysEnabled;float4x4 _SolarInvVP,_SolarLightVP,_SolarLightView;
+ float3 _SolarCamera,_SolarSun;float _SolarExtent,_SolarClouds,_RaysEnabled,_RayStrength;float4x4 _SolarInvVP,_SolarLightVP,_SolarLightView;
  #include "ManciniLensFlare.hlsl"
  v2f_img Fullscreen(uint id:SV_VertexID){v2f_img o;float2 uv=float2((id<<1u)&2u,id&2u);o.pos=float4(uv*2-1,0,1);
  #if UNITY_UV_STARTS_AT_TOP
@@ -93,7 +93,7 @@ Shader "Hidden/STAFF/SolarOptics" {
     float2 d=float2(x,y)-f;float delta=(tap.a-min(eye,60000))/max(eye,.001);
     float weight=exp(-dot(d,d)/2-.5*delta*delta/.01);total+=weight;illum+=tap.r*weight;
    }
-   scene.rgb=lerp(scene.rgb,_RayColor.rgb,illum/max(total,1e-6));
+   scene.rgb=lerp(scene.rgb,_RayColor.rgb,illum/max(total,1e-6)*_RayStrength);
   }
   float visibility=tex2D(_SolarVisibility,float2(.5,.5)).r;
   if(_FlareOptions.w>0&&visibility>.0001)scene.rgb+=StaffLensFlare(i.uv,_SolarSunUV.xy)*visibility;

@@ -181,6 +181,9 @@ VolumetricRayResult TraceVolumetricRay(CloudRay cloudRay)
                 half3 sunColor = sun.color * PI * _SunLightDimmer;
             #endif
 
+                // Apply the cloud-only override in physical-sun variants as well.
+                if (_StaffSunDirection.w > .5) sunColor = _StaffSunColor.rgb * PI * _SunLightDimmer;
+
                 // Evaluate the environement lighting contribution
             #ifdef _CLOUDS_AMBIENT_PROBE
                 half3 ambientTermTop = SAMPLE_TEXTURECUBE_LOD(_VolumetricCloudsAmbientProbe, sampler_VolumetricCloudsAmbientProbe, half3(0.0, 1.0, 0.0), 4.0).rgb;
@@ -191,7 +194,11 @@ VolumetricRayResult TraceVolumetricRay(CloudRay cloudRay)
             #endif
                 half3 ambient = max(0, lerp(ambientTermBottom, ambientTermTop, relativeHeight) * _AmbientProbeDimmer);
 
-                if (_StaffSunDirection.w > .5) ambient = max(ambient, _StaffAmbientFloor.rgb);
+                if (_StaffSunDirection.w > .5) {
+                    // Replace most probe lighting to keep interior ambient from washing out dusk/night hues.
+                    half3 palette = lerp(_StaffCloudAmbientBottom.rgb, _StaffCloudAmbientTop.rgb, smoothstep(0.0, 1.0, relativeHeight));
+                    ambient = lerp(max(ambient, _StaffAmbientFloor.rgb), palette, _StaffCloudAmbientTop.w);
+                }
                 volumetricRay.scattering = sunColor * volumetricRay.scattering;
                 volumetricRay.scattering += ambient * volumetricRay.ambient;
             }

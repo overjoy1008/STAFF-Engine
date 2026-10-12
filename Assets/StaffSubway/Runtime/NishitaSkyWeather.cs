@@ -12,6 +12,8 @@ namespace Staff.Subway
         public sealed class Settings
         {
             public bool clouds = true;
+            [Range(0,10)] public float cloudMotionMultiplier=3;
+            public CloudTimePalette.Settings cloudColors = new CloudTimePalette.Settings();
             [HideInInspector] public int seed = 2718;
             [Range(0, 1)] [HideInInspector] public float cloudCoverage = .48f;
             [Range(.1f, 3)] [HideInInspector] public float cloudDensity = 1.1f;
@@ -31,7 +33,7 @@ namespace Staff.Subway
 
             [Range(0, 3)] public float starBrightness = 1;
             [Tooltip("One star revolution in game seconds; 86164 approximates real sidereal time.")]
-            [Min(60)] public float starRevolutionSeconds = 14400;
+            [Min(60)] public float starRevolutionSeconds = 1200;
             [Range(0, 360)] public float starPhaseDegrees = 0;
             public bool animate = true;
         }

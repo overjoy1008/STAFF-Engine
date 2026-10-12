@@ -31,6 +31,9 @@ namespace Staff.Subway {
   [Header("Sun optics — F9 flare / F10 rays")]
   public SolarEffects.Settings solarEffects = new SolarEffects.Settings();
   NishitaSkyWeather weather;
+  double weatherClock;
+  [Tooltip("Blend atmospheric density, exposure and added sky fill continuously during Solar Day.")]
+  public bool continuousSolarLighting=true;
   Material disc, savedGlobalSky;
   [Range(-12,12)] public float exposure=-3;
   AdventurePlayer player;
@@ -39,7 +42,7 @@ namespace Staff.Subway {
   CameraClearFlags[] savedFlags;
   float savedFillIntensity;Color savedFillColor;
   void OnEnable(){
-   Active=this;
+   Active=this;weatherClock=Time.realtimeSinceStartupAsDouble;
    weather = new NishitaSkyWeather();
    savedGlobalSky=RenderSettings.skybox;
    player=FindFirstObjectByType<AdventurePlayer>();
@@ -63,10 +66,33 @@ namespace Staff.Subway {
    // Only the added sky fill varies. Fluorescents, station fill and reflection remain intact.
    if(skyFill){skyFill.intensity=current==0?.22f:current==1?.35f:current==2?.16f:.02f;skyFill.color=current==0?new Color(1,.88f,.65f):current==1?new Color(.85f,.92f,1):current==2?new Color(1,.64f,.48f):new Color(.5f,.63f,1);}
   }
-  void LateUpdate(){if(Application.isPlaying)weather?.Advance(Time.deltaTime,skyWeather);ApplySky();}
+  void LateUpdate(){double now=Time.realtimeSinceStartupAsDouble;weather?.Advance(Application.isPlaying?Time.deltaTime:(float)Math.Min(.2,Math.Max(0,now-weatherClock)),skyWeather);weatherClock=now;ApplySolarDay();ApplySky();}
+  public void ApplySolarDay(){
+   var a=atmosphere;if(!a||!a.useDayCycle||!continuousSolarLighting||presets==null||presets.Length<4)return;
+   // All transitions are evaluated from the same continuous sun direction, never preset index.
+   var direction=NishitaAtmosphere.SolarDirection(a.timeOfDay,a.latitude,a.solarDeclination,a.northRotation);
+   float elevation=Mathf.Asin(Mathf.Clamp(direction.y,-1,1))*Mathf.Rad2Deg;
+   float morning=Mathf.SmoothStep(0,1,Mathf.InverseLerp(-.2f,.2f,(Quaternion.Euler(0,-a.northRotation,0)*direction).x));
+   float day=Mathf.SmoothStep(0,1,Mathf.InverseLerp(8,45,elevation));
+   float awake=Mathf.SmoothStep(0,1,Mathf.InverseLerp(-12,2,elevation));
+   var dawn=presets[0];var noon=presets[1];var dusk=presets[2];var night=presets[3];
+   a.airDensity=BlendDay(night.air,dawn.air,noon.air,dusk.air,morning,day,awake);
+   a.aerosolDensity=BlendDay(night.aerosols,dawn.aerosols,noon.aerosols,dusk.aerosols,morning,day,awake);
+   a.brightness=BlendDay(night.brightness,dawn.brightness,noon.brightness,dusk.brightness,morning,day,awake);
+   exposure=BlendDay(night.exposure,dawn.exposure,noon.exposure,dusk.exposure,morning,day,awake);
+   // The shader clips the disc at the horizon; a night preset must not latch it off all day.
+   a.sunDisc=true;
+   if(skyFill){skyFill.intensity=BlendDay(.02f,.22f,.35f,.16f,morning,day,awake);skyFill.color=Color.Lerp(new Color(.5f,.63f,1),Color.Lerp(Color.Lerp(new Color(1,.64f,.48f),new Color(1,.88f,.65f),morning),new Color(.85f,.92f,1),day),awake);}
+   a.Tick(false);
+  }
+  static float BlendDay(float night,float dawn,float noon,float dusk,float morning,float day,float awake){return Mathf.Lerp(night,Mathf.Lerp(Mathf.Lerp(dusk,dawn,morning),noon,day),awake);}
   public void ApplySky(){
    if(!atmosphere||!atmosphere.Ready||!agxLut)return;
-   var real=atmosphere.GetSky(true);real.SetTexture("_Lut",agxLut);real.SetFloat("_Exposure",exposure);real.SetFloat("_DiscOnly",0);
+   var real=atmosphere.GetSky(true);
+   float lowSun=1-Mathf.SmoothStep(0,1,Mathf.InverseLerp(2,20,atmosphere.Elevation));
+   float west=1-Mathf.SmoothStep(0,1,Mathf.InverseLerp(-.2f,.2f,(Quaternion.Euler(0,-atmosphere.northRotation,0)*atmosphere.SunDirection).x));
+   real.SetColor("_StaffSunTint",Color.Lerp(Color.white,new Color(1,.78f,.18f),lowSun));
+   real.SetFloat("_StaffSunset",west*lowSun*Mathf.SmoothStep(0,1,Mathf.InverseLerp(-12,-2,atmosphere.Elevation)));real.SetTexture("_Lut",agxLut);real.SetFloat("_Exposure",exposure);real.SetFloat("_DiscOnly",0);
    weather?.Apply(real,skyWeather,atmosphere.latitude,atmosphere.northRotation,atmosphere.Elevation);
    if(!disc)disc=new Material(real){name="Subway solar disc",hideFlags=HideFlags.HideAndDontSave};
    disc.CopyPropertiesFromMaterial(real);disc.SetFloat("_DiscOnly",1);

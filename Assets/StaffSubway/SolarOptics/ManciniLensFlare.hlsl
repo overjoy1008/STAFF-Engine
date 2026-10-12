@@ -1,3 +1,6 @@
+float4 _SunStarTint;
+float4 _GhostControls; // hex count, round count, hex opacity, round opacity
+float4 _GhostStyle; // hex size, round size
 // Altered HLSL port of Anderson Mancini's lensflare-threejs-vanilla (CC0).
 // Original glare, drawflare, colored ghosts and hexagonal aperture functions.
 #define iTime _FlareOptions.z
@@ -10,6 +13,14 @@
 #define flareShape 1.2
 #define flareSpeed 0.0
 #define colorGain float3(230.0,205.0,170.0)
+// Fixed diffraction directions; smoothly interpolate the independent spoke gains across angle.
+float _FlareStarGains[16];
+float StaffSpokeGain(float2 p,float points){
+ float count=points*2;
+ float sector=frac(atan2(p.x,p.y)/6.28318530718+1)*count;
+ uint a=(uint)floor(sector);uint b=a+1u;if(b>=(uint)count)b=0u;
+ float f=frac(sector);return lerp(_FlareStarGains[a],_FlareStarGains[b],f*f*(3-2*f));
+}
     float rand(float n){return frac(sin(n) * 43758.5453123);}
 
     float noise(float p){
@@ -58,13 +69,18 @@
         float blades = length(p * flareShape * sin(internalStarPoints * atan2(p.x, p.y))); //draw 6 blades
         
         float comp = pow(1.-saturate2(blades), ( anamorphic ? 100. : 12.));
-        comp += saturate2(expgrad-0.9) * 3.;
-        comp = pow(comp * expgrad, 8. + (1.-intensity) * 5.);
+        float core = saturate2(expgrad-0.9) * 3.;
+        float exponent = 8. + (1.-intensity) * 5.;
+        comp = pow((comp + core) * expgrad, exponent);
+        float coreOnly = pow(core * expgrad, exponent);
+        // Do not animate the central disc; fade modulation in outside the singular core.
+        float gain=lerp(1,StaffSpokeGain(p,internalStarPoints),smoothstep(.012,.04,lingrad));
+        comp=coreOnly+max(0,comp-coreOnly)*gain;
         
         if(flareSpeed > 0.0){
             return ((float3)(comp)) * colgrad;
         } else{
-            return ((float3)(comp)) * flareSize * 15.;
+            return ((float3)(comp)) * flareSize * 15. * _SunStarTint.rgb;
         }
     }
 
@@ -214,16 +230,33 @@
     }
 
 
+// Soft circular coating reflections layered behind the sharper aperture ghosts.
+float3 StaffRoundGhost(float2 uv,float2 center,float radius,float3 tint,float ring){
+ float r=length(uv-center)/max(radius,.0001);
+ float disc=exp(-r*r*3.5)*(1-smoothstep(.7,1.2,r));
+ float rim=exp(-pow((r-.78)/.14,2))*(1-smoothstep(1,1.2,r));
+ return tint*(disc*.65+rim*ring);
+}
 float3 StaffLensFlare(float2 screenUV,float2 sunUV) {
  float aspect=_SolarScreen.y/_SolarScreen.x;
  float2 uv=(screenUV-.5)*float2(1,aspect);
  float2 pos=(sunUV-.5)*float2(1,aspect);
  float3 c=LensFlare(uv,pos)*20.0*colorGain/256.0;
  if(_FlareOptions.x>.5){
-  c+=renderhex(uv,-pos*.5,ghostScale*1.4,float3(.45,.32,.2));
-  c+=renderhex(uv,pos*.5,ghostScale*.5,float3(.25,.35,.45));
-  c+=renderhex(uv,pos*.2,ghostScale*1.6,float3(.15,.3,.35));
-  c+=renderhex(uv,-pos*2.5,ghostScale*3,float3(.2,.15,.3));
+  static const float hexPosition[6]={-.5,.5,.2,-1.05,-1.65,-2.5};
+  static const float hexSize[6]={2.2,.9,1.5,.65,1.1,3.5};
+  static const float3 hexColor[6]={float3(.95,.56,.28)*10.5,float3(.3,.65,.9)*9,float3(.25,.8,.62)*8.25,float3(.45,.6,1)*12,float3(.9,.35,.58)*7.5,float3(.65,.35,.85)*6};
+  [unroll] for(int j=0;j<12;j++){
+   if(j<(int)_GhostControls.x){int k=j%6;float p=j<6?hexPosition[k]:lerp(-2.3,.65,(j-6)/5.0);
+    c+=renderhex(uv,pos*p,ghostScale*hexSize[k]*_GhostStyle.x,hexColor[k])*_GhostControls.z;}
+  }
+  static const float roundPosition[3]={-.82,-1.9,.34};
+  static const float roundSize[3]={.19,.34,.12};
+  static const float3 roundColor[3]={float3(.32,.62,.85),float3(.8,.42,.22),float3(.24,.65,.48)};
+  [unroll] for(int j=0;j<8;j++){
+   if(j<(int)_GhostControls.y){int k=j%3;float p=j<3?roundPosition[k]:lerp(-2.6,.7,(j-3)/4.0);
+    c+=StaffRoundGhost(uv,pos*p,ghostScale*roundSize[k]*_GhostStyle.y,roundColor[k],.12)*_GhostControls.w;}
+  }
  }
  // Additive intensity bounded to keep the original singular core finite.
  return min(max(c,0),8.0)*_FlareOptions.w*.08;

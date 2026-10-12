@@ -36,7 +36,7 @@ namespace Staff.Subway {
     m.SetFloat("_Cutoff",clip?cutoff:0);return m;
    }
    struct Draw {public Renderer renderer;public Material material;public int submesh;}
-   class Data {public TextureHandle color,copy,depth,shadow,shadowDepth,rays,blur,visibility;public Material effect;public Draw[] draws;public Camera camera;public Matrix4x4 lightVP,lightView,invVP;public Vector3 lightPosition,sun;public Vector4 sunUV;public SolarEffects.Settings settings;public float daylight,extent,time;public bool clouds;}
+   class Data {public TextureHandle color,copy,depth,shadow,shadowDepth,rays,blur,visibility;public Material effect;public Draw[] draws;public Camera camera;public Matrix4x4 lightVP,lightView,invVP;public Vector3 lightPosition,sun;public Vector4 sunUV;public SolarEffects.Settings settings;public Color rayTint,starTint;public float daylight,extent,time;public bool clouds;public float[] starGains=new float[16];}
    public override void RecordRenderGraph(RenderGraph graph,ContextContainer frame){
     if(!effect||!sky)return;
     var u=frame.Get<UniversalResourceData>();var cd=frame.Get<UniversalCameraData>();var c=cd.camera;var s=sky.solarEffects;
@@ -61,7 +61,7 @@ namespace Staff.Subway {
      }
     }
     using(var b=graph.AddUnsafePass<Data>("Solar optics — Mancini flare / good-godrays",out var d)){
-     d.color=u.activeColorTexture;d.depth=u.cameraDepthTexture;d.camera=c;d.effect=effect;d.draws=draws.ToArray();d.lightVP=vp;d.lightView=view;d.lightPosition=lightPosition;d.invVP=clips.inverse;d.sun=sun;d.sunUV=sunUV;d.settings=s;d.extent=extent;d.time=(float)sky.StarElapsedSeconds;d.daylight=Mathf.SmoothStep(0,1,Mathf.InverseLerp(-1,5,sky.atmosphere.Elevation));
+     d.color=u.activeColorTexture;d.depth=u.cameraDepthTexture;d.camera=c;d.effect=effect;d.draws=draws.ToArray();d.lightVP=vp;d.lightView=view;d.lightPosition=lightPosition;d.invVP=clips.inverse;d.sun=sun;d.sunUV=sunUV;d.settings=s;d.starTint=Color.Lerp(new Color(1,.78f,.18f),Color.white,Mathf.SmoothStep(0,1,Mathf.InverseLerp(2,20,sky.atmosphere.Elevation)));d.rayTint=SolarEffects.SolarRayColor(s,sky.atmosphere.Elevation,Mathf.SmoothStep(0,1,Mathf.InverseLerp(-.2f,.2f,(Quaternion.Euler(0,-sky.atmosphere.northRotation,0)*sky.atmosphere.SunDirection).x)));d.extent=extent;double flareClock=Application.isPlaying?Time.timeAsDouble:s.previewStarAnimation?Time.realtimeSinceStartupAsDouble:0;d.time=(float)flareClock;SolarEffects.FillStarGains(s,flareClock,d.starGains);d.daylight=Mathf.SmoothStep(0,1,Mathf.InverseLerp(-1,5,sky.atmosphere.Elevation));
      var cloudVolume=VolumeManager.instance.stack?.GetComponent<VolumetricClouds>();d.clouds=sky.skyWeather.clouds&&cloudVolume!=null&&cloudVolume.IsActive();
      var desc=d.color.GetDescriptor(graph);desc.msaaSamples=MSAASamples.None;desc.depthBufferBits=DepthBits.None;desc.name="Solar scene copy";d.copy=graph.CreateTexture(desc);
      b.UseTexture(d.color,AccessFlags.ReadWrite);b.UseTexture(d.copy,AccessFlags.ReadWrite);b.UseTexture(d.depth,AccessFlags.Read);b.UseAllGlobalTextures(true);
@@ -82,11 +82,14 @@ namespace Staff.Subway {
    static void Execute(Data d,UnsafeGraphContext context){
     var cmd=CommandBufferHelpers.GetNativeCommandBuffer(context.cmd);RTHandle color=d.color,copy=d.copy,depth=d.depth,visibility=d.visibility;var m=d.effect;var s=d.settings;
     cmd.Blit(color,copy);
+    cmd.SetGlobalFloatArray("_FlareStarGains",d.starGains);
     cmd.SetGlobalTexture("_SolarSceneDepth",depth);cmd.SetGlobalMatrix("_SolarInvVP",d.invVP);cmd.SetGlobalMatrix("_SolarLightVP",d.lightVP);cmd.SetGlobalMatrix("_SolarLightView",d.lightView);
     cmd.SetGlobalVector("_SolarCamera",d.camera.transform.position);cmd.SetGlobalVector("_SolarSun",d.sun);cmd.SetGlobalVector("_SolarSunUV",d.sunUV);cmd.SetGlobalFloat("_SolarClouds",d.clouds?1:0);cmd.SetGlobalFloat("_SolarExtent",d.extent);
     m.SetVector("_SolarScreen",new Vector4(copy.rt.width,copy.rt.height,1f/copy.rt.width,1f/copy.rt.height));
-    m.SetVector("_FlareParameters",new Vector4(s.glareSize,s.flareSize,s.starPoints,s.ghostScale));m.SetVector("_FlareOptions",new Vector4(s.secondaryGhosts?1:0,s.anamorphic?1:0,d.time,s.lensFlare?s.flareIntensity*d.daylight:0));
-    m.SetVector("_RayParameters",new Vector4(s.rayDensity,s.rayMaxOpacity,s.raySteps,s.distanceAttenuation));m.SetColor("_RayColor",s.rayColor*d.daylight);m.SetFloat("_RaysEnabled",s.sunRays?1:0);
+    m.SetColor("_SunStarTint",d.starTint);
+    m.SetVector("_FlareParameters",new Vector4(s.glareSize,s.flareSize,Mathf.Clamp(s.starPoints,2,8),s.ghostScale));m.SetVector("_FlareOptions",new Vector4(s.secondaryGhosts?1:0,s.anamorphic?1:0,d.time,s.lensFlare?s.flareIntensity*d.daylight:0));
+    m.SetVector("_GhostControls",new Vector4(Mathf.Clamp(s.hexGhostCount,0,12),Mathf.Clamp(s.roundGhostCount,0,8),s.hexGhostOpacity,s.roundGhostOpacity));m.SetVector("_GhostStyle",new Vector4(s.hexGhostSize,s.roundGhostSize,0,0));
+    m.SetVector("_RayParameters",new Vector4(s.rayDensity,s.rayMaxOpacity,s.raySteps,s.distanceAttenuation));m.SetColor("_RayColor",d.rayTint*d.daylight);m.SetFloat("_RaysEnabled",s.sunRays?1:0);m.SetFloat("_RayStrength",s.solarRayStrength);
     DrawFullscreen(cmd,copy,visibility,m,0);cmd.SetGlobalTexture("_SolarVisibility",visibility);
     if(s.sunRays){
      RTHandle shadow=d.shadow,shadowDepth=d.shadowDepth,rays=d.rays,blur=d.blur;

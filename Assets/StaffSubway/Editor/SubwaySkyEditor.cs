@@ -21,6 +21,8 @@ namespace Staff.Subway.Editor {
     EditorGUILayout.Space();EditorGUILayout.LabelField("Live Nishita parameters",EditorStyles.boldLabel);
     EditorGUILayout.HelpBox("Solar time: enable Use Day Cycle and change Time Of Day. Otherwise use Sun Elevation / Sun Rotation. Parameters are preserved until you select another preset.",MessageType.Info);
     CreateCachedEditor(sky.atmosphere,null,ref atmosphereEditor);atmosphereEditor.OnInspectorGUI();
+    EditorGUILayout.LabelField("Effective sun radius",sky.atmosphere.EffectiveSunRadius.ToString("F3")+" degrees");
+    EditorGUILayout.LabelField("Effective ozone",sky.atmosphere.EffectiveOzone.ToString("F3"));
    }
   }
   void OnDisable(){if(atmosphereEditor)DestroyImmediate(atmosphereEditor);}
@@ -35,11 +37,16 @@ namespace Staff.Subway.Editor {
   }
   static void Tick(){
    if(EditorApplication.isPlayingOrWillChangePlaymode||EditorApplication.isCompiling||EditorApplication.timeSinceStartup<next)return;
-   next=EditorApplication.timeSinceStartup+.1;
+   next=EditorApplication.timeSinceStartup+.05;
    var skies=Object.FindObjectsByType<SubwayTimeOfDay>(FindObjectsSortMode.None);
    string state="";foreach(var sky in skies)if(sky&&sky.isActiveAndEnabled&&sky.atmosphere)state+=JsonUtility.ToJson(sky)+JsonUtility.ToJson(sky.atmosphere);
    if(state!=last){last=state;settle=next+.4;}
-   if(next>settle)return;
+   if(next>settle){
+    foreach(var sky in skies)if(sky&&sky.isActiveAndEnabled&&sky.atmosphere&&((sky.atmosphere.useDayCycle&&sky.atmosphere.animate)||(sky.skyWeather.animate&&(sky.skyWeather.clouds||sky.skyWeather.stars)))){EditorApplication.QueuePlayerLoopUpdate();SceneView.RepaintAll();break;}
+    foreach(var sky in skies)if(sky&&sky.isActiveAndEnabled&&sky.atmosphere&&sky.atmosphere.Elevation<-3&&sky.skyWeather.stars&&sky.skyWeather.animate){EditorApplication.QueuePlayerLoopUpdate();SceneView.RepaintAll();break;}
+    foreach(var sky in skies)if(sky&&sky.isActiveAndEnabled&&sky.atmosphere&&sky.atmosphere.Elevation>-1&&sky.solarEffects.lensFlare&&sky.solarEffects.animateStarPoints&&sky.solarEffects.previewStarAnimation&&sky.solarEffects.starAnimationSpeed>0&&sky.solarEffects.starAnimationAmount>0){EditorApplication.QueuePlayerLoopUpdate();SceneView.RepaintAll();break;}
+    return;
+   }
    foreach(var sky in skies)if(sky&&sky.isActiveAndEnabled&&sky.atmosphere){sky.atmosphere.Tick(false);sky.ApplySky();}
    EditorApplication.QueuePlayerLoopUpdate();SceneView.RepaintAll();
   }
