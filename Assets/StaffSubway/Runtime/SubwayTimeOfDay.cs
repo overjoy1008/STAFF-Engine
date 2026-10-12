@@ -11,6 +11,8 @@ namespace Staff.Subway {
    public float elevation,rotation,air,aerosols,ozone,brightness,exposure;
    public Preset(string label,float elevation,float rotation,float air,float aerosols,float ozone,float brightness,float exposure){this.label=label;this.elevation=elevation;this.rotation=rotation;this.air=air;this.aerosols=aerosols;this.ozone=ozone;this.brightness=brightness;this.exposure=exposure;}
   }
+  public static SubwayTimeOfDay Active { get; private set; }
+  public double StarElapsedSeconds => weather?.ElapsedSeconds ?? 0;
   public NishitaAtmosphere atmosphere;
   public Texture2D agxLut;
   public Camera[] cameras;
@@ -26,6 +28,8 @@ namespace Staff.Subway {
   public string Label=>presets!=null&&presets.Length>0?presets[Mathf.Clamp(current,0,presets.Length-1)].label:"";
   [Header("Clouds and celestial stars")]
   public NishitaSkyWeather.Settings skyWeather = new NishitaSkyWeather.Settings();
+  [Header("Sun optics — F9 flare / F10 rays")]
+  public SolarEffects.Settings solarEffects = new SolarEffects.Settings();
   NishitaSkyWeather weather;
   Material disc, savedGlobalSky;
   [Range(-12,12)] public float exposure=-3;
@@ -35,6 +39,7 @@ namespace Staff.Subway {
   CameraClearFlags[] savedFlags;
   float savedFillIntensity;Color savedFillColor;
   void OnEnable(){
+   Active=this;
    weather = new NishitaSkyWeather();
    savedGlobalSky=RenderSettings.skybox;
    player=FindFirstObjectByType<AdventurePlayer>();
@@ -45,7 +50,7 @@ namespace Staff.Subway {
    ApplySky();
   }
   void Update(){if(!Application.isPlaying)return;HandleInput(Application.isFocused&&player&&player.InputCaptured&&!player.InputBlocked);}
-  public bool HandleInput(bool accept){if(!accept||Keyboard.current==null||!Keyboard.current.tKey.wasPressedThisFrame)return false;Cycle();return true;}
+  public bool HandleInput(bool accept){bool changed=SolarEffects.HandleInput(solarEffects,accept);if(!accept||Keyboard.current==null||!Keyboard.current.tKey.wasPressedThisFrame)return changed;Cycle();return true;}
   public void Cycle(){if(presets!=null&&presets.Length>0)SetPreset((current+1)%presets.Length);}
   public void SetPreset(int index){
    if(!atmosphere||presets==null||presets.Length==0)return;
@@ -75,6 +80,7 @@ namespace Staff.Subway {
    if(cameras!=null&&savedSky!=null)for(int i=0;i<cameras.Length&&i<savedSky.Length;i++){var c=cameras[i];if(!c)continue;var mode=c.GetComponent<AbstractEnvironment>();if(mode){mode.abstractSkybox=savedAbstract[i];}var sky=c.GetComponent<Skybox>();if(sky){sky.material=savedSky[i];sky.enabled=savedEnabled[i];}c.clearFlags=savedFlags[i];}
   }
   void OnDisable(){
+   if(Active==this)Active=null;
    RestorePreviewBindings();
    weather?.Dispose();weather=null;
    if(skyFill){skyFill.intensity=savedFillIntensity;skyFill.color=savedFillColor;}

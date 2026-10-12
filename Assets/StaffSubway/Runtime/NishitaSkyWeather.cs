@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace Staff.Subway
 {
-    // NASA Deep Star Maps 2020: shared imported HDR celestial map.
+    // Selectable HYG mesh renderer / NASA Deep Star Maps 2020 fallback.
     // Cloud rendering is supplied by UnityVolumetricCloudsURP. No per-star objects or runtime texture generation.
     public sealed class NishitaSkyWeather : IDisposable
     {
+        public enum StarBackend { UnityStarRenderer, NASADeepStarMap }
         [Serializable]
         public sealed class Settings
         {
@@ -21,6 +22,9 @@ namespace Staff.Subway
             [Range(0, 20)] [HideInInspector] public float windMetersPerSecond = 1.2f;
             [Range(0, 360)] [HideInInspector] public float windHeading = 75;
             public bool stars = true;
+            public StarBackend starBackend = StarBackend.UnityStarRenderer;
+            [Range(0,6.5f)] public float starMagnitudeLimit = 6.5f;
+            [Range(.1f,3)] public float starSize = 1;
             [Tooltip("Optional celestial RA/Dec map. Defaults to NASA Deep Star Maps 2020 (4K).")]
             public Texture2D starMap;
             [Range(-8,8)] public float starExposure = 0;
@@ -45,8 +49,8 @@ namespace Staff.Subway
         public void Apply(Material material, Settings s, float latitude, float northRotation, float sunElevation,
                           double seconds = -1)
         {
-            material.SetFloat("_WeatherStars", s.stars ? 1 : 0);
-            if (!s.stars) return;
+            material.SetFloat("_WeatherStars", s.stars && s.starBackend == StarBackend.NASADeepStarMap ? 1 : 0);
+            if (!s.stars || s.starBackend != StarBackend.NASADeepStarMap) return;
             if (!stars) stars = Resources.Load<Texture2D>("NASA/starmap_2020_4k");
             var map = s.starMap ? s.starMap : stars;
             if (!map) { material.SetFloat("_WeatherStars",0); return; }

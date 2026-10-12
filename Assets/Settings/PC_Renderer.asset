@@ -52,6 +52,8 @@ MonoBehaviour:
   - {fileID: 7833122117494664109}
   - {fileID: 6468300963774406907}
   - {fileID: -6245904748744300033}
+  - {fileID: 574025814810073826}
+  - {fileID: 6220943710149942331}
   m_RendererFeatureMap: ad6b866f10d7b46c
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
@@ -81,6 +83,37 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &574025814810073826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fc0e69ccde74cb88d47daf4da943ee, type: 3}
+  m_Name: Unity Star Renderer - HYG
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.CelestialStarFeature
+  m_Active: 1
+  catalog: {fileID: 4900000, guid: 4ad4f3822367a46d39b6c8d6df2c6c52, type: 3}
+  starMaterial: {fileID: 2100000, guid: 0297e61e879a84f64880f18c2cdbb8d4, type: 2}
+--- !u!114 &6220943710149942331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52747920763e04d2fbd7555bd60f0720, type: 3}
+  m_Name: Solar Optics - Flare F9 / Rays F10
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SolarOpticsFeature
+  m_Active: 1
+  opticsShader: {fileID: 4800000, guid: 4e3b253cf2fb04230ab1ec2a91c5e12c, type: 3}
+  shadowShader: {fileID: 4800000, guid: 415f6342c389847bbb5a66984535caa8, type: 3}
+  shadowResolution: 1024
 --- !u!114 &6468300963774406907
 MonoBehaviour:
   m_ObjectHideFlags: 0
