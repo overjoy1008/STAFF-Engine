@@ -266,7 +266,7 @@ inline float4 lookup_multiscattering(float cos_theta, float normalized_height, f
  _Transmittance[id.xy]=get_transmittance(float(id.x)/255*2-1,float(id.y)/63);
 }
 [numthreads(8,8,1)] void GenerateSky(uint3 id:SV_DispatchThreadID){
- if(id.x>=uint(_Width/2)||id.y>=uint(_Height))return;
+ if(id.x>=(uint(_Width) >> 1)||id.y>=uint(_Height))return;
  float2 uv=(float2(id.xy)+.5)/float2(_Width,_Height);
  float azimuth=M_2PI_F*uv.x;float l=uv.y*2-1;
  float elev=sign(l)*l*l*M_PI_2_F;

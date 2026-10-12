@@ -1,0 +1,7 @@
+NASA Deep Star Maps 2020
+Source: https://svs.gsfc.nasa.gov/4851
+Original: https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004851/starmap_2020_4k.exr
+Credit: NASA/Goddard Space Flight Center Scientific Visualization Studio. Visualization by Ernie Wright.
+Data: Hipparcos-2, Tycho-2, Gaia DR2, with Yale Bright Star Catalog, UCAC3 and XHIP.
+4096x2048 OpenEXR, linear HDR, ICRF/J2000 RA/Dec; RA zero at centre and increases left.
+Original EXR retained unchanged. Unity imports as linear HDR BC6H with mipmaps. No runtime star database, individual star objects, artificial Polaris, or constellation lines. Sidereal phase is artistic, not tied to calendar/longitude.

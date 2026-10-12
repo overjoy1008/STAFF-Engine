@@ -1,0 +1,47 @@
+using UnityEngine;
+using UnityEditor;
+using Staff.Subway;
+using Staff.Nishita;
+namespace Staff.Subway.Editor {
+ [CustomEditor(typeof(SubwayTimeOfDay))]
+ public sealed class SubwaySkyEditor:UnityEditor.Editor {
+  UnityEditor.Editor atmosphereEditor;
+  public override void OnInspectorGUI(){
+   var sky=(SubwayTimeOfDay)target;
+   if(sky.presets!=null&&sky.presets.Length>0){
+    var labels=System.Array.ConvertAll(sky.presets,p=>p.label);
+    EditorGUI.BeginChangeCheck();int next=EditorGUILayout.Popup("Time preset",sky.Current,labels);
+    if(EditorGUI.EndChangeCheck()){
+     Undo.RecordObject(sky,"Change sky preset");if(sky.atmosphere)Undo.RecordObject(sky.atmosphere,"Change sky preset");if(sky.skyFill)Undo.RecordObject(sky.skyFill,"Change sky preset");
+     sky.SetPreset(next);EditorUtility.SetDirty(sky);if(sky.atmosphere)EditorUtility.SetDirty(sky.atmosphere);
+    }
+   }
+   DrawDefaultInspector();
+   if(sky.atmosphere){
+    EditorGUILayout.Space();EditorGUILayout.LabelField("Live Nishita parameters",EditorStyles.boldLabel);
+    EditorGUILayout.HelpBox("Solar time: enable Use Day Cycle and change Time Of Day. Otherwise use Sun Elevation / Sun Rotation. Parameters are preserved until you select another preset.",MessageType.Info);
+    CreateCachedEditor(sky.atmosphere,null,ref atmosphereEditor);atmosphereEditor.OnInspectorGUI();
+   }
+  }
+  void OnDisable(){if(atmosphereEditor)DestroyImmediate(atmosphereEditor);}
+ }
+ [InitializeOnLoad]
+ static class SkyEditPreview {
+  static double next;static string last;static double settle;
+  static SkyEditPreview(){
+   EditorApplication.update+=Tick;
+   UnityEditor.SceneManagement.EditorSceneManager.sceneSaving+=(scene,path)=>{foreach(var sky in Object.FindObjectsByType<SubwayTimeOfDay>(FindObjectsSortMode.None))if(sky.isActiveAndEnabled&&sky.gameObject.scene==scene)sky.RestorePreviewBindings();};
+   UnityEditor.SceneManagement.EditorSceneManager.sceneSaved+=scene=>{foreach(var sky in Object.FindObjectsByType<SubwayTimeOfDay>(FindObjectsSortMode.None))if(sky.isActiveAndEnabled&&sky.gameObject.scene==scene)sky.ApplySky();};
+  }
+  static void Tick(){
+   if(EditorApplication.isPlayingOrWillChangePlaymode||EditorApplication.isCompiling||EditorApplication.timeSinceStartup<next)return;
+   next=EditorApplication.timeSinceStartup+.1;
+   var skies=Object.FindObjectsByType<SubwayTimeOfDay>(FindObjectsSortMode.None);
+   string state="";foreach(var sky in skies)if(sky&&sky.isActiveAndEnabled&&sky.atmosphere)state+=JsonUtility.ToJson(sky)+JsonUtility.ToJson(sky.atmosphere);
+   if(state!=last){last=state;settle=next+.4;}
+   if(next>settle)return;
+   foreach(var sky in skies)if(sky&&sky.isActiveAndEnabled&&sky.atmosphere){sky.atmosphere.Tick(false);sky.ApplySky();}
+   EditorApplication.QueuePlayerLoopUpdate();SceneView.RepaintAll();
+  }
+ }
+}

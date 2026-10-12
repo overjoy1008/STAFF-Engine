@@ -2,7 +2,7 @@
 // intern/cycles/kernel/svm/sky.h, Blender Foundation, Apache-2.0.
 Shader "STAFF/Subway/Live Nishita Presets"
 {
- Properties { _SkyCurrent("Current atmosphere",2D)="black"{} _SkyPrevious("Previous atmosphere",2D)="black"{} }
+ Properties { [HideInInspector] _StarMap("NASA celestial map",2D)="black"{} _SkyCurrent("Current atmosphere",2D)="black"{} _SkyPrevious("Previous atmosphere",2D)="black"{} }
  SubShader {
  Tags {"Queue"="Background" "RenderType"="Background" "PreviewType"="Skybox"}
  Cull Off ZWrite Off

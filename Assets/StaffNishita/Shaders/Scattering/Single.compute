@@ -138,8 +138,11 @@ static float phase_rayleigh(float mu)
 
 static float phase_mie(float mu)
 {
+  mu = clamp(mu, -1.0f, 1.0f);
+  // Positive equivalent of 1 + g*g - 2*g*mu; x^1.5 = x*sqrt(x).
+  float phaseBase = sqr(1.0f - MIE_G) + 2.0f * MIE_G * (1.0f - mu);
   return (3.0f * (1.0f - SQR_G) * (1.0f + sqr(mu))) /
-         (8.0f * M_PI_F * (2.0f + SQR_G) * powf((1.0f + SQR_G - 2.0f * MIE_G * mu), 1.5));
+         (8.0f * M_PI_F * (2.0f + SQR_G) * (phaseBase * sqrt(phaseBase)));
 }
 
 /* Intersection helpers. */
@@ -305,9 +308,9 @@ static void sun_radiation(float3 cam_dir,
 
 
 [numthreads(8,8,1)] void GenerateSky(uint3 id:SV_DispatchThreadID){
- if(id.x>=uint(_Width/2)||id.y>=uint(_Height/2))return;
- int y=id.y+_Height/2;
- float latitude=M_PI_2_F*sqr(float(y)/(_Height/2)-1);
+ if(id.x>=(uint(_Width) >> 1)||id.y>=(uint(_Height) >> 1))return;
+ uint y=id.y+(uint(_Height) >> 1);
+ float latitude=M_PI_2_F*sqr(float(y)/(uint(_Height) >> 1)-1);
  float longitude=M_2PI_F*id.x/_Width-M_PI_F;
  float spectrum[21];
  single_scattering(geographical_to_direction(latitude,longitude),SunDirection(_Elevation),
@@ -316,10 +319,10 @@ static void sun_radiation(float3 cam_dir,
  _Sky[int2(id.x,y)]=xyz;_Sky[int2(_Width-id.x-1,y)]=xyz;
 }
 [numthreads(8,8,1)] void FillLower(uint3 id:SV_DispatchThreadID){
- if(id.x>=uint(_Width)||id.y>=uint(_Height/2))return;
- float latitude=M_PI_2_F*sqr(float(id.y)/(_Height/2)-1);
+ if(id.x>=uint(_Width)||id.y>=(uint(_Height) >> 1))return;
+ float latitude=M_PI_2_F*sqr(float(id.y)/(uint(_Height) >> 1)-1);
  float fade=pow(max(1-sin(latitude)*2.5,0),3);
- _Sky[id.xy]=float4(_Sky[int2(id.x,_Height/2)].xyz*fade,1);
+ _Sky[id.xy]=float4(_Sky[int2(id.x,(uint(_Height) >> 1))].xyz*fade,1);
 }
 [numthreads(1,1,1)] void GenerateSun(uint3 id:SV_DispatchThreadID){
  float radius=_Diameter*.5;

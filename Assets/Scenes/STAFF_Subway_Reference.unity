@@ -18667,7 +18667,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
@@ -19766,6 +19766,7 @@ GameObject:
   - component: {fileID: 547016253}
   - component: {fileID: 547016255}
   - component: {fileID: 547016254}
+  - component: {fileID: 547016256}
   m_Layer: 0
   m_Name: Nishita time presets
   m_TagString: Untagged
@@ -19839,7 +19840,23 @@ MonoBehaviour:
     ozone: 2.92
     brightness: 0.27
     exposure: -2
-  current: 0
+  current: 1
+  skyWeather:
+    clouds: 1
+    seed: 2718
+    cloudCoverage: 0.48
+    cloudDensity: 1.1
+    cloudBaseMeters: 1400
+    cloudThicknessMeters: 1800
+    cloudScaleMeters: 6500
+    windMetersPerSecond: 1.2
+    windHeading: 75
+    stars: 1
+    starBrightness: 1
+    starRevolutionSeconds: 14400
+    starPhaseDegrees: 0
+    animate: 1
+  exposure: -3
 --- !u!114 &547016255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19852,16 +19869,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49877256a7bce4b609fc1a853907d318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Nishita.NishitaAtmosphere
-  airDensity: 1.6
-  aerosolDensity: 1.8
-  ozoneDensity: 0.6
+  airDensity: 1.2
+  aerosolDensity: 0.3
+  ozoneDensity: 2.5
   altitude: 1523
   sunDisc: 1
   sunRadius: 0.941
   sunIntensity: 1.22
-  brightness: 0.27
-  sunElevation: 5.5
-  sunRotation: 92.2
+  brightness: 0.35
+  sunElevation: 60
+  sunRotation: 180
   useDayCycle: 0
   animate: 0
   timeOfDay: 17.5
@@ -19875,6 +19892,19 @@ MonoBehaviour:
   multipleCompute: {fileID: 7200000, guid: 84b341b2022104309b6fe128c670216b, type: 3}
   lightingCompute: {fileID: 7200000, guid: e7502ee98723f42db9b0d551cdea88ff, type: 3}
   skyShader: {fileID: 4800000, guid: fb1e5910326bc4abdabfd8a1a065c095, type: 3}
+--- !u!114 &547016256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547016252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bce70e6c290c4e87b9bcdeaede553ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.NishitaCloudLighting
+  sky: {fileID: 547016254}
 --- !u!1 &547314810
 GameObject:
   m_ObjectHideFlags: 0
@@ -23114,7 +23144,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
@@ -87588,6 +87618,7 @@ Transform:
   - {fileID: 2080937091}
   - {fileID: 1934010528}
   - {fileID: 547016253}
+  - {fileID: 2005404469}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1959684899
@@ -89248,6 +89279,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001778402}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2005404468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2005404469}
+  - component: {fileID: 2005404470}
+  m_Layer: 8
+  m_Name: Nishita Volumetric Clouds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2005404469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005404468}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959564675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2005404470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005404468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 10
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: cfeed730860994e1d8ed3e0de4030504, type: 2}
 --- !u!1 &2006220580
 GameObject:
   m_ObjectHideFlags: 0
