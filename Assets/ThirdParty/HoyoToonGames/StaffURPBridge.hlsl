@@ -5,19 +5,30 @@
 // Previous HoyoToon neutral-light setting preserves illuminance and albedo colors.
 float _StaffExposure, _StaffNeutralLighting;
 float3 StaffLightColor(float3 color) { return lerp(color, dot(color,float3(.2126,.7152,.0722)).xxx, saturate(_StaffNeutralLighting)); }
+// Per-fragment context for the upstream ForwardAdd equations, evaluated in URP.
+static bool StaffAdditionalActive = false;
+static float4 StaffAdditionalPosition, StaffAdditionalColor;
+static float StaffAdditionalAttenuation, StaffAdditionalShadow;
+void StaffSetAdditional(Light light, float3 sourcePosition) {
+ StaffAdditionalActive=true;
+ StaffAdditionalPosition=float4(sourcePosition+light.direction,1);
+ StaffAdditionalColor=float4(StaffLightColor(light.color),1);
+ StaffAdditionalAttenuation=light.distanceAttenuation*light.shadowAttenuation;
+ StaffAdditionalShadow=light.shadowAttenuation;
+}
 #define UnityObjectToClipPos(v) TransformObjectToHClip((v).xyz)
 #define UnityObjectToWorldDir(v) TransformObjectToWorldDir(v)
 #define ShadeSH9(v) StaffLightColor(SampleSH((v).xyz))
 #define ComputeGrabScreenPos(v) ComputeScreenPos(v)
-#define _WorldSpaceLightPos0 float4(GetMainLight().direction,0)
-#define _LightColor0 float4(StaffLightColor(GetMainLight().color),1)
+#define _WorldSpaceLightPos0 (StaffAdditionalActive ? StaffAdditionalPosition : float4(GetMainLight().direction,0))
+#define _LightColor0 (StaffAdditionalActive ? StaffAdditionalColor : float4(StaffLightColor(GetMainLight().color),1))
 #define UNITY_DECLARE_DEPTH_TEXTURE(t)
 #undef SAMPLE_DEPTH_TEXTURE
 #define SAMPLE_DEPTH_TEXTURE(t,uv) SampleSceneDepth(uv)
 #define SHADOW_COORDS(n) float4 shadowCoord:TEXCOORD##n;
 #define TRANSFER_SHADOW(o) o.shadowCoord=TransformWorldToShadowCoord(o.ws_pos.xyz);
-#define SHADOW_ATTENUATION(i) GetMainLight(TransformWorldToShadowCoord(i.ws_pos.xyz)).shadowAttenuation
-#define UNITY_LIGHT_ATTENUATION(name,i,pos) half name=GetMainLight(TransformWorldToShadowCoord(pos)).shadowAttenuation
+#define SHADOW_ATTENUATION(i) (StaffAdditionalActive ? StaffAdditionalShadow : GetMainLight(TransformWorldToShadowCoord(i.ws_pos.xyz)).shadowAttenuation)
+#define UNITY_LIGHT_ATTENUATION(name,i,pos) half name=(StaffAdditionalActive ? StaffAdditionalAttenuation : GetMainLight(TransformWorldToShadowCoord(pos)).shadowAttenuation)
 #define V2F_SHADOW_CASTER float4 pos:SV_POSITION
 float3 _LightDirection, _LightPosition;
 float4 StaffShadowPosition(float3 positionOS,float3 normalOS){

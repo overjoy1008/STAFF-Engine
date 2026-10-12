@@ -20,7 +20,9 @@ retains its own shading equations.
 
 This is a six-mode shader comparison, not reconstruction of the original games'
 complete character materials. Game-specific face/hair setup requires matching maps.
-URP currently schedules the base, stencil and outline passes; Built-in ForwardAdd
-is not used. Specialized game effects require further integration and source data.
+URP schedules base, stencil and outline passes. Additional point/spot lights are
+evaluated in the base pass through each game's original ForwardAdd fragment
+equations (generated StaffAdditionalLight.hlsl), using URP light attenuation and
+shadows. Specialized game effects require further integration and source data.
 The old HoyoToonMMD folder/template is retained for existing asset references, but
 CharacterToonToggle no longer reads or uses that template.

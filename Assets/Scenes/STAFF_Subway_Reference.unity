@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.037, g: 0.045, b: 0.062, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: a6a47b140f0704a1d9c4a1760bac9fae, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: b3bd6bb16df33417d88c91131cae40f2, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -3276,7 +3276,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5629,7 +5629,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5868,7 +5868,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -11870,7 +11870,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -14979,7 +14979,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -16176,7 +16176,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -18485,7 +18485,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -18584,6 +18584,7 @@ GameObject:
   - component: {fileID: 498957215}
   - component: {fileID: 498957214}
   - component: {fileID: 9876543201}
+  - component: {fileID: 9876543202}
   m_Layer: 0
   m_Name: Gameplay Camera (SampleScene)
   m_TagString: MainCamera
@@ -18707,7 +18708,7 @@ Camera:
   m_GameObject: {fileID: 498957212}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.037, g: 0.045, b: 0.062, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -19754,6 +19755,126 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3, y: 3.2, z: 0.18}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &547016252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 547016253}
+  - component: {fileID: 547016255}
+  - component: {fileID: 547016254}
+  m_Layer: 0
+  m_Name: Nishita time presets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &547016253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547016252}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959564675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &547016254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547016252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591dd830a800240b2bcf354ddacc1f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SubwayTimeOfDay
+  atmosphere: {fileID: 547016255}
+  agxLut: {fileID: 2800000, guid: 4f2794108934a4f16a365244871a8bfb, type: 2}
+  cameras:
+  - {fileID: 498957218}
+  - {fileID: 581668946}
+  skyFill: {fileID: 1934010529}
+  presets:
+  - label: Yellow sunrise
+    elevation: 5.5
+    rotation: 92.2
+    air: 1.6
+    aerosols: 1.8
+    ozone: 0.6
+    brightness: 0.27
+    exposure: -2
+  - label: Blue noon
+    elevation: 60
+    rotation: 180
+    air: 1.2
+    aerosols: 0.3
+    ozone: 2.5
+    brightness: 0.35
+    exposure: -3
+  - label: Red sunset
+    elevation: 0.8
+    rotation: 267.8
+    air: 1.8
+    aerosols: 4.5
+    ozone: 1.1
+    brightness: 0.27
+    exposure: -1.5
+  - label: Night
+    elevation: -12
+    rotation: 300
+    air: 1.8
+    aerosols: 1
+    ozone: 2.92
+    brightness: 0.27
+    exposure: -2
+  current: 0
+--- !u!114 &547016255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547016252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49877256a7bce4b609fc1a853907d318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Nishita.NishitaAtmosphere
+  airDensity: 1.6
+  aerosolDensity: 1.8
+  ozoneDensity: 0.6
+  altitude: 1523
+  sunDisc: 1
+  sunRadius: 0.941
+  sunIntensity: 1.22
+  brightness: 0.27
+  sunElevation: 5.5
+  sunRotation: 92.2
+  useDayCycle: 0
+  animate: 0
+  timeOfDay: 17.5
+  dayDurationSeconds: 240
+  latitude: 37
+  solarDeclination: 0
+  northRotation: 0
+  skyWidth: 256
+  updateInterval: 0.0667
+  singleCompute: {fileID: 7200000, guid: 47288199198254671bc95ee5dda41292, type: 3}
+  multipleCompute: {fileID: 7200000, guid: 84b341b2022104309b6fe128c670216b, type: 3}
+  lightingCompute: {fileID: 7200000, guid: e7502ee98723f42db9b0d551cdea88ff, type: 3}
+  skyShader: {fileID: 4800000, guid: fb1e5910326bc4abdabfd8a1a065c095, type: 3}
 --- !u!1 &547314810
 GameObject:
   m_ObjectHideFlags: 0
@@ -22861,6 +22982,7 @@ GameObject:
   - component: {fileID: 581668944}
   - component: {fileID: 581668943}
   - component: {fileID: 581668947}
+  - component: {fileID: 581668948}
   m_Layer: 30
   m_Name: Reference Camera
   m_TagString: Untagged
@@ -22930,7 +23052,7 @@ Camera:
   m_GameObject: {fileID: 581668941}
   m_Enabled: 0
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.037, g: 0.045, b: 0.062, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -22953,7 +23075,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.08
-  far clip plane: 240
+  far clip plane: 600
   field of view: 58
   orthographic: 0
   orthographic size: 5
@@ -23016,6 +23138,15 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!45 &581668948
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581668941}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: b3bd6bb16df33417d88c91131cae40f2, type: 2}
 --- !u!1 &582746565
 GameObject:
   m_ObjectHideFlags: 0
@@ -24863,7 +24994,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -25697,7 +25828,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -26022,7 +26153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 65
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &705381506
 Transform:
   m_ObjectHideFlags: 0
@@ -26575,7 +26706,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -27017,7 +27148,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -27466,7 +27597,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -28109,7 +28240,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -28507,7 +28638,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -46922,7 +47053,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 0.82, g: 0.88, b: 1, a: 1}
-  m_Intensity: 0.9
+  m_Intensity: 1.25
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -47437,7 +47568,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -49072,7 +49203,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -49470,7 +49601,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -49629,7 +49760,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -50108,7 +50239,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -52738,7 +52869,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -57599,7 +57730,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -58057,7 +58188,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -58802,7 +58933,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -61372,7 +61503,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -70851,7 +70982,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -72696,7 +72827,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -79185,7 +79316,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -80946,7 +81077,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -81297,7 +81428,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -86838,6 +86969,133 @@ Transform:
   - {fileID: 786782660}
   m_Father: {fileID: 1594543956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1934010527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1934010528}
+  - component: {fileID: 1934010529}
+  - component: {fileID: 1934010530}
+  m_Layer: 0
+  m_Name: Nishita sky fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1934010528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934010527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.51899165, y: 0.21828577, z: -0.13906339, w: 0.8146536}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959564675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &1934010529
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934010527}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 1
+  m_Color: {r: 0.85, g: 0.92, b: 1, a: 1}
+  m_Intensity: 0.35
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!114 &1934010530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934010527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1001 &1934506115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87328,6 +87586,8 @@ Transform:
   - {fileID: 574989647}
   - {fileID: 1073362206}
   - {fileID: 2080937091}
+  - {fileID: 1934010528}
+  - {fileID: 547016253}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1959684899
@@ -88105,7 +88365,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -88232,7 +88492,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -91134,7 +91394,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.83, g: 0.89, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2.5
   m_Range: 12.75
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -93192,10 +93452,20 @@ MonoBehaviour:
   surfaceShader: {fileID: 4800000, guid: bac644a32d4f4480917ea2a33e975f01, type: 3}
   geometryShader: {fileID: 4800000, guid: d4e28f3a00f1467cb48f0faa4a462a15, type: 3}
   edgeShader: {fileID: 4800000, guid: a0e06a15e3e24e0fb5f6383a3637d0ab, type: 3}
+  abstractSkybox: {fileID: 2100000, guid: f9f6e019eadfb46b38b51ac506dbe8b4, type: 2}
   startAbstract: 0
   lineWidth: 1
   normalThreshold: 0.18
   depthThreshold: 0.008
+--- !u!45 &9876543202
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498957212}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: b3bd6bb16df33417d88c91131cae40f2, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

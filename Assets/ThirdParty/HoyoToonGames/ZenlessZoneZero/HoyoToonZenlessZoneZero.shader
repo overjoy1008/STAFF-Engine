@@ -477,16 +477,31 @@ Shader "HoyoToon/Zenless Zone Zero/Character"
             HLSLPROGRAM
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile _IS_PASS_BASE
             #pragma vertex vs_model
             #pragma fragment Staff_ps_model
             #include "Include/zzz-program.hlsl"
-            // Source UV/coverage adapter only; upstream RGB shading is unchanged.
+            #include "StaffAdditionalLight.hlsl"
+            // Source UV/coverage and URP light routing; native game shading equations retained.
             float4 Staff_ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET {
                 i.uv_a.xy = i.uv_a.xy * _StaffSourceST.xy + _StaffSourceST.zw;
                 float coverage = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy).a * _StaffSourceOpacity;
                 clip(coverage - _StaffSourceCutoff);
                 float4 result = ps_model(i, vface);
+
+                #if defined(_ADDITIONAL_LIGHTS)
+                if (_MultiLight > .5) {
+                    uint count=GetAdditionalLightsCount();
+                    for(uint index=0;index<count;index++) {
+                        Light localLight=GetAdditionalLight(index,i.ws_pos.xyz,half4(1,1,1,1));
+                        StaffSetAdditional(localLight,i.ws_pos.xyz);
+                        result.rgb += StaffAdditionalFragment(i, vface).rgb;
+                    }
+                    StaffAdditionalActive=false;
+                }
+                #endif
                 result.a *= _StaffSourceOpacity;
                 result.rgb *= _StaffExposure;
                 return result;
@@ -512,10 +527,12 @@ Shader "HoyoToon/Zenless Zone Zero/Character"
             #pragma multi_compile _IS_PASS_BASE
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma vertex vs_model
             #pragma fragment Staff_ps_model
             #include "Include/zzz-program.hlsl"
-            // Source UV/coverage adapter only; upstream RGB shading is unchanged.
+            // Source UV/coverage and URP light routing; native game shading equations retained.
             float4 Staff_ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET {
                 i.uv_a.xy = i.uv_a.xy * _StaffSourceST.xy + _StaffSourceST.zw;
                 float coverage = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy).a * _StaffSourceOpacity;
@@ -552,7 +569,7 @@ Shader "HoyoToon/Zenless Zone Zero/Character"
             #pragma fragment Staff_ps_model 
 
             #include "Include/zzz-program.hlsl"
-            // Source UV/coverage adapter only; upstream RGB shading is unchanged.
+            // Source UV/coverage and URP light routing; native game shading equations retained.
             float4 Staff_ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET {
                 i.uv_a.xy = i.uv_a.xy * _StaffSourceST.xy + _StaffSourceST.zw;
                 float coverage = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy).a * _StaffSourceOpacity;
@@ -581,10 +598,12 @@ Shader "HoyoToon/Zenless Zone Zero/Character"
             HLSLPROGRAM
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma vertex vs_outline
             #pragma fragment Staff_ps_outline
             #include "Include/zzz-program.hlsl"
-            // Source UV/coverage adapter only; upstream RGB shading is unchanged.
+            // Source UV/coverage and URP light routing; native game shading equations retained.
             float4 Staff_ps_outline(vs_out i) : SV_TARGET {
                 i.uv_a.xy = i.uv_a.xy * _StaffSourceST.xy + _StaffSourceST.zw;
                 float coverage = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy).a * _StaffSourceOpacity;
@@ -607,12 +626,14 @@ Shader "HoyoToon/Zenless Zone Zero/Character"
             
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             
             #pragma vertex vs_shadow
             #pragma fragment Staff_ps_shadow
 
             #include "Include/zzz-program.hlsl"
-            // Source UV/coverage adapter only; upstream RGB shading is unchanged.
+            // Source UV/coverage and URP light routing; native game shading equations retained.
             float4 Staff_ps_shadow(shadow_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET {
                 i.uv_a.xy = i.uv_a.xy * _StaffSourceST.xy + _StaffSourceST.zw;
                 float coverage = _MainTex.Sample(sampler_linear_repeat, i.uv_a.xy).a * _StaffSourceOpacity;

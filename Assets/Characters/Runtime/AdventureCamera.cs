@@ -281,7 +281,9 @@ namespace Staff.Characters
             if (roster && roster.PickerOpen) return;
             var dance = target.GetComponent<AdventureDance>();
             var monochrome = Object.FindFirstObjectByType<Staff.MathSpace.MonochromeMode>();
-            GUI.Box(new Rect(12, 12, 340, 187), GUIContent.none);
+            var timeOfDay = Object.FindFirstObjectByType<Staff.Subway.SubwayTimeOfDay>();
+            GUI.Box(new Rect(12, 12, 340, timeOfDay ? 210 : 187), GUIContent.none);
+            if(timeOfDay) GUI.Label(new Rect(22, 193, 320, 22), "T   Time: " + timeOfDay.Label);
             GUI.Label(new Rect(22, 18, 320, 22), IsFirstPerson ? perspectiveKey + "   First person: " + (Mode == FirstPersonMode.Classic ? "Classic" : Mode == FirstPersonMode.Eyes ? "Eyes (Original)" : Mode == FirstPersonMode.LightEyes ? "Eyes (Light)" : "Eyes (Stabilized)") : perspectiveKey + "   Camera: Third person (Cinemachine)");
             GUI.Label(new Rect(22, 40, 320, 22), "C   Character: " + (roster ? roster.CurrentName : "—"));
             var environmentMode = GetComponent<Staff.Subway.AbstractEnvironment>();

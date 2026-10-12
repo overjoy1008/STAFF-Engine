@@ -12,6 +12,11 @@ namespace Staff.Subway {
    if(!mirror){var go=new GameObject("Subway Reflection Camera"){hideFlags=HideFlags.HideAndDontSave};mirror=go.AddComponent<Camera>();mirror.enabled=false;}
    if(!texture){texture=new RenderTexture(resolution,resolution,24,RenderTextureFormat.ARGBHalf){name="Subway Planar Reflection",useMipMap=true,autoGenerateMips=true,hideFlags=HideFlags.HideAndDontSave};texture.Create();}
    mirror.CopyFrom(source);mirror.enabled=false;mirror.targetTexture=texture;mirror.cullingMask=source.cullingMask&~(1<<29);mirror.useOcclusionCulling=false;
+   // Camera.CopyFrom does not copy a camera-local Skybox component.
+   // Mirror the selected time-of-day sky as well as the scene geometry.
+   var sourceSky=source.GetComponent<Skybox>();var mirrorSky=mirror.GetComponent<Skybox>();
+   if(sourceSky&&sourceSky.enabled&&sourceSky.material){if(!mirrorSky)mirrorSky=mirror.gameObject.AddComponent<Skybox>();mirrorSky.enabled=true;mirrorSky.material=sourceSky.material;}
+   else if(mirrorSky)mirrorSky.enabled=false;
    var reflection=Matrix4x4.identity;reflection.m11=-1;reflection.m13=2*height;
    mirror.worldToCameraMatrix=source.worldToCameraMatrix*reflection;
    Vector3 pos=source.transform.position;pos.y=2*height-pos.y;mirror.transform.position=pos;
