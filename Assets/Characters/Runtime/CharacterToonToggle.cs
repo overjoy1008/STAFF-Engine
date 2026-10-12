@@ -30,6 +30,13 @@ namespace Staff.Characters {
        result.SetTexture("_LightTex",lightMask);result.SetTexture("_OtherDataTex",dataMask);result.SetTexture("_OtherDataTex2",dataMask2);
        result.SetFloat("_UseBumpMap",0);result.SetFloat("_SpecIntensity",0);result.SetFloat("_DoubleSided",0);result.SetFloat("_DoubleUV",0);result.SetFloat("_UseAlpha",1);result.SetFloat("_AlphaCutoff",source.HasProperty("_Cutoff")?source.GetFloat("_Cutoff"):.1f);result.SetFloat("_Cull",source.HasProperty("_Cull")?source.GetFloat("_Cull"):0);result.SetFloat("_AlbedoSmoothness",.18f);
        foreach(var name in new[]{"_PostShallowTint","_PostShallowFadeTint","_PostShadowTint","_PostShadowFadeTint","_PostFrontTint","_PostSssTint"})result.SetColor(name,Color.white);
+       // Soft opacity needs blending after opaque skin/clothes, not a solid cutout.
+       bool transparent=source.HasProperty("_Surface")&&source.GetFloat("_Surface")>.5f;
+       result.SetFloat("_SrcBlend",transparent?5:1);result.SetFloat("_DstBlend",transparent?10:0);
+       result.SetFloat("_ZWrite",transparent?0:1);result.SetFloat("_ZTesting",4);
+       result.renderQueue=transparent?3000:2450;
+       result.SetOverrideTag("RenderType",transparent?"Transparent":"TransparentCutout");
+       if(transparent)result.SetFloat("_AlphaCutoff",.001f);
        result.SetFloat("_StaffNeutralLighting",1);
        result.SetFloat("_StaffExposure",.8f);
        converted.Add(source,result);originals.Add(result,source);
@@ -39,8 +46,12 @@ namespace Staff.Characters {
      if(!legacy.TryGetValue(source,out result)){
       result=new Material(Shader.Find("STAFF/Character Toon")){name=source.name+" (CharacterToon)"};
       string tc=source.HasProperty("_BaseMap")?"_BaseMap":"_MainTex",cc=source.HasProperty("_BaseColor")?"_BaseColor":"_Color";
-      if(source.HasProperty(tc))result.SetTexture("_BaseMap",source.GetTexture(tc));
+      if(source.HasProperty(tc)){result.SetTexture("_BaseMap",source.GetTexture(tc));result.SetTextureScale("_BaseMap",source.GetTextureScale(tc));result.SetTextureOffset("_BaseMap",source.GetTextureOffset(tc));}
       if(source.HasProperty(cc))result.SetColor("_BaseColor",source.GetColor(cc));
+      foreach(var prop in new[]{"_Cutoff","_Cull","_Surface","_SrcBlend","_DstBlend","_ZWrite"})if(source.HasProperty(prop))result.SetFloat(prop,source.GetFloat(prop));
+      bool transparent=source.HasProperty("_Surface")&&source.GetFloat("_Surface")>.5f;
+      result.SetFloat("_SrcBlend",transparent?5:1);result.SetFloat("_DstBlend",transparent?10:0);result.SetFloat("_ZWrite",transparent?0:1);
+      result.renderQueue=transparent?3000:2450;result.SetOverrideTag("RenderType",transparent?"Transparent":"TransparentCutout");
       legacy.Add(source,result);originals.Add(result,source);
      }
     }

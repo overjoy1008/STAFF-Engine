@@ -7,7 +7,10 @@ namespace Staff.Subway {
   public Transform environmentRoot;
   public Transform[] additionalEnvironmentRoots = new Transform[0];
   public Shader analyticShader;
-  public IEnumerable<Renderer> EnvironmentRenderers => new[]{environmentRoot}.Concat(additionalEnvironmentRoots??new Transform[0]).Where(t=>t).SelectMany(t=>t.GetComponentsInChildren<Renderer>(true)).Distinct().Where(r=>!r.GetComponentInParent<Staff.Characters.AdventurePlayer>());
+  // Lighting contains visible diffuser meshes as well as Light components. Include it
+  // in old saved scenes too; only renderers are converted, never the lights themselves.
+  IEnumerable<Transform> LightingRoots => gameObject.scene.IsValid() ? gameObject.scene.GetRootGameObjects().Where(g=>g.name=="Lighting").Select(g=>g.transform) : Enumerable.Empty<Transform>();
+  public IEnumerable<Renderer> EnvironmentRenderers => new[]{environmentRoot}.Concat(additionalEnvironmentRoots??new Transform[0]).Concat(LightingRoots).Where(t=>t).SelectMany(t=>t.GetComponentsInChildren<Renderer>(true)).Distinct().Where(r=>!r.GetComponentInParent<Staff.Characters.AdventurePlayer>());
   public Shader surfaceShader,geometryShader,edgeShader;
   public bool startAbstract=false;
   public enum EnvironmentMode { Real, Abstract, Imaginary }

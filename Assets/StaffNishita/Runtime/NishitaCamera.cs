@@ -12,7 +12,10 @@ namespace Staff.Nishita
   AmbientMode oldMode; Color oldSky,oldEquator,oldGround,oldSun;
   SphericalHarmonicsL2 oldProbe;
   float oldIntensity,oldReflection; Quaternion oldRotation; bool scoped;
-  void OnEnable() { GetComponent<Camera>().allowHDR=true; }
+  void OnEnable() { GetComponent<Camera>().allowHDR=true; RenderPipelineManager.beginCameraRendering+=Begin;RenderPipelineManager.endCameraRendering+=End; }
+  void Begin(ScriptableRenderContext context,Camera camera){if(camera==GetComponent<Camera>())OnPreCull();}
+  void End(ScriptableRenderContext context,Camera camera){if(camera==GetComponent<Camera>())Restore();}
+  public Material ToneMaterial {get {if(!comparison||!comparison.agxLut||!toneShader)return null;if(!tone)tone=new Material(toneShader){hideFlags=HideFlags.HideAndDontSave};tone.SetTexture("_Lut",comparison.agxLut);tone.SetFloat("_Exposure",comparison.exposure);return tone;}}
   void OnPreCull()
   {
    if(!comparison || comparison.presets==null || comparison.presets.Length==0)return;
@@ -67,6 +70,6 @@ namespace Staff.Nishita
    tone.SetTexture("_Lut",comparison.agxLut); tone.SetFloat("_Exposure",comparison.exposure);
    Graphics.Blit(source,destination,tone);
   }
-  void OnDisable(){Restore();if(tone){if(Application.isPlaying)Destroy(tone);else DestroyImmediate(tone);}}
+  void OnDisable(){RenderPipelineManager.beginCameraRendering-=Begin;RenderPipelineManager.endCameraRendering-=End;Restore();if(tone){if(Application.isPlaying)Destroy(tone);else DestroyImmediate(tone);}}
  }
 }

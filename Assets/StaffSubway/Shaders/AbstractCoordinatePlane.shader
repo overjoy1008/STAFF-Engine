@@ -16,5 +16,13 @@ Shader "STAFF/Environment/Abstract Coordinate Plane"
  #pragma fragment Frag
  #include "AbstractAnalyticPlane.cginc"
  ENDCG
+ }
+ Pass { Name "AbstractGeometry" Cull Off ZWrite On
+ CGPROGRAM
+ #pragma vertex Vert
+ #pragma fragment Frag
+ #define STAFF_ABSTRACT_GEOMETRY
+ #include "AbstractAnalyticPlane.cginc"
+ ENDCG
  } } Fallback Off
 }

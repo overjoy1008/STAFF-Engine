@@ -23,7 +23,7 @@ namespace Staff.Characters.Editor {
   var target=head.position+Vector3.up*.05f;cam.transform.position=target+p.Visual.forward*1.4f;cam.transform.LookAt(target);
   while(roster.ShaderMode!=CharacterShaderMode.HoyoToon)roster.ToggleToon();
   for(int m=0;m<4;m++){
-   cam.targetTexture=rt;cam.Render();RenderTexture.active=rt;
+   cam.targetTexture=rt;Staff.Rendering.StaffCameraCapture.Render(cam);RenderTexture.active=rt;
    var tex=new Texture2D(768,768,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,768,768),0,0);tex.Apply();
    File.WriteAllBytes(dir+"/"+name+"-"+roster.ShaderMode+".png",tex.EncodeToPNG());UnityEngine.Object.DestroyImmediate(tex);roster.ToggleToon();
   }

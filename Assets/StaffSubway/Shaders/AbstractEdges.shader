@@ -22,9 +22,7 @@ Shader "Hidden/STAFF/Abstract Edges" {
  }
  float4 frag(v2f_img i):SV_Target {
  float2 uv=i.uv;float2 guv=uv;
- #if UNITY_UV_STARTS_AT_TOP
- if(_MainTex_TexelSize.y<0)guv.y=1-guv.y;
- #endif
+ // URP source copy and explicit geometry matrix have matching texture orientation.
  float4 source=tex2D(_MainTex,uv);float4 c=tex2D(_Geometry,guv);if(c.a<0)return source;if(c.a==0)return invertEnvironment(source);
  float2 d=_Geometry_TexelSize.xy*_LineWidth;float edge=0;
  float4 l=tex2D(_Geometry,guv-float2(d.x,0)),r=tex2D(_Geometry,guv+float2(d.x,0));

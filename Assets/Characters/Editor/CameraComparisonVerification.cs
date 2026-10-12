@@ -30,7 +30,7 @@ namespace Staff.Characters.Editor
         {
             Directory.CreateDirectory("Library/StaffCamera");
             var target=new RenderTexture(1280,720,24);var old=camera.targetTexture;var active=RenderTexture.active;
-            try {camera.targetTexture=target;camera.Render();RenderTexture.active=target;var image=new Texture2D(1280,720,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,1280,720),0,0);image.Apply();File.WriteAllBytes("Library/StaffCamera/"+filename,image.EncodeToPNG());UnityEngine.Object.DestroyImmediate(image);}
+            try {camera.targetTexture=target;Staff.Rendering.StaffCameraCapture.Render(camera);RenderTexture.active=target;var image=new Texture2D(1280,720,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,1280,720),0,0);image.Apply();File.WriteAllBytes("Library/StaffCamera/"+filename,image.EncodeToPNG());UnityEngine.Object.DestroyImmediate(image);}
             finally{camera.targetTexture=old;RenderTexture.active=active;target.Release();UnityEngine.Object.DestroyImmediate(target);}
         }
         static IEnumerator Verify()

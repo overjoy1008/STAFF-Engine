@@ -6,3 +6,5 @@ Runtime uses neutral packed masks and generic body shading for all MMD character
 Further STAFF modifications: neutral direct/ambient/additional lighting and neutral post tints; optional HSR-style two-tone shadow branch. Original texture colors are preserved.
 
 MMD material opacity is multiplied with texture alpha so hidden expression overlays remain hidden. Brightness control defaults to 0.8.
+
+URP migration: inspected and retained kazama01/HoyoToon-URP commit caf149b3f6dd44ccce76ae52b648bfc02e8a186e. Its only public branch remains Built-in code; STAFF adds the actual URP adapter, additional-light loop, shadow and scheduled stencil/outline passes while preserving existing MMD deltas. Unmodified fork source is archived in STAFF/3D Studio/URP Migration/HoyoToonFork. This is a STAFF adaptation, not an upstream-certified URP release.

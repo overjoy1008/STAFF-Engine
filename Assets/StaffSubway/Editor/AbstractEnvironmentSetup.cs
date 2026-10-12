@@ -23,7 +23,7 @@ namespace Staff.Subway.Editor {
   mode.environmentRoot=scene.GetRootGameObjects().Single(x=>x.name=="Environment").transform;
   mode.surfaceShader=Shader.Find("STAFF/Environment/Abstract Surface");mode.geometryShader=Shader.Find("Hidden/STAFF/Abstract Geometry");mode.edgeShader=Shader.Find("Hidden/STAFF/Abstract Edges");mode.startAbstract=false;
   mode.analyticShader=Shader.Find("STAFF/Environment/Abstract Coordinate Plane");
-  mode.additionalEnvironmentRoots=scene.GetRootGameObjects().Where(g=>g.name=="Coordinates"||g.name=="Mathematical Symbols").Select(g=>g.transform).ToArray();
+  mode.additionalEnvironmentRoots=scene.GetRootGameObjects().Where(g=>g.name=="Coordinates"||g.name=="Mathematical Symbols"||g.name=="Lighting").Select(g=>g.transform).ToArray();
   foreach(var shader in new[]{mode.surfaceShader,mode.geometryShader,mode.edgeShader,mode.analyticShader})if(!shader||ShaderUtil.ShaderHasError(shader))throw new Exception("Shader compile failure");
   EditorUtility.SetDirty(mode);EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);
  }
@@ -52,7 +52,7 @@ namespace Staff.Subway.Editor {
  }
  [MenuItem("STAFF/Subway/Verify Abstract Mode")]
  static void Verify(){EditorApplication.isPaused=false;EditorApplication.ExecuteMenuItem("Window/General/Game");Directory.CreateDirectory("Library/StaffSubway");SessionState.SetBool(Flag,true);EditorApplication.isPlaying=true;}
- static void Capture(Camera c,string name){var rt=new RenderTexture(1600,900,24);var active=RenderTexture.active;var old=c.targetTexture;try{c.targetTexture=rt;c.Render();RenderTexture.active=rt;var t=new Texture2D(1600,900,TextureFormat.RGB24,false);t.ReadPixels(new Rect(0,0,1600,900),0,0);t.Apply();if(t.GetPixels32().Count(p=>p.r>240&&p.g<20&&p.b>240)>1600*900/100)throw new Exception("Shader error magenta detected in "+name);File.WriteAllBytes("Library/StaffSubway/"+name+".png",t.EncodeToPNG());UnityEngine.Object.DestroyImmediate(t);}finally{c.targetTexture=old;RenderTexture.active=active;UnityEngine.Object.DestroyImmediate(rt);}}
+ static void Capture(Camera c,string name){var rt=new RenderTexture(1600,900,24);var active=RenderTexture.active;var old=c.targetTexture;try{c.targetTexture=rt;Staff.Rendering.StaffCameraCapture.Render(c);RenderTexture.active=rt;var t=new Texture2D(1600,900,TextureFormat.RGB24,false);t.ReadPixels(new Rect(0,0,1600,900),0,0);t.Apply();if(t.GetPixels32().Count(p=>p.r>240&&p.g<20&&p.b>240)>1600*900/100)throw new Exception("Shader error magenta detected in "+name);File.WriteAllBytes("Library/StaffSubway/"+name+".png",t.EncodeToPNG());UnityEngine.Object.DestroyImmediate(t);}finally{c.targetTexture=old;RenderTexture.active=active;UnityEngine.Object.DestroyImmediate(rt);}}
  [MenuItem("STAFF/Subway/Mode Verification Status")]
  static void Status(){File.WriteAllText("Library/StaffSubway/verification-state.txt",$"playing={EditorApplication.isPlaying} paused={EditorApplication.isPaused} frame={Time.frameCount} flag={SessionState.GetBool(Flag,false)} scene={SceneManager.GetActiveScene().name}");}
  static void PressI()=>PressKey(UnityEngine.InputSystem.Key.I,()=>UnityEngine.Object.FindFirstObjectByType<CharacterSwitcher>().HandleInput(true));

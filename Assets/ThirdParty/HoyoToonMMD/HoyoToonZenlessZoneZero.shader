@@ -449,15 +449,10 @@ Shader "HoyoToon/STAFF MMD"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry" }
+        Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" "Queue"="Geometry" }
         HLSLINCLUDE
 
-        #include "UnityCG.cginc"
-        #include "UnityLightingCommon.cginc"
-        #include "UnityShaderVariables.cginc"
-        #include "Lighting.cginc"
-        #include "AutoLight.cginc"
-        #include "UnityInstancing.cginc"
+        #include "Include/StaffURPBridge.hlsl"
         #include "Include/zzz-declarations.hlsl"
         #include "Include/zzz-inputs.hlsl"
         #include "Include/zzz-common.hlsl"
@@ -466,7 +461,7 @@ Shader "HoyoToon/STAFF MMD"
         Pass
         {
             Name "Character Pass"
-            Tags{ "LightMode" = "ForwardBase" }
+            Tags{ "LightMode" = "UniversalForwardOnly" }
             Blend [_SrcBlend] [_DstBlend]
             Stencil
             {
@@ -479,7 +474,10 @@ Shader "HoyoToon/STAFF MMD"
             ZClip [_ZClip]
             Cull Off
             HLSLPROGRAM
-            #pragma multi_compile_fwdbase
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile _IS_PASS_BASE
             #pragma vertex vs_model
             #pragma fragment ps_model
@@ -490,7 +488,7 @@ Shader "HoyoToon/STAFF MMD"
         Pass
         {
             Name "Stencil Pass"
-            Tags{ "LightMode" = "ForwardBase" }
+            Tags{ "LightMode" = "StaffHoyoStencil" }
             Blend [_SrcBlendB] [_DstBlendB]
             Stencil
             {
@@ -502,43 +500,20 @@ Shader "HoyoToon/STAFF MMD"
             HLSLPROGRAM
             #define _IS_STENCIL
             #pragma multi_compile _IS_PASS_BASE
-            #pragma multi_compile_fwdbase
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma vertex vs_model
             #pragma fragment ps_model
             #include "Include/zzz-program.hlsl"
             ENDHLSL
         }   
 
-        Pass // Character Light Pass
-        {
-            Name "Character Light Pass"
-            Tags{ "LightMode" = "ForwardAdd" }
-            Cull [_Cull]
-            // Stencil
-            // {
-			// 	ref [_StencilRef]
-            //     Comp [_StencilCompA]
-			// 	Pass [_StencilPassA]
-            // }
-            ZWrite Off
-            Blend One One     
-            
-            HLSLPROGRAM
-            
-            #pragma multi_compile_fwdadd
-            #pragma multi_compile _IS_PASS_LIGHT
-
-            #pragma vertex vs_model
-            #pragma fragment ps_model 
-
-            #include "Include/zzz-program.hlsl"
-            ENDHLSL
-        }  
-
         Pass
         {
             Name "Outline Pass"
-            Tags{ "LightMode" = "ForwardBase" }
+            Tags{ "LightMode" = "StaffHoyoOutline" }
             Cull Front
             Blend [_SrcBlend] [_DstBlend]
             Stencil
@@ -548,7 +523,10 @@ Shader "HoyoToon/STAFF MMD"
                 Pass Keep
             }
             HLSLPROGRAM
-            #pragma multi_compile_fwdbase
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma vertex vs_outline
             #pragma fragment ps_outline
             #include "Include/zzz-program.hlsl"
@@ -564,7 +542,7 @@ Shader "HoyoToon/STAFF MMD"
             // Blend [_SrcBlend] [_DstBlend]
             HLSLPROGRAM
             
-            #pragma multi_compile_shadowcaster
+            #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
             
             #pragma vertex vs_shadow
             #pragma fragment ps_shadow

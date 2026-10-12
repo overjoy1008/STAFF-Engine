@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
 
 namespace Staff.Characters
@@ -116,7 +117,9 @@ namespace Staff.Characters
             }
             Simulate(0);
         }
-        void OnPreCull() { if (IsFirstPerson && isActiveAndEnabled) firstPersonBody.BeforeRender(); }
+        void BeginCamera(ScriptableRenderContext context,Camera camera){if(camera==GetComponent<Camera>())StaffBeforeRender();}
+        void EndCamera(ScriptableRenderContext context,Camera camera){if(camera==GetComponent<Camera>())firstPersonBody.AfterRender();}
+        public void StaffBeforeRender() { if (IsFirstPerson && isActiveAndEnabled) firstPersonBody.BeforeRender(); }
         void OnPostRender() => firstPersonBody.AfterRender();
         void UpdateFirstPerson(float dt)
         {
@@ -263,11 +266,12 @@ namespace Staff.Characters
         public void Configure(Transform player, Transform model) { target = player; facing = model; Snap(); }
         void OnEnable()
         {
+            RenderPipelineManager.beginCameraRendering+=BeginCamera;RenderPipelineManager.endCameraRendering+=EndCamera;
             initialized = false;
             EnsureRig();
             wafflus.SetActive(!IsFirstPerson);
         }
-        void OnDisable() { if (IsFirstPerson) SetFirstPerson(false); firstPersonBody.Dispose(); gaze.Clear(); cursorGazeWeight=0; canLookAtCursor=false; if (wafflus) wafflus.SetActive(false); cursorHold.Reset(); }
+        void OnDisable() { RenderPipelineManager.beginCameraRendering-=BeginCamera;RenderPipelineManager.endCameraRendering-=EndCamera; if (IsFirstPerson) SetFirstPerson(false); firstPersonBody.Dispose(); gaze.Clear(); cursorGazeWeight=0; canLookAtCursor=false; if (wafflus) wafflus.SetActive(false); cursorHold.Reset(); }
         void OnDestroy() { gaze.Clear(); firstPersonBody.Dispose(); if (wafflus) Destroy(wafflus.gameObject); }
         void Start() => Snap();
         void OnGUI()

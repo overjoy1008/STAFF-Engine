@@ -156,7 +156,7 @@ namespace Staff.Subway.Editor {
    Check(!ShaderUtil.ShaderHasError(Shader.Find("STAFF/Subway/Station Surface")),"Station shader compiles");
    foreach(var guid in AssetDatabase.FindAssets("t:Material",new[]{Root+"/Materials"})){var path=AssetDatabase.GUIDToAssetPath(guid);var m=AssetDatabase.LoadAssetAtPath<Material>(path);FixEmission(m);EditorUtility.SetDirty(m);}
    AssetDatabase.SaveAssets();
-   foreach(var guid in AssetDatabase.FindAssets("t:Material",new[]{Root+"/Materials"})){var path=AssetDatabase.GUIDToAssetPath(guid);AssetDatabase.ImportAsset(path,ImportAssetOptions.ForceUpdate);var m=AssetDatabase.LoadAssetAtPath<Material>(path);if(m.shader.name=="Standard"&&m.GetColor("_EmissionColor").maxColorComponent>.01f)Check(m.IsKeywordEnabled("_EMISSION"),"Emission survives reimport: "+m.name);}
+   foreach(var guid in AssetDatabase.FindAssets("t:Material",new[]{Root+"/Materials"})){var path=AssetDatabase.GUIDToAssetPath(guid);AssetDatabase.ImportAsset(path,ImportAssetOptions.ForceUpdate);var m=AssetDatabase.LoadAssetAtPath<Material>(path);if(m.shader.name=="Universal Render Pipeline/Lit"&&m.GetColor("_EmissionColor").maxColorComponent>.01f)Check(m.IsKeywordEnabled("_EMISSION"),"Emission survives reimport: "+m.name);}
 
    var roots=scene.GetRootGameObjects();var report=new List<string>();
    RenderSettings.ambientMode=AmbientMode.Flat;RenderSettings.ambientLight=new Color(.42f,.45f,.50f);
@@ -192,9 +192,9 @@ namespace Staff.Subway.Editor {
   static Transform Group(string name,Transform parent=null){var g=new GameObject(name);g.layer=EnvironmentLayer;g.transform.SetParent(parent,false);return g.transform;}
   static GameObject Cube(string name,Transform parent,Vector3 pos,Vector3 size,Material mat){var g=GameObject.CreatePrimitive(PrimitiveType.Cube);g.name=name;g.layer=EnvironmentLayer;g.transform.SetParent(parent,true);g.transform.position=pos;g.transform.localScale=size;g.GetComponent<Renderer>().sharedMaterial=mat;return g;}
   static Material SaveMat(string name,Material m){string p=Root+"/Materials/"+name+".mat";var existing=AssetDatabase.LoadAssetAtPath<Material>(p);m.name=name;FixEmission(m);if(existing){EditorUtility.CopySerialized(m,existing);Object.DestroyImmediate(m);m=existing;}else AssetDatabase.CreateAsset(m,p);FixEmission(m);EditorUtility.SetDirty(m);mats[name]=m;return m;}
-  static void FixEmission(Material m){if(m.shader.name=="Standard"&&m.HasProperty("_EmissionColor")&&m.GetColor("_EmissionColor").maxColorComponent>.01f){m.globalIlluminationFlags=MaterialGlobalIlluminationFlags.RealtimeEmissive;m.EnableKeyword("_EMISSION");}}
+  static void FixEmission(Material m){if(m.shader.name=="Universal Render Pipeline/Lit"&&m.HasProperty("_EmissionColor")&&m.GetColor("_EmissionColor").maxColorComponent>.01f){m.globalIlluminationFlags=MaterialGlobalIlluminationFlags.BakedEmissive;m.EnableKeyword("_EMISSION");}}
   static Material Surface(string name,Color color,float metallic,float smooth){if(mats.TryGetValue(name,out var m))return m;m=new Material(Shader.Find("STAFF/Subway/Station Surface"));m.SetColor("_Color",color);m.SetFloat("_Metallic",metallic);m.SetFloat("_Glossiness",smooth);m.enableInstancing=true;return SaveMat(name,m);}
-  static Material Emissive(string name,Color color,float intensity){if(mats.TryGetValue(name,out var m))return m;m=new Material(Shader.Find("Standard"));m.color=color;m.EnableKeyword("_EMISSION");m.SetColor("_EmissionColor",color*intensity);return SaveMat(name,m);}
+  static Material Emissive(string name,Color color,float intensity){if(mats.TryGetValue(name,out var m))return m;m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.color=color;m.EnableKeyword("_EMISSION");m.SetColor("_EmissionColor",color*intensity);return SaveMat(name,m);}
   static Bounds BoundsOf(Transform t){var rs=t.GetComponentsInChildren<Renderer>();if(rs.Length==0)throw new Exception("No renderers: "+t.name);var b=rs[0].bounds;foreach(var r in rs.Skip(1))b.Encapsulate(r.bounds);return b;}
   static Transform Model(string key,string name,Transform parent,Vector3 bottom,Vector3 size,float yaw,Material overwrite){
    string path=Root+"/Models/"+key+"/"+(key=="Train"?"TrainPBRGlow":key)+".fbx";var asset=AssetDatabase.LoadAssetAtPath<GameObject>(path);if(!asset)throw new Exception("Missing model "+path);
@@ -215,9 +215,9 @@ namespace Staff.Subway.Editor {
   static Material TrainMaterial(string original){
    string name=original.Replace(" (Instance)","");if(mats.TryGetValue(name,out var m))return m;
    string atlas=name.StartsWith("Doors")?"Doors":name.StartsWith("Undercarriage")?"Undercarriage":"Body";string dir=Root+"/Models/Train/";
-   m=new Material(Shader.Find("Standard"));m.SetTexture("_MainTex",AssetDatabase.LoadAssetAtPath<Texture2D>(dir+atlas+"_BaseColor.png"));m.SetTexture("_MetallicGlossMap",AssetDatabase.LoadAssetAtPath<Texture2D>(dir+atlas+"_MetallicSmoothness.png"));m.EnableKeyword("_METALLICGLOSSMAP");m.SetFloat("_GlossMapScale",1);m.SetColor("_Color",Color.white);
+   m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.SetTexture("_BaseMap",AssetDatabase.LoadAssetAtPath<Texture2D>(dir+atlas+"_BaseColor.png"));m.SetTexture("_MetallicGlossMap",AssetDatabase.LoadAssetAtPath<Texture2D>(dir+atlas+"_MetallicSmoothness.png"));m.EnableKeyword("_METALLICGLOSSMAP");m.SetFloat("_Smoothness",1);m.SetColor("_BaseColor",Color.white);
    m.SetTexture("_EmissionMap",AssetDatabase.LoadAssetAtPath<Texture2D>(dir+atlas+"_Emission.png"));m.EnableKeyword("_EMISSION");m.SetColor("_EmissionColor",Color.white*1.2f);m.enableInstancing=true;
-   if(name.Contains("Glass")){m.SetFloat("_Mode",2);m.SetColor("_Color",new Color(.78f,.86f,.93f,.22f));m.SetInt("_SrcBlend",(int)BlendMode.SrcAlpha);m.SetInt("_DstBlend",(int)BlendMode.OneMinusSrcAlpha);m.SetInt("_ZWrite",0);m.EnableKeyword("_ALPHABLEND_ON");m.SetOverrideTag("RenderType","Transparent");m.renderQueue=3000;}
+   if(name.Contains("Glass")){m.SetFloat("_Surface",1);m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");m.SetColor("_BaseColor",new Color(.78f,.86f,.93f,.22f));m.SetInt("_SrcBlend",(int)BlendMode.SrcAlpha);m.SetInt("_DstBlend",(int)BlendMode.OneMinusSrcAlpha);m.SetInt("_ZWrite",0);m.EnableKeyword("_ALPHABLEND_ON");m.SetOverrideTag("RenderType","Transparent");m.renderQueue=3000;}
    return SaveMat(name,m);
   }
   static void Panel(string name,Vector3 pos,Vector2 size,string textureName,bool latex){
@@ -232,7 +232,7 @@ namespace Staff.Subway.Editor {
    foreach(float x in new[]{-.10f,.10f})Part("Leg",PrimitiveType.Capsule,new Vector3(x,.45f,0),new Vector3(.135f,.45f,.15f));
    foreach(float x in new[]{-.235f,.235f})Part("Arm",PrimitiveType.Capsule,new Vector3(x,1.02f,0),new Vector3(.10f,.29f,.105f));
   }
-  static void Capture(Camera cam,string path,int w,int h){var rt=new RenderTexture(w,h,24,RenderTextureFormat.ARGB32);rt.antiAliasing=4;var previous=RenderTexture.active;var old=cam.targetTexture;try{cam.targetTexture=rt;cam.Render();RenderTexture.active=rt;var im=new Texture2D(w,h,TextureFormat.RGB24,false);im.ReadPixels(new Rect(0,0,w,h),0,0);im.Apply();File.WriteAllBytes(path,im.EncodeToPNG());Object.DestroyImmediate(im);}finally{RenderTexture.active=previous;cam.targetTexture=old;rt.Release();Object.DestroyImmediate(rt);}}
+  static void Capture(Camera cam,string path,int w,int h){var rt=new RenderTexture(w,h,24,RenderTextureFormat.ARGB32);rt.antiAliasing=4;var previous=RenderTexture.active;var old=cam.targetTexture;try{cam.targetTexture=rt;Staff.Rendering.StaffCameraCapture.Render(cam);RenderTexture.active=rt;var im=new Texture2D(w,h,TextureFormat.RGB24,false);im.ReadPixels(new Rect(0,0,w,h),0,0);im.Apply();File.WriteAllBytes(path,im.EncodeToPNG());Object.DestroyImmediate(im);}finally{RenderTexture.active=previous;cam.targetTexture=old;rt.Release();Object.DestroyImmediate(rt);}}
   [MenuItem("STAFF/Subway/Frame Reference View")]
   public static void Focus(){var c=GameObject.Find("Cameras/Reference Camera")?.GetComponent<Camera>();if(!c)return;var v=SceneView.lastActiveSceneView;if(v){v.LookAtDirect(c.transform.position+c.transform.forward*13,c.transform.rotation,13);v.sceneLighting=true;v.Repaint();}}
  }
