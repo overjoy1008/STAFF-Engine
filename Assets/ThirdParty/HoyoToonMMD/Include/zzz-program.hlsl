@@ -1,3 +1,4 @@
+#include "Assets/Characters/Shaders/StaffFaceLighting.hlsl"
 vs_out vs_model(vs_in v)
 {
     // fix potential compiler errors
@@ -52,6 +53,7 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
 {
     // intialize inputs : 
     float3 normal = normalize(i.normal);
+    if(_StaffTwoTone>.5)normal=StaffFaceNormal(i.ws_pos.xyz,normal);
     float3 view = normalize(i.view);
     float2 uv_a = i.uv_a.xy;
     float2 uv_b = i.uv_b.xy;
@@ -72,6 +74,7 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
 
     // sample textures
     float4 diffuse = _MainTex.Sample(sampler_linear_repeat, main_uv);
+    diffuse.rgb=StaffSkinColor(diffuse.rgb);
     float4 light = _LightTex.Sample(sampler_linear_repeat, light_uv); // rg normal, b diffuse bias
     float4 other_data = _OtherDataTex.Sample(sampler_linear_repeat, light_uv); // r mat id, g metallic, b specular mask
     float4 other_data2 = _OtherDataTex2.Sample(sampler_linear_repeat, light_uv); // r transparency, g smoothness, b emission mask 
@@ -143,7 +146,7 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
         float skin_id = Material_Detect(other_data.x).x;
 
         // normal mapping : 
-        float3 bumped = (_MaterialType != 1 && _UseBumpMap) ? normal_mapping(light.rgb, i.normal, i.tangent, vface) : i.normal;
+        float3 bumped = (_MaterialType != 1 && _UseBumpMap) ? normal_mapping(light.rgb, i.normal, i.tangent, vface) : normal;
         bumped = normalize(bumped);
 
         float ndotl = dot(bumped, _WorldSpaceLightPos0.xyz);
@@ -392,6 +395,16 @@ float4 ps_model(vs_out i, bool vface : SV_ISFRONTFACE) : SV_TARGET
         }     
     #endif
     final_color.rgb *= _StaffExposure;
+    #if defined(_IS_PASS_BASE) && defined(_ADDITIONAL_LIGHTS) && !defined(_IS_STENCIL)
+    uint lightCount=GetAdditionalLightsCount();
+    for(uint lightIndex=0;lightIndex<lightCount;lightIndex++){
+     Light extra=GetAdditionalLight(lightIndex,i.ws_pos.xyz);
+     float ndl=saturate(dot(normal,extra.direction));
+     float3 lc=extra.color;
+     if(_StaffNeutralLighting>.5)lc=dot(lc,float3(.2126,.7152,.0722)).xxx;
+     final_color.rgb+=diffuse.rgb*_Color.rgb*lc*ndl*extra.distanceAttenuation*extra.shadowAttenuation*_StaffExposure;
+    }
+    #endif
     return final_color;
 }
 

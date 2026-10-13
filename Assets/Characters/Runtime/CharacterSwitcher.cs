@@ -19,7 +19,7 @@ namespace Staff.Characters
         CharacterPicker picker;
         public bool PickerOpen => picker && picker.IsOpen;
         CharacterToonToggle shading;
-        public CharacterShaderMode ShaderMode { get; private set; } = CharacterShaderMode.HoyoToon;
+        public CharacterShaderMode ShaderMode { get; private set; } = CharacterShaderMode.CharacterToonSmooth;
         public bool PhysicsEnabled { get; private set; } = true;
         public void TogglePhysics()
         {
@@ -28,8 +28,8 @@ namespace Staff.Characters
             var physics = model ? model.GetComponent<PmxPhysics>() : null;
             if (physics) physics.PhysicsEnabled = PhysicsEnabled;
         }
-        public bool ToonEnabled => ShaderMode != CharacterShaderMode.Smooth;
-        public string ShaderLabel => ShaderMode == CharacterShaderMode.HoyoToon ? "HoyoToon (Neutral)" : ShaderMode == CharacterShaderMode.HoyoTwoTone ? "HoyoToon (HSR-style)" : ShaderMode == CharacterShaderMode.CharacterToon ? "CharacterToon (Two-tone)" : "CharacterToon (Smooth)";
+        public bool ToonEnabled => ShaderMode != CharacterShaderMode.CharacterToonSmooth;
+        public string ShaderLabel => CharacterToonToggle.Label(ShaderMode);
         public int Index { get; private set; }
         public int Count => characters.Length + 1;
         public string CurrentName => Index == 0 ? "Silver Robot" : ActiveCharacters[Index - 1].name;
@@ -88,7 +88,7 @@ namespace Staff.Characters
         }
         public void ToggleToon()
         {
-            ShaderMode = (CharacterShaderMode)(((int)ShaderMode + 1) % 4);
+            ShaderMode = (CharacterShaderMode)(((int)ShaderMode + 1) % CharacterToonToggle.ModeCount);
             shading.Apply(Index == 0 ? originalModel : instance, ShaderMode);
         }
         public void Cycle() => Select((Index + 1) % Count);

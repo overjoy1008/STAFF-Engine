@@ -43,7 +43,7 @@ namespace Staff.Subway.Editor {
     switcher.Select(old==1?2:1);Check(p.Animator&&p.Animator.isHuman,"Character switching retains humanoid animator");switcher.Select(old);
     Place(new Vector3(0,.03f,-4));Step(idle,60);cam.Snap();
     var r=c.GetComponent<SubwayPlanarReflection>();Check(r&&r.enabled,"Floor reflection migrated to gameplay camera");
-    var rt=new RenderTexture(1600,900,24);c.targetTexture=rt;c.Render();RenderTexture.active=rt;var img=new Texture2D(1600,900,TextureFormat.RGB24,false);img.ReadPixels(new Rect(0,0,1600,900),0,0);img.Apply();File.WriteAllBytes("Library/StaffSubway/gameplay-view.png",img.EncodeToPNG());c.targetTexture=null;RenderTexture.active=null;UnityEngine.Object.DestroyImmediate(img);UnityEngine.Object.DestroyImmediate(rt);
+    var rt=new RenderTexture(1600,900,24);c.targetTexture=rt;Staff.Rendering.StaffCameraCapture.Render(c);RenderTexture.active=rt;var img=new Texture2D(1600,900,TextureFormat.RGB24,false);img.ReadPixels(new Rect(0,0,1600,900),0,0);img.Apply();File.WriteAllBytes("Library/StaffSubway/gameplay-view.png",img.EncodeToPNG());c.targetTexture=null;RenderTexture.active=null;UnityEngine.Object.DestroyImmediate(img);UnityEngine.Object.DestroyImmediate(rt);
     Check(r.floorMaterial.GetTexture("_ReflectionTex")!=null,"Live station reflection rendered");
    }catch(Exception e){report.AppendLine("FAIL: "+e);Debug.LogException(e);}
    finally{File.WriteAllText("Library/StaffSubway/play-validation.txt",report.ToString());EditorApplication.isPlaying=false;}

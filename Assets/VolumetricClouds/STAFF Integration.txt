@@ -1,0 +1,6 @@
+Source: https://github.com/jiaozi158/UnityVolumetricCloudsURP
+Commit: 26c59bd371cc2af7b70741f6aea01adfdc8cc7bc
+MIT Copyright (c) 2024 jiaozi158; see LICENSE.txt.
+
+Original renderer, shaders, noise textures, volume controls and editor UI are included.
+STAFF changes: safe Create before VolumeManager initialization; optional camera filter; per-camera Nishita sun direction/color and ambient floor. The built-in directional lights are not modified. Temporal accumulation is disabled in the STAFF profile to avoid cross-camera history artifacts. Profile renders at half resolution, 64 primary steps and 4 lighting steps. Clouds use global sky mode; original upstream limitation: no orthographic cameras.

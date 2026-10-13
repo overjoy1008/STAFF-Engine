@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8225915618898676817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fc0e69ccde74cb88d47daf4da943ee, type: 3}
+  m_Name: Unity Star Renderer - HYG
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.CelestialStarFeature
+  m_Active: 1
+  catalog: {fileID: 4900000, guid: 4ad4f3822367a46d39b6c8d6df2c6c52, type: 3}
+  starMaterial: {fileID: 2100000, guid: 0297e61e879a84f64880f18c2cdbb8d4, type: 2}
+--- !u!114 &-1695636764946073635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52747920763e04d2fbd7555bd60f0720, type: 3}
+  m_Name: Solar Optics - Flare F9 / Rays F10
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SolarOpticsFeature
+  m_Active: 1
+  opticsShader: {fileID: 4800000, guid: 4e3b253cf2fb04230ab1ec2a91c5e12c, type: 3}
+  shadowShader: {fileID: 4800000, guid: 415f6342c389847bbb5a66984535caa8, type: 3}
+  shadowResolution: 1024
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,11 +44,9 @@ MonoBehaviour:
   m_Name: Mobile_Renderer
   m_EditorClassIdentifier: 
   debugShaders:
-    debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
-      type: 3}
+    debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
-    probeVolumeSamplingDebugComputeShader: {fileID: 7200000, guid: 53626a513ea68ce47b59dc1299fe3959,
-      type: 3}
+    probeVolumeSamplingDebugComputeShader: {fileID: 7200000, guid: 53626a513ea68ce47b59dc1299fe3959, type: 3}
   probeVolumeResources:
     probeVolumeDebugShader: {fileID: 0}
     probeVolumeFragmentationDebugShader: {fileID: 0}
@@ -26,11 +55,20 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: 0}
     probeSamplingDebugTexture: {fileID: 0}
     probeVolumeBlendStatesCS: {fileID: 0}
-  m_RendererFeatures: []
+  m_RendererFeatures:
+  - {fileID: 6763799190210871088}
+  - {fileID: 4365315514769752017}
+  - {fileID: -8225915618898676817}
+  - {fileID: -1695636764946073635}
+  - {fileID: 8978819825617706285}
   m_RendererFeatureMap: 
   m_UseNativeRenderPass: 1
+  xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
-  m_AssetVersion: 2
+  m_AssetVersion: 3
+  m_PrepassLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_OpaqueLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -48,5 +86,61 @@ MonoBehaviour:
   m_RenderingMode: 0
   m_DepthPrimingMode: 0
   m_CopyDepthMode: 0
+  m_DepthAttachmentFormat: 0
+  m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &4365315514769752017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af24e90db4bf58443aff8888b8b7e207, type: 3}
+  m_Name: Volumetric Clouds URP
+  m_EditorClassIdentifier: VolumetricCloudsURP::VolumetricCloudsURP
+  m_Active: 1
+  material: {fileID: 2100000, guid: 3748131af20412e478461c6445c73923, type: 2}
+  renderingDebugger: 0
+  reflectionProbe: 0
+  resolutionScale: 0.5
+  upscaleMode: 0
+  preferredRenderMode: 1
+  ambientProbe: 1
+  sunAttenuation: 0
+  resetOnStart: 1
+  outputDepth: 1
+  depthTexture: 0
+--- !u!114 &6763799190210871088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b6d339e4cfd4159a64027e4ef2d9ad, type: 3}
+  m_Name: STAFF Atmosphere and HoyoToon
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Rendering.StaffRenderFeature
+  m_Active: 1
+  geometryShader: {fileID: 4800000, guid: 47fbd6f38cbf44d16b5ab0bb8e0ae783, type: 3}
+--- !u!114 &8978819825617706285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a3804d82ecf4bcdb0492ad055b711e, type: 3}
+  m_Name: Local Godrays - Station and Train F10
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.LocalGodraysFeature
+  m_Active: 1
+  opticsShader: {fileID: 4800000, guid: d96c69a7425b841c1a72afda2356fde1, type: 3}
+  shadowShader: {fileID: 4800000, guid: edc351d2610174a9d87ea39829391807, type: 3}
+  shadowResolution: 128

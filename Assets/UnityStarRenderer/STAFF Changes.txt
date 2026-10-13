@@ -1,0 +1,4 @@
+Unity Star Renderer by Thomas Baron (MIT), https://github.com/tjbaron/unity-star-renderer
+Upstream commit: 07a0c66581f87e10c08045484e0af61a869f3b0a
+HYG v3 subset: 8,912 stars with apparent magnitude <= 6.5, Sun excluded. Catalog remains CC BY-SA 2.5; original notices retained. Original full catalog SHA256: 039fdcdcfc31968c6938863ac1d293854ba810bbfa0bcd72b1f4cc2d544f3d08
+STAFF modifications: edit-mode mesh lifecycle, invariant parsing, magnitude filter, exact batch lengths, per-camera URP pass before clouds, terrestrial rotation and horizon/night fade. Original star color, magnitude sizing, sprite and twinkle graphs retained.

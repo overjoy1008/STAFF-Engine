@@ -3,10 +3,10 @@
 float _Horizon;
 [numthreads(1,1,1)] void GatherLighting(uint3 id:SV_DispatchThreadID){
  float3 zenith=0,horizon=0;
- for(int i=0;i<8;i++){
-  int x=(i*_Width)/8;
+ for(uint i=0;i<8u;i++){
+  uint x=(i*uint(_Width)) >> 3;
   zenith+=_Sky[int2(x,_Height-2)].xyz*32;
-  horizon+=_Sky[int2(x,_Height/2+max(_Height/16,1))].xyz*32;
+  horizon+=_Sky[int2(x,(uint(_Height) >> 1)+max(uint(_Height) >> 4,1u))].xyz*32;
  }
  _SunData[2]=float4(XYZToRGB(zenith),1);
  _SunData[3]=float4(XYZToRGB(horizon),1);

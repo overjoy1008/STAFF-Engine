@@ -11,7 +11,7 @@ Shader "STAFF/Cartesian Floor Lines"
         Tags { "RenderType"="Opaque"  "Queue"="Geometry" }
         Pass
         {
-            Tags { "LightMode"="ForwardBase" }
+            Tags { "LightMode"="SRPDefaultUnlit" }
             Cull Off
             ZWrite On
             HLSLPROGRAM

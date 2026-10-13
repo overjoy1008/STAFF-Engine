@@ -100,7 +100,7 @@ namespace Staff.Characters.Editor
             var target=player.transform.position+Vector3.up*.9f;obj.transform.position=target+player.Visual.forward*3.7f+player.Visual.right*1.2f+Vector3.up*.1f;obj.transform.LookAt(target);
             Debug.Log("DANCE BOUNDS "+player.Animator.GetBoneTransform(HumanBodyBones.Hips).position+" player="+player.transform.position);
             var rt=new RenderTexture(1280,720,24);var previous=camera.targetTexture;var active=RenderTexture.active;
-            try {camera.targetTexture=rt;camera.Render();RenderTexture.active=rt;var image=new Texture2D(1280,720,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,1280,720),0,0);image.Apply();File.WriteAllBytes(path,image.EncodeToPNG());UnityEngine.Object.DestroyImmediate(image);}
+            try {camera.targetTexture=rt;Staff.Rendering.StaffCameraCapture.Render(camera);RenderTexture.active=rt;var image=new Texture2D(1280,720,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,1280,720),0,0);image.Apply();File.WriteAllBytes(path,image.EncodeToPNG());UnityEngine.Object.DestroyImmediate(image);}
             finally {camera.targetTexture=previous;RenderTexture.active=active;rt.Release();UnityEngine.Object.DestroyImmediate(rt);UnityEngine.Object.DestroyImmediate(obj);}
         }
         [Serializable] class Result {public bool pass,cameraDoesNotCancel,movementCancels,jumpCancels,dashCancels;public int checks,combinations,characters,dances;}

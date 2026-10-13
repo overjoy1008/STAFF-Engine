@@ -7,8 +7,14 @@ namespace Staff.Subway {
   public Transform environmentRoot;
   public Transform[] additionalEnvironmentRoots = new Transform[0];
   public Shader analyticShader;
-  public IEnumerable<Renderer> EnvironmentRenderers => new[]{environmentRoot}.Concat(additionalEnvironmentRoots??new Transform[0]).Where(t=>t).SelectMany(t=>t.GetComponentsInChildren<Renderer>(true)).Distinct().Where(r=>!r.GetComponentInParent<Staff.Characters.AdventurePlayer>());
+  // Lighting contains visible diffuser meshes as well as Light components. Include it
+  // in old saved scenes too; only renderers are converted, never the lights themselves.
+  IEnumerable<Transform> LightingRoots => gameObject.scene.IsValid() ? gameObject.scene.GetRootGameObjects().Where(g=>g.name=="Lighting").Select(g=>g.transform) : Enumerable.Empty<Transform>();
+  public IEnumerable<Renderer> EnvironmentRenderers => new[]{environmentRoot}.Concat(additionalEnvironmentRoots??new Transform[0]).Concat(LightingRoots).Where(t=>t).SelectMany(t=>t.GetComponentsInChildren<Renderer>(true)).Distinct().Where(r=>!r.GetComponentInParent<Staff.Characters.AdventurePlayer>());
   public Shader surfaceShader,geometryShader,edgeShader;
+  // Optional camera-local sky: retain the solar disc without atmospheric color.
+  public Material abstractSkybox;
+  Skybox localSky;Material originalSky;bool originalSkyEnabled;
   public bool startAbstract=false;
   public enum EnvironmentMode { Real, Abstract, Imaginary }
   public EnvironmentMode Mode {get;private set;}
@@ -38,13 +44,16 @@ namespace Staff.Subway {
      for(int i=0;i<mats.Length;i++)abstractMats[i]=mats[i]?Convert(mats[i]):null;
      r.sharedMaterials=abstractMats;
     }
-    source.clearFlags=CameraClearFlags.SolidColor;source.backgroundColor=Color.black;IsAbstract=true;Mode=EnvironmentMode.Abstract;
+    source.clearFlags=CameraClearFlags.SolidColor;source.backgroundColor=Color.black;
+    if(abstractSkybox){localSky=GetComponent<Skybox>();if(!localSky)localSky=gameObject.AddComponent<Skybox>();originalSky=localSky.material;originalSkyEnabled=localSky.enabled;localSky.material=abstractSkybox;localSky.enabled=true;source.clearFlags=CameraClearFlags.Skybox;}
+    IsAbstract=true;Mode=EnvironmentMode.Abstract;
    }else{
     foreach(var pair in originals)if(pair.Key)pair.Key.sharedMaterials=pair.Value;originals.Clear();
     foreach(var m in replacements.Values)Destroy(m);replacements.Clear();
     if(monochrome)monochrome.SetInverted(originalInverted);
     Mode=EnvironmentMode.Real;
     if(source){source.clearFlags=clearFlags;source.backgroundColor=background;}
+    if(localSky){localSky.material=originalSky;localSky.enabled=originalSkyEnabled;localSky=null;}
     if(reflection)reflection.enabled=reflectionEnabled;IsAbstract=false;ReleaseRenderResources();
    }
   }

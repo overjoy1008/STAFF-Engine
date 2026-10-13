@@ -87,7 +87,7 @@ namespace Staff.Nishita.Editor
   }
   static Material Matte(string name,Color color){
    string path=Root+"/Materials/"+name+".mat";var m=AssetDatabase.LoadAssetAtPath<Material>(path);
-   if(!m){m=new Material(Shader.Find("Standard"));AssetDatabase.CreateAsset(m,path);}m.color=color;m.SetFloat("_Glossiness",.18f);m.SetFloat("_Metallic",0);EditorUtility.SetDirty(m);return m;
+   if(!m){m=new Material(Shader.Find("Universal Render Pipeline/Lit"));AssetDatabase.CreateAsset(m,path);}m.color=color;m.SetFloat("_Smoothness",.18f);m.SetFloat("_Metallic",0);EditorUtility.SetDirty(m);return m;
   }
   static GameObject Primitive(PrimitiveType type,string name,Transform parent,Vector3 pos,Vector3 scale,Material m){
    var go=GameObject.CreatePrimitive(type);go.name=name;go.transform.SetParent(parent,false);go.transform.localPosition=pos;go.transform.localScale=scale;go.GetComponent<Renderer>().sharedMaterial=m;UnityEngine.Object.DestroyImmediate(go.GetComponent<Collider>());return go;
@@ -139,7 +139,7 @@ namespace Staff.Nishita.Editor
   static Texture2D Capture(Camera cam){
    var oldTarget=cam.targetTexture;var oldRect=cam.rect;var oldActive=RenderTexture.active;
    var rt=new RenderTexture(720,720,24,RenderTextureFormat.ARGBHalf,RenderTextureReadWrite.Linear);rt.Create();
-   try{cam.targetTexture=rt;cam.rect=new Rect(0,0,1,1);cam.Render();RenderTexture.active=rt;var linear=new Texture2D(720,720,TextureFormat.RGBAFloat,false,true);linear.ReadPixels(new Rect(0,0,720,720),0,0);linear.Apply();
+   try{cam.targetTexture=rt;cam.rect=new Rect(0,0,1,1);Staff.Rendering.StaffCameraCapture.Render(cam);RenderTexture.active=rt;var linear=new Texture2D(720,720,TextureFormat.RGBAFloat,false,true);linear.ReadPixels(new Rect(0,0,720,720),0,0);linear.Apply();
     var pixels=linear.GetPixels();for(int i=0;i<pixels.Length;i++)pixels[i]=pixels[i].gamma;
     var t=new Texture2D(720,720,TextureFormat.RGB24,false);t.SetPixels(pixels);t.Apply();UnityEngine.Object.DestroyImmediate(linear);return t;}
    finally{cam.targetTexture=oldTarget;cam.rect=oldRect;RenderTexture.active=oldActive;rt.Release();UnityEngine.Object.DestroyImmediate(rt);}

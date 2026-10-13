@@ -82,7 +82,7 @@ namespace Staff.Characters.Editor
   {
    var obj=new GameObject("Character Verification Camera");var camera=obj.AddComponent<Camera>();camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=new Color(.15f,.16f,.19f);camera.fieldOfView=32;
    var target=player.transform.position+Vector3.up*.9f;obj.transform.position=target+player.Visual.forward*3.7f+player.Visual.right*1.2f+Vector3.up*.1f;obj.transform.LookAt(target);
-   var rt=new RenderTexture(512,640,24);camera.targetTexture=rt;camera.Render();var previous=RenderTexture.active;RenderTexture.active=rt;var image=new Texture2D(512,640,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,512,640),0,0);image.Apply();File.WriteAllBytes("Library/StaffCharacters/"+name+".png",image.EncodeToPNG());RenderTexture.active=previous;camera.targetTexture=null;rt.Release();UnityEngine.Object.DestroyImmediate(image);UnityEngine.Object.DestroyImmediate(rt);UnityEngine.Object.DestroyImmediate(obj);
+   var rt=new RenderTexture(512,640,24);camera.targetTexture=rt;Staff.Rendering.StaffCameraCapture.Render(camera);var previous=RenderTexture.active;RenderTexture.active=rt;var image=new Texture2D(512,640,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,512,640),0,0);image.Apply();File.WriteAllBytes("Library/StaffCharacters/"+name+".png",image.EncodeToPNG());RenderTexture.active=previous;camera.targetTexture=null;rt.Release();UnityEngine.Object.DestroyImmediate(image);UnityEngine.Object.DestroyImmediate(rt);UnityEngine.Object.DestroyImmediate(obj);
   }
  }
 }

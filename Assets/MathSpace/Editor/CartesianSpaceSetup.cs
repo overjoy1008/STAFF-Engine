@@ -230,7 +230,7 @@ namespace Staff.MathSpace.Editor
                 camera.aspect = 1600f / 900;
                 target.Create();
                 camera.targetTexture = target;
-                camera.Render();
+                Staff.Rendering.StaffCameraCapture.Render(camera);
                 RenderTexture.active = target;
                 image = new Texture2D(1600, 900, TextureFormat.RGB24, false);
                 image.ReadPixels(new Rect(0, 0, 1600, 900), 0, 0);

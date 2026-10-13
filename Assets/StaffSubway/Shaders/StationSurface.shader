@@ -5,23 +5,98 @@ Shader "STAFF/Subway/Station Surface" {
  _Grid("Floor tile grid",Range(0,1))=0 _TileSize("Tile size metres",Float)=1.2
  _ReflectionTex("Planar reflection",2D)="black"{} _ReflectionStrength("Reflection strength",Range(0,1))=0
  }
- SubShader { Tags {"RenderType"="Opaque"} LOD 300
- CGPROGRAM
- #pragma surface surf Standard fullforwardshadows vertex:vert
- #pragma target 3.0
- sampler2D _MainTex,_ReflectionTex;fixed4 _Color;half _UseVertexColor,_Metallic,_Glossiness,_Grid,_TileSize,_ReflectionStrength;
- struct Input {float2 uv_MainTex;float3 worldPos;float4 screenPos;float4 color:COLOR;};
- void vert(inout appdata_full v,out Input o){UNITY_INITIALIZE_OUTPUT(Input,o);o.color=v.color;}
- void surf(Input IN,inout SurfaceOutputStandard o){
- fixed3 color=tex2D(_MainTex,IN.uv_MainTex).rgb*_Color.rgb*lerp(1,IN.color.rgb,_UseVertexColor);
- float2 uv=IN.worldPos.xz/_TileSize;float2 edge=abs(frac(uv-.5)-.5);float2 edgeAA=1-smoothstep(float2(.002,.002),float2(.002,.002)+fwidth(uv),edge);float gridLine=max(edgeAA.x,edgeAA.y);
- float grain=frac(sin(dot(floor(IN.worldPos.xz*180),float2(12.9898,78.233)))*43758.54);
- color*=lerp(1,lerp(.93,1.04,grain),_Grid);color=lerp(color,color*.22,gridLine*_Grid);
- o.Albedo=color;o.Metallic=_Metallic;o.Smoothness=_Glossiness;o.Alpha=1;
- float2 screen=IN.screenPos.xy/IN.screenPos.w;
- fixed3 reflected=tex2Dbias(_ReflectionTex,float4(screen,0,2.2)).rgb;
- o.Emission=min(reflected,1.5)*_ReflectionStrength*(1-.7*gridLine*_Grid);
+ SubShader {Tags{"RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" "Queue"="Geometry"}
+
+ HLSLINCLUDE
+ #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+ #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+ #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+ sampler2D _MainTex,_MetallicGlossMap,_EmissionMap,_ReflectionTex;
+ CBUFFER_START(UnityPerMaterial)
+ float4 _MainTex_ST,_Color,_EmissionColor;float _Metallic,_Glossiness,_GlossMapScale,_UseVertexColor,_Grid,_TileSize,_ReflectionStrength;
+ CBUFFER_END
+ struct A{float4 positionOS:POSITION;float3 normalOS:NORMAL;float2 uv:TEXCOORD0;float2 lightmapUV:TEXCOORD1;float4 color:COLOR;};
+ struct V{float4 positionCS:SV_POSITION;float3 positionWS:TEXCOORD0;float3 normalWS:TEXCOORD1;float2 uv:TEXCOORD2;float2 lightmapUV:TEXCOORD3;float4 color:COLOR;float fog:TEXCOORD4;};
+ V vert(A i){V o=(V)0;o.positionWS=TransformObjectToWorld(i.positionOS.xyz);o.positionCS=TransformWorldToHClip(o.positionWS);o.normalWS=TransformObjectToWorldNormal(i.normalOS);o.uv=TRANSFORM_TEX(i.uv,_MainTex);o.lightmapUV=i.lightmapUV*unity_LightmapST.xy+unity_LightmapST.zw;o.color=i.color;o.fog=ComputeFogFactor(o.positionCS.z);return o;}
+ void surface(V i,out SurfaceData s){s=(SurfaceData)0;float4 c=tex2D(_MainTex,i.uv)*_Color;s.albedo=c.rgb;s.alpha=c.a;s.metallic=_Metallic;s.smoothness=_Glossiness;s.normalTS=float3(0,0,1);s.occlusion=1;
+ #if defined(_METALLICGLOSSMAP)
+ float4 mr=tex2D(_MetallicGlossMap,i.uv);s.metallic=mr.r;s.smoothness=mr.a*_GlossMapScale;
+ #endif
+ #if defined(_EMISSION)
+ s.emission=tex2D(_EmissionMap,i.uv).rgb*_EmissionColor.rgb;
+ #endif
+ s.albedo*=lerp(1,i.color.rgb,_UseVertexColor);float2 uv=i.positionWS.xz/max(_TileSize,.001);float2 edge=abs(frac(uv-.5)-.5);float2 aa=1-smoothstep(.002,.002+fwidth(uv),edge);float gridLine=max(aa.x,aa.y);float grain=frac(sin(dot(floor(i.positionWS.xz*180),float2(12.9898,78.233)))*43758.54);s.albedo*=lerp(1,lerp(.93,1.04,grain),_Grid);s.albedo=lerp(s.albedo,s.albedo*.22,gridLine*_Grid);s.emission+=min(tex2Dbias(_ReflectionTex,float4(GetNormalizedScreenSpaceUV(i.positionCS),0,2.2)).rgb,1.5)*_ReflectionStrength*(1-.7*gridLine*_Grid);
  }
- ENDCG
- } FallBack "Standard"
+ half4 frag(V i,bool facing:SV_IsFrontFace):SV_Target{SurfaceData s;surface(i,s);InputData d=(InputData)0;d.positionWS=i.positionWS;d.normalWS=normalize(i.normalWS)*(facing?1:-1);d.viewDirectionWS=GetWorldSpaceNormalizeViewDir(i.positionWS);d.shadowCoord=TransformWorldToShadowCoord(i.positionWS);d.normalizedScreenSpaceUV=GetNormalizedScreenSpaceUV(i.positionCS);d.bakedGI=SAMPLE_GI(i.lightmapUV,SampleSH(d.normalWS),d.normalWS);d.shadowMask=SAMPLE_SHADOWMASK(i.lightmapUV);half4 c=UniversalFragmentPBR(d,s);c.rgb=MixFog(c.rgb,i.fog);return c;}
+ float3 _LightDirection,_LightPosition;
+ V shadow(A i){V o=vert(i);float3 l=_LightDirection;
+ #if defined(_CASTING_PUNCTUAL_LIGHT_SHADOW)
+ l=normalize(_LightPosition-o.positionWS);
+ #endif
+ o.positionCS=TransformWorldToHClip(ApplyShadowBias(o.positionWS,o.normalWS,l));
+ #if UNITY_REVERSED_Z
+ o.positionCS.z=min(o.positionCS.z,UNITY_NEAR_CLIP_VALUE*o.positionCS.w);
+ #else
+ o.positionCS.z=max(o.positionCS.z,UNITY_NEAR_CLIP_VALUE*o.positionCS.w);
+ #endif
+ return o;}
+ half4 depth(V i):SV_Target{return 0;}
+ half4 normals(V i,bool f:SV_IsFrontFace):SV_Target{return half4(normalize(i.normalWS)*(f?1:-1),0);}
+ V metaVert(A i){V o=vert(i);o.positionCS=UnityMetaVertexPosition(i.positionOS.xyz,i.lightmapUV,i.lightmapUV,unity_LightmapST,unity_DynamicLightmapST);return o;}
+ half4 metaFrag(V i):SV_Target{SurfaceData s;surface(i,s);MetaInput m=(MetaInput)0;m.Albedo=s.albedo;m.Emission=0;return MetaFragment(m); /* Screen-space reflections are not baked emission. */}
+ ENDHLSL
+Pass { Name "Forward" Tags{"LightMode"="UniversalForward"} Cull Off ZWrite On
+ HLSLPROGRAM
+ #pragma target 3.5
+ #pragma vertex vert
+ #pragma fragment frag
+ #pragma shader_feature_local _METALLICGLOSSMAP
+ #pragma shader_feature_local _EMISSION
+ #pragma multi_compile _ LIGHTMAP_ON
+ #pragma multi_compile _ DIRLIGHTMAP_COMBINED
+ #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+ #pragma multi_compile _ _ADDITIONAL_LIGHTS
+ #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+ #pragma multi_compile_fragment _ _SHADOWS_SOFT
+ #pragma multi_compile_fog
+ ENDHLSL
+}
+Pass { Name "ShadowCaster" Tags{"LightMode"="ShadowCaster"} Cull Off ZWrite On
+ HLSLPROGRAM
+ #pragma target 3.5
+ #pragma vertex shadow
+ #pragma fragment depth
+ #pragma shader_feature_local _METALLICGLOSSMAP
+ #pragma shader_feature_local _EMISSION
+ #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+ ENDHLSL
+}
+Pass { Name "DepthOnly" Tags{"LightMode"="DepthOnly"} Cull Off ZWrite On
+ HLSLPROGRAM
+ #pragma target 3.5
+ #pragma vertex vert
+ #pragma fragment depth
+ #pragma shader_feature_local _METALLICGLOSSMAP
+ #pragma shader_feature_local _EMISSION
+ ENDHLSL
+}
+Pass { Name "DepthNormals" Tags{"LightMode"="DepthNormals"} Cull Off ZWrite On
+ HLSLPROGRAM
+ #pragma target 3.5
+ #pragma vertex vert
+ #pragma fragment normals
+ #pragma shader_feature_local _METALLICGLOSSMAP
+ #pragma shader_feature_local _EMISSION
+ ENDHLSL
+}
+Pass { Name "Meta" Tags{"LightMode"="Meta"} Cull Off ZWrite On
+ HLSLPROGRAM
+ #pragma target 3.5
+ #pragma vertex metaVert
+ #pragma fragment metaFrag
+ #pragma shader_feature_local _METALLICGLOSSMAP
+ #pragma shader_feature_local _EMISSION
+ ENDHLSL
+}
+}
 }

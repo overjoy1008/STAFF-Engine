@@ -14,7 +14,7 @@ Shader "STAFF/Infinite Coordinate Plane"
         Tags {  "RenderType"="Opaque" "Queue"="Geometry" }
         Pass
         {
-            Tags { "LightMode"="ForwardBase" }
+            Tags { "LightMode"="SRPDefaultUnlit" }
             Cull Off
             ZTest LEqual
             ZWrite On
@@ -30,7 +30,7 @@ Shader "STAFF/Infinite Coordinate Plane"
                 #if UNITY_UV_STARTS_AT_TOP
                 clipPos.y=-clipPos.y;
                 #endif
-                clipPos.y *= _ProjectionParams.x;
+                // URP render textures already include the GPU projection flip.
                 float4 world=mul(invVP,clipPos);return world.xyz/world.w;
             }
             CBUFFER_START(UnityPerMaterial)

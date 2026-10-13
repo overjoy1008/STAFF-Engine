@@ -1,5 +1,8 @@
 #include "UnityCG.cginc"
 #include "AbstractColor.cginc"
+#if defined(STAFF_ABSTRACT_GEOMETRY)
+float4x4 _StaffGeometryVP,_StaffGeometryV;
+#endif
 
             
             float4x4 _StaffInverseViewProjection;
@@ -8,7 +11,7 @@
                 #if UNITY_UV_STARTS_AT_TOP
                 clipPos.y=-clipPos.y;
                 #endif
-                clipPos.y *= _ProjectionParams.x;
+                // URP render textures already include the GPU projection flip.
                 float4 world=mul(invVP,clipPos);return world.xyz/world.w;
             }
             CBUFFER_START(UnityPerMaterial)
@@ -55,7 +58,11 @@
                 clip(t);
                 clip(1.0 - t);
                 float3 hitWS = nearWS + direction * t;
+                #if defined(STAFF_ABSTRACT_GEOMETRY)
+                float4 clipPosition = mul(_StaffGeometryVP,float4(hitWS,1));
+                #else
                 float4 clipPosition = mul(UNITY_MATRIX_VP,float4(hitWS,1));
+                #endif
                 Output output;
                 output.depth = clipPosition.z / clipPosition.w;
                 #if !UNITY_REVERSED_Z
@@ -78,7 +85,7 @@
                     output.color = half4(1,1,1,coverage);
                 }
                 #if defined(STAFF_ABSTRACT_GEOMETRY)
-                output.color = float4(.5, 1, .5, -mul(UNITY_MATRIX_V, float4(hitWS,1)).z);
+                output.color = float4(.5, 1, .5, -mul(_StaffGeometryV, float4(hitWS,1)).z);
                 #else
                 float graphic = max(output.color.r, max(output.color.g, output.color.b));
                 output.color.rgb = StaffAbstractColor(0, graphic.xxx);

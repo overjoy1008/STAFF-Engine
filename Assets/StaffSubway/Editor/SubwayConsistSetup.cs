@@ -25,13 +25,13 @@ namespace Staff.Subway.Editor {
    name=name.Replace(" (Instance)","");var existing=AssetDatabase.LoadAssetAtPath<Material>(Root+"Materials/"+name+".mat");
    if(module=="Front")return existing;
    string path=Dir(module)+name+".mat";var m=AssetDatabase.LoadAssetAtPath<Material>(path);if(m)return m;
-   m=existing?new Material(existing):new Material(Shader.Find("Standard"));m.name=name;
+   m=existing?new Material(existing):new Material(Shader.Find("Universal Render Pipeline/Lit"));m.name=name;
    string atlas=name=="Body_ContinuousShell"?"Continuity":name.StartsWith("Doors")?"Doors":name.StartsWith("Undercarriage")?"Undercarriage":"Body";
-   m.SetTexture("_MainTex",AssetDatabase.LoadAssetAtPath<Texture2D>(Dir(module)+atlas+"_BaseColor.png"));m.SetColor("_Color",Color.white);
-   m.SetTexture("_MetallicGlossMap",AssetDatabase.LoadAssetAtPath<Texture2D>(Dir(module)+atlas+"_MetallicSmoothness.png"));m.EnableKeyword("_METALLICGLOSSMAP");m.SetFloat("_GlossMapScale",1);
+   m.SetTexture(m.HasProperty("_BaseMap")?"_BaseMap":"_MainTex",AssetDatabase.LoadAssetAtPath<Texture2D>(Dir(module)+atlas+"_BaseColor.png"));m.SetColor(m.HasProperty("_BaseColor")?"_BaseColor":"_Color",Color.white);
+   m.SetTexture("_MetallicGlossMap",AssetDatabase.LoadAssetAtPath<Texture2D>(Dir(module)+atlas+"_MetallicSmoothness.png"));m.EnableKeyword("_METALLICGLOSSMAP");m.SetFloat(m.HasProperty("_Smoothness")?"_Smoothness":"_GlossMapScale",1);
    m.SetTexture("_EmissionMap",AssetDatabase.LoadAssetAtPath<Texture2D>(Dir(module)+atlas+"_Emission.png"));m.EnableKeyword("_EMISSION");m.SetColor("_EmissionColor",atlas=="Doors"?Color.black:Color.white*1.2f);
-   if(name.EndsWith("Glass")){m.SetColor("_Color",new Color(.78f,.86f,.93f,.22f));}
-   if(name=="Body_Transition"){m.SetTexture("_MainTex",null);m.SetColor("_Color",new Color(.025f,.032f,.043f));m.SetColor("_EmissionColor",Color.black);}
+   if(name.EndsWith("Glass")){m.SetColor(m.HasProperty("_BaseColor")?"_BaseColor":"_Color",new Color(.78f,.86f,.93f,.22f));}
+   if(name=="Body_Transition"){m.SetTexture(m.HasProperty("_BaseMap")?"_BaseMap":"_MainTex",null);m.SetColor(m.HasProperty("_BaseColor")?"_BaseColor":"_Color",new Color(.025f,.032f,.043f));m.SetColor("_EmissionColor",Color.black);}
    m.enableInstancing=true;AssetDatabase.CreateAsset(m,path);return m;
   }
   static void Prepare(string module){
