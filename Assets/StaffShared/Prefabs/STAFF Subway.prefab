@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &439599552216165969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 483678305820189493}
+  - component: {fileID: 829766557413194254}
+  - component: {fileID: 1290396675919479283}
+  - component: {fileID: 825240577363656772}
+  m_Layer: 0
+  m_Name: STAFF Subway
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &483678305820189493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439599552216165969}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &829766557413194254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439599552216165969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca79188f3e867460bbbbd3daeb251d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SubwayDoors
+  leaves: []
+  duration: 1.5
+  doorwayGates: []
+--- !u!114 &1290396675919479283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439599552216165969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91a8bb680ae942a3b535f32eb5a0c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SubwayTransit
+  movingParts: []
+  motionSpace: {fileID: 0}
+  boardingBounds:
+    m_Center: {x: 7.65, y: 1.7, z: 58}
+    m_Extent: {x: 1.85, y: 1.7, z: 76}
+  doors: {fileID: 0}
+  dockPositions: []
+  travelDistance: 420
+  travelSeconds: 16
+--- !u!114 &825240577363656772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439599552216165969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8a2ce5407614ac6adba4d716ab8d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Shared.SubwayConsist
+  carCount: 5
+  rearCar: {fileID: 3920837104133250151, guid: 5a4783b78bd96409a8bfc0eb8c380a3c, type: 3}
+  middleCar: {fileID: 1531658553480035607, guid: 9300bb0c943464a80812eb6b7cdf6791, type: 3}
+  frontCar: {fileID: 4908000638988203544, guid: 282d2ea0d7f944019b7e95a33cc43cee, type: 3}
+  carSpacing: 30.325006
+  gangwayMaterial: {fileID: 2100000, guid: 36ecfabbb5f984940ab2d18002336bbb, type: 2}
+  generated: {fileID: 0}

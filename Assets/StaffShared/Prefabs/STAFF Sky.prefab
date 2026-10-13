@@ -1,0 +1,565 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1894837624604355687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4125954821432991380}
+  - component: {fileID: 494239141586551305}
+  m_Layer: 0
+  m_Name: STAFF Sky
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4125954821432991380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894837624604355687}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5938829361413142936}
+  - {fileID: 9212065925109552740}
+  - {fileID: 180965713672768757}
+  - {fileID: 4262658390480807783}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &494239141586551305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894837624604355687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f9e86a0788a44e29eab584a7c11a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Shared.SharedSkyRig
+  sky: {fileID: 566713750416022077}
+  rendererData: {fileID: 11400000, guid: f288ae1f4751b564a96ac7587541f7a2, type: 2}
+  sun: {fileID: 4715637209824454093}
+  daylightIntensity: 1.15
+  skyVolumes:
+  - {fileID: 5784342144886420353}
+--- !u!1 &2309025276579476625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4262658390480807783}
+  - component: {fileID: 4715637209824454093}
+  m_Layer: 0
+  m_Name: Solar directional light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4262658390480807783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309025276579476625}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4125954821432991380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &4715637209824454093
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309025276579476625}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!1 &4579912867736143937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180965713672768757}
+  - component: {fileID: 5784342144886420353}
+  m_Layer: 8
+  m_Name: Nishita Volumetric Clouds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180965713672768757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4579912867736143937}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4125954821432991380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5784342144886420353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4579912867736143937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 10
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: cfeed730860994e1d8ed3e0de4030504, type: 2}
+--- !u!1 &6847029134681951154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5938829361413142936}
+  - component: {fileID: 3964199005438402295}
+  - component: {fileID: 566713750416022077}
+  - component: {fileID: 7820016171239458631}
+  m_Layer: 0
+  m_Name: Nishita time presets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5938829361413142936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6847029134681951154}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4125954821432991380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3964199005438402295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6847029134681951154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49877256a7bce4b609fc1a853907d318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Nishita.NishitaAtmosphere
+  airDensity: 1.8
+  aerosolDensity: 1
+  ozoneDensity: 2.5
+  altitude: 1523
+  sunDisc: 1
+  sunRadius: 0.941
+  sunIntensity: 1
+  brightness: 0.27
+  sunElevation: 60
+  sunRotation: 180
+  useDayCycle: 1
+  animate: 1
+  timeOfDay: 23.318977
+  dayDurationSeconds: 240
+  latitude: 37
+  solarDeclination: 0
+  northRotation: 0
+  elevationSunSize: 1
+  horizonRadiusMultiplier: 1.18
+  horizonRadiusFadeDegrees: 20
+  elevationOzone: 1
+  horizonOzone: 0.6
+  noonOzone: 45
+  middleOzone: 10
+  ozoneMiddleDegrees: 20
+  ozoneStartDegrees: 10
+  ozoneFullDegrees: 60
+  skyWidth: 256
+  updateInterval: 0.0667
+  singleCompute: {fileID: 7200000, guid: 47288199198254671bc95ee5dda41292, type: 3}
+  multipleCompute: {fileID: 7200000, guid: 84b341b2022104309b6fe128c670216b, type: 3}
+  lightingCompute: {fileID: 7200000, guid: e7502ee98723f42db9b0d551cdea88ff, type: 3}
+  skyShader: {fileID: 4800000, guid: fb1e5910326bc4abdabfd8a1a065c095, type: 3}
+--- !u!114 &566713750416022077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6847029134681951154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591dd830a800240b2bcf354ddacc1f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SubwayTimeOfDay
+  automaticSceneCameras: 1
+  atmosphere: {fileID: 3964199005438402295}
+  agxLut: {fileID: 2800000, guid: 4f2794108934a4f16a365244871a8bfb, type: 2}
+  cameras: []
+  skyFill: {fileID: 6353255688785240517}
+  presets:
+  - label: Yellow sunrise
+    elevation: 5.5
+    rotation: 92.2
+    air: 1.6
+    aerosols: 1.8
+    ozone: 0.6
+    brightness: 0.27
+    exposure: -2
+  - label: Blue noon
+    elevation: 60
+    rotation: 180
+    air: 1.2
+    aerosols: 0.3
+    ozone: 2.5
+    brightness: 0.35
+    exposure: -3
+  - label: Red sunset
+    elevation: 0.8
+    rotation: 267.8
+    air: 1.8
+    aerosols: 4.5
+    ozone: 1.1
+    brightness: 0.27
+    exposure: -1.5
+  - label: Night
+    elevation: -12
+    rotation: 300
+    air: 1.8
+    aerosols: 1
+    ozone: 2.92
+    brightness: 0.27
+    exposure: -2
+  current: 1
+  skyWeather:
+    clouds: 1
+    cloudMotionMultiplier: 4
+    cloudColors:
+      enabled: 1
+      strength: 0.9
+      daylight: {r: 1, g: 0.97, b: 0.92, a: 1}
+      dayShadow: {r: 0.53, g: 0.68, b: 0.88, a: 1}
+      dawnLight: {r: 1, g: 0.79, b: 0.56, a: 1}
+      dawnShadow: {r: 0.59, g: 0.61, b: 0.78, a: 1}
+      sunsetLight: {r: 1, g: 0.3, b: 0.2, a: 1}
+      sunsetShadow: {r: 0.63, g: 0.27, b: 0.4, a: 1}
+      twilightLight: {r: 0.72, g: 0.58, b: 0.86, a: 1}
+      twilightShadow: {r: 0.35, g: 0.39, b: 0.65, a: 1}
+      nightShadow: {r: 0.24, g: 0.34, b: 0.57, a: 1}
+    seed: 2718
+    cloudCoverage: 0.48
+    cloudDensity: 1.1
+    cloudBaseMeters: 1400
+    cloudThicknessMeters: 1800
+    cloudScaleMeters: 6500
+    windMetersPerSecond: 25
+    windHeading: 75
+    stars: 1
+    starBackend: 0
+    starMagnitudeLimit: 6.5
+    starSize: 0.65
+    starMap: {fileID: 0}
+    starExposure: 0
+    starBrightness: 0.55
+    starRevolutionSeconds: 1800
+    starPhaseDegrees: 0
+    animate: 1
+  solarEffects:
+    lensFlare: 1
+    sunRays: 1
+    flareIntensity: 0.55
+    glareSize: 0.3
+    flareSize: 0.003
+    starPoints: 5
+    starRayOpacity: 0.65
+    animateStarPoints: 1
+    starIntensityVariation: 0.75
+    starAnimationAmount: 0.35
+    starAnimationSpeed: 0.7
+    starAnimationSeed: 2718
+    previewStarAnimation: 1
+    ghostScale: 0.25
+    secondaryGhosts: 1
+    hexGhostCount: 6
+    roundGhostCount: 3
+    hexGhostOpacity: 0.53
+    roundGhostOpacity: 1
+    hexGhostSize: 1.3
+    roundGhostSize: 1.8
+    anamorphic: 0
+    solarRayStrength: 0.3
+    rayDensity: 0.0078125
+    rayMaxOpacity: 0.3
+    raySteps: 48
+    rayDistance: 80
+    distanceAttenuation: 2
+    rayColor: {r: 1, g: 0.9, b: 0.7, a: 1}
+    localLights: 1
+    trainEndRayStrength: 0.4
+    interiorRayStrength: 0.05
+    fluorescentRays: 1
+    trainEmissionRays: 1
+    localLightBudget: 3
+    localRaySteps: 32
+    localRayDensity: 0.025
+    localRayIntensity: 0.6
+    trainRayIntensity: 0.65
+    trainLedRange: 3
+    trainLampRange: 8
+    trainLedColor: {r: 0.12, g: 0.4, b: 1, a: 1}
+    trainLampColor: {r: 1, g: 0.85, b: 0.65, a: 1}
+  moon:
+    enabled: 1
+    surface: {fileID: 2800000, guid: 3deca633c634a4927b451deb05e5a0f1, type: 3}
+    phase: 0.5
+    followSolarDay: 1
+    elevation: 30
+    azimuth: 0
+    radius: 1.4
+    brightness: 1
+    tint: {r: 0.7028302, g: 0.833295, b: 1, a: 1}
+    earthshine: 0.025
+    glow: 0.01
+    glowRadius: 5.5
+    textureRotation: 0
+  continuousSolarLighting: 1
+  exposure: -2
+--- !u!114 &7820016171239458631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6847029134681951154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bce70e6c290c4e87b9bcdeaede553ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.NishitaCloudLighting
+  sky: {fileID: 566713750416022077}
+--- !u!1 &7295995318619150897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9212065925109552740}
+  - component: {fileID: 6353255688785240517}
+  - component: {fileID: 1223202486450718179}
+  m_Layer: 0
+  m_Name: Nishita sky fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9212065925109552740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295995318619150897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.51899165, y: 0.21828577, z: -0.13906339, w: 0.8146536}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.4999999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4125954821432991380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &6353255688785240517
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295995318619150897}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Intensity: 0
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!114 &1223202486450718179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295995318619150897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1

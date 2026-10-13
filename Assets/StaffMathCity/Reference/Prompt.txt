@@ -1,0 +1,10 @@
+Tool: built-in image_gen.imagegen
+Use case: stylized-concept
+Date: 2026-10-13 Asia/Seoul
+Output: City-Concept.png
+
+Use case: stylized-concept. Create an original anime background art reference for a playable Unity 3D city scene for STAFF, a contemporary supernatural mathematics action story about Hanyul and Shua. This is their ordinary human city, NOT a CPU/computer/cyber city. Wide landscape 16:9 cinematic establishing shot, street-level camera at 2 meters looking down a slightly uphill compact Japanese/Korean urban shopping street. Grounded proportions and cinematic painted anime backgrounds reminiscent of Chainsaw Man and Jujutsu Kaisen urban atmosphere. Foreground zebra crossing over charcoal asphalt, warm pale concrete sidewalks. Left side a weathered ivory four-story corner shop with dusty sage awning, big glass storefront, little red vending machine, stacked balconies, AC units. Right side slender 5-story pale grey apartment and muted ochre bookshop, vertical modest signs, side alley. Utility poles and graceful sagging overhead cable silhouettes. Street recedes toward an elevated railway bridge, slim midrise skyline beyond. Small ginkgo street trees and potted plants bring restrained Botanica organic silhouettes. Late afternoon warm sunlight from upper left, crisp long cool blue-grey shadows, soft pale cyan sky and broad painterly white clouds. Fine dark contour details, restrained texture noise, large readable shadow shapes. Dense believable architectural detail but clear empty walking space, no people, no vehicles in foreground, no fantasy symbols, no neon cyberpunk, no math text, no interface, no title, no logos. A finished cinematic background painting usable as a concrete environment layout reference, not a collage.
+
+Inspection notes: the image contains incidental invented Japanese lettering and a
+recognizable beverage logo despite the prompt. These are reference-only and have
+not been copied into the scene's original generic shop signs or vending machine.

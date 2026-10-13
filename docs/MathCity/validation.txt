@@ -1,0 +1,8 @@
+PASS
+Scene: Assets/Scenes/STAFF_City_Reference.unity
+Renderers: 499
+Triangles: 732960
+Missing scripts: 0
+All renderer materials and shaders valid.
+Reference image: Assets/StaffMathCity/Reference/City-Concept.png
+Camera navigation: RMB + WASD, Q/E, Shift, R home.

@@ -12,7 +12,7 @@ namespace Staff.Subway {
   OpticsPass pass;
   public override void Create(){pass?.Dispose();pass=new OpticsPass(opticsShader,shadowShader){renderPassEvent=(RenderPassEvent)((int)RenderPassEvent.BeforeRenderingPostProcessing+1)};}
   public override void AddRenderPasses(ScriptableRenderer renderer,ref RenderingData data){
-   var sky=SubwayTimeOfDay.Active;var c=data.cameraData.camera;
+   var sky=SubwayTimeOfDay.ForCamera(data.cameraData.camera);var c=data.cameraData.camera;
    if(SubwayPlanarReflection.RenderingMirror||!sky||!sky.atmosphere||!sky.atmosphere.Ready||!opticsShader||!shadowShader||c.cameraType==CameraType.Preview||c.cameraType==CameraType.Reflection||c.orthographic)return;
    var mode=c.GetComponent<AbstractEnvironment>();if(mode&&mode.IsAbstract)return;
    if(sky.atmosphere.Elevation<=-1||(!sky.solarEffects.lensFlare&&!sky.solarEffects.sunRays))return;

@@ -1,0 +1,1 @@
+PASS: sky instantiated before camera; late-added camera binds; disabling sky restores original camera flags/material/enabled state.

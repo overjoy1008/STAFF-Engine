@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,16 +9,17 @@ namespace Staff.Subway {
   public Leaf[] leaves=Array.Empty<Leaf>();
   [Min(.1f)] public float duration=1.5f;
   public BoxCollider[] doorwayGates=Array.Empty<BoxCollider>();
-  public bool DoorwayOccupied { get { var player=FindFirstObjectByType<Staff.Characters.AdventurePlayer>();if(!player)return false;var body=player.GetComponent<CharacterController>();if(!body)return false;foreach(var gate in doorwayGates){if(!gate||gate.name.EndsWith(" L"))continue;var bounds=new Bounds(gate.transform.TransformPoint(gate.center),Vector3.Scale(gate.size,gate.transform.lossyScale));bounds.Expand(.15f);if(bounds.Intersects(body.bounds))return true;}return false;} }
+  public bool DoorwayOccupied { get { var player=gameObject.scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Staff.Characters.AdventurePlayer>()).FirstOrDefault();if(!player)return false;var body=player.GetComponent<CharacterController>();if(!body)return false;foreach(var gate in doorwayGates){if(!gate||gate.name.EndsWith(" L"))continue;var bounds=new Bounds(gate.transform.TransformPoint(gate.center),Vector3.zero);for(int i=0;i<8;i++)bounds.Encapsulate(gate.transform.TransformPoint(gate.center+Vector3.Scale(gate.size*.5f,new Vector3((i&1)==0?-1:1,(i&2)==0?-1:1,(i&4)==0?-1:1))));bounds.Expand(.15f);if(bounds.Intersects(body.bounds))return true;}return false;} }
   public bool IsOpen {get;private set;}
   public float Progress {get;private set;}
   public bool InputLocked {get;set;}
+  public void ResetClosed(){IsOpen=false;Progress=0;InputLocked=false;Advance(0);}
   public void Close(){if(!DoorwayOccupied)IsOpen=false;}
   public void Toggle(){if(InputLocked||IsOpen&&DoorwayOccupied)return;IsOpen=!IsOpen;}
   public void HandleInput(bool accept){if(accept&&Keyboard.current!=null&&Keyboard.current.oKey.wasPressedThisFrame)Toggle();}
   void Start(){Advance(0);}
   void Update(){
-   var player=FindFirstObjectByType<Staff.Characters.AdventurePlayer>();
+   var player=gameObject.scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Staff.Characters.AdventurePlayer>()).FirstOrDefault();
    HandleInput(Application.isFocused&&player&&player.InputCaptured&&!player.InputBlocked);
    Advance(Time.deltaTime);
   }

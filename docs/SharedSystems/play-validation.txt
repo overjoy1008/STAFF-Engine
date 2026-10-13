@@ -1,0 +1,6 @@
+PASS: adding a component to the shared gameplay prefab propagated to all three scenes; temporary probe removed from source.
+PASS: runtime 2–8 cars; translated/rotated 8-car train carries rider in local forward direction; departure and arrival finish correctly.
+PASS STAFF_Subway_Reference: actual Play; shared character features/camera; live Nishita; day/night captures; continuous solar cycle.
+PASS SampleScene: actual Play; shared character features/camera; live Nishita; day/night captures; continuous solar cycle.
+PASS STAFF_City_Reference: actual Play; shared character features/camera; live Nishita; day/night captures; continuous solar cycle.
+PASS STAFF_City_Reference: actual Play; shared character features/camera; live Nishita; day/night captures; continuous solar cycle.

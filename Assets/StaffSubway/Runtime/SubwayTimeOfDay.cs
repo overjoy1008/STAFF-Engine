@@ -1,3 +1,6 @@
+using System.Linq;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,7 +14,12 @@ namespace Staff.Subway {
    public float elevation,rotation,air,aerosols,ozone,brightness,exposure;
    public Preset(string label,float elevation,float rotation,float air,float aerosols,float ozone,float brightness,float exposure){this.label=label;this.elevation=elevation;this.rotation=rotation;this.air=air;this.aerosols=aerosols;this.ozone=ozone;this.brightness=brightness;this.exposure=exposure;}
   }
-  public static SubwayTimeOfDay Active { get; private set; }
+  static readonly List<SubwayTimeOfDay> instances=new List<SubwayTimeOfDay>();
+  public static SubwayTimeOfDay Active=>instances.LastOrDefault(s=>s&&s.isActiveAndEnabled&&s.gameObject.scene==SceneManager.GetActiveScene());
+  public static SubwayTimeOfDay ForCamera(Camera c)=>c&&c.cameraType!=CameraType.SceneView?instances.LastOrDefault(s=>s&&s.isActiveAndEnabled&&s.gameObject.scene==c.gameObject.scene):Active;
+  public bool automaticSceneCameras;
+  Camera[] boundCameras;
+  Camera[] BoundCameras=>boundCameras??cameras;
   public double StarElapsedSeconds => weather?.ElapsedSeconds ?? 0;
   public Vector2 CloudDisplacement => weather?.CloudDisplacement ?? Vector2.zero;
   public NishitaAtmosphere atmosphere;
@@ -39,21 +47,28 @@ namespace Staff.Subway {
   double weatherClock;
   [Tooltip("Blend atmospheric density, exposure and added sky fill continuously during Solar Day.")]
   public bool continuousSolarLighting=true;
-  Material disc, savedGlobalSky;
+  Material disc, savedGlobalSky, appliedGlobalSky;
   [Range(-12,12)] public float exposure=-3;
   AdventurePlayer player;
   Material[] savedSky,savedAbstract;
   bool[] savedEnabled;
   CameraClearFlags[] savedFlags;
   float savedFillIntensity;Color savedFillColor;
+  bool initializePending;
   void OnEnable(){
-   Active=this;weatherClock=Time.realtimeSinceStartupAsDouble;
+   if(!gameObject.scene.IsValid()||!gameObject.scene.isLoaded){initializePending=true;return;}
+   InitializeSky();
+  }
+  void InitializeSky(){initializePending=false;
+   if(!instances.Contains(this))instances.Add(this);
+   boundCameras=automaticSceneCameras?gameObject.scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Camera>(true)).Where(c=>c.cameraType==CameraType.Game).ToArray():cameras;
+   weatherClock=Time.realtimeSinceStartupAsDouble;
    weather = new NishitaSkyWeather();
    savedGlobalSky=RenderSettings.skybox;
-   player=FindFirstObjectByType<AdventurePlayer>();
+   player=gameObject.scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<AdventurePlayer>()).FirstOrDefault();
    if(skyFill){savedFillIntensity=skyFill.intensity;savedFillColor=skyFill.color;}
-   int count=cameras==null?0:cameras.Length;savedSky=new Material[count];savedAbstract=new Material[count];savedEnabled=new bool[count];savedFlags=new CameraClearFlags[count];
-   for(int i=0;i<count;i++){var c=cameras[i];if(!c)continue;var sky=c.GetComponent<Skybox>();if(!sky)sky=c.gameObject.AddComponent<Skybox>();savedSky[i]=sky.material;savedEnabled[i]=sky.enabled;savedFlags[i]=c.clearFlags;var mode=c.GetComponent<AbstractEnvironment>();if(mode)savedAbstract[i]=mode.abstractSkybox;}
+   int count=BoundCameras==null?0:BoundCameras.Length;savedSky=new Material[count];savedAbstract=new Material[count];savedEnabled=new bool[count];savedFlags=new CameraClearFlags[count];
+   for(int i=0;i<count;i++){var c=BoundCameras[i];if(!c)continue;var sky=c.GetComponent<Skybox>();if(!sky)sky=c.gameObject.AddComponent<Skybox>();savedSky[i]=sky.material;savedEnabled[i]=sky.enabled;savedFlags[i]=c.clearFlags;var mode=c.GetComponent<AbstractEnvironment>();if(mode)savedAbstract[i]=mode.abstractSkybox;}
    if(atmosphere)atmosphere.Tick(true);
    ApplySky();
   }
@@ -78,7 +93,7 @@ namespace Staff.Subway {
    // Only the added sky fill varies. Fluorescents, station fill and reflection remain intact.
    if(skyFill){skyFill.intensity=current==0?.22f:current==1?.35f:current==2?.16f:.02f;skyFill.color=current==0?new Color(1,.88f,.65f):current==1?new Color(.85f,.92f,1):current==2?new Color(1,.64f,.48f):new Color(.5f,.63f,1);}
   }
-  void LateUpdate(){double now=Time.realtimeSinceStartupAsDouble;weather?.Advance(Application.isPlaying?Time.deltaTime:(float)Math.Max(0,now-weatherClock),skyWeather);weatherClock=now;ApplySolarDay();ApplySky();}
+  void LateUpdate(){if(initializePending){if(!gameObject.scene.IsValid()||!gameObject.scene.isLoaded)return;InitializeSky();}double now=Time.realtimeSinceStartupAsDouble;weather?.Advance(Application.isPlaying?Time.deltaTime:(float)Math.Max(0,now-weatherClock),skyWeather);weatherClock=now;ApplySolarDay();ApplySky();}
   public void ApplySolarDay(){
    var a=atmosphere;if(!a||!a.useDayCycle||!continuousSolarLighting||presets==null||presets.Length<4)return;
    // All transitions are evaluated from the same continuous sun direction, never preset index.
@@ -108,18 +123,27 @@ namespace Staff.Subway {
    weather?.Apply(real,skyWeather,atmosphere.latitude,atmosphere.northRotation,atmosphere.Elevation);
    if(!disc)disc=new Material(real){name="Subway solar disc",hideFlags=HideFlags.HideAndDontSave};
    disc.CopyPropertiesFromMaterial(real);disc.SetFloat("_DiscOnly",1);
-   RenderSettings.skybox=real;
-   if(cameras==null)return;
-   foreach(var c in cameras){if(!c)continue;var mode=c.GetComponent<AbstractEnvironment>();if(mode)mode.abstractSkybox=disc;var sky=c.GetComponent<Skybox>();if(!sky)continue;sky.enabled=true;sky.material=mode&&mode.IsAbstract?disc:real;c.clearFlags=CameraClearFlags.Skybox;}
+   if(Active==this){RenderSettings.skybox=real;appliedGlobalSky=real;}
+   if(BoundCameras==null)return;
+   foreach(var c in BoundCameras){if(!c)continue;var mode=c.GetComponent<AbstractEnvironment>();if(mode)mode.abstractSkybox=disc;var sky=c.GetComponent<Skybox>();if(!sky)continue;sky.enabled=true;sky.material=mode&&mode.IsAbstract?disc:real;c.clearFlags=CameraClearFlags.Skybox;}
+  }
+  public void ApplyToCamera(Camera c){
+   if(!c||!atmosphere||!atmosphere.Ready)return;
+   var mode=c.GetComponent<AbstractEnvironment>();var box=c.GetComponent<Skybox>();if(!box)box=c.gameObject.AddComponent<Skybox>();
+   if(boundCameras==null||!boundCameras.Contains(c)){
+    int count=boundCameras==null?0:boundCameras.Length;Array.Resize(ref boundCameras,count+1);Array.Resize(ref savedSky,count+1);Array.Resize(ref savedAbstract,count+1);Array.Resize(ref savedEnabled,count+1);Array.Resize(ref savedFlags,count+1);
+    boundCameras[count]=c;savedSky[count]=box.material;savedAbstract[count]=mode?mode.abstractSkybox:null;savedEnabled[count]=box.enabled;savedFlags[count]=c.clearFlags;
+   }
+   box.enabled=true;box.material=mode&&mode.IsAbstract?disc:atmosphere.GetSky(true);c.clearFlags=CameraClearFlags.Skybox;
   }
   // Editor save hooks restore serialized references before saving transient preview materials.
   public void RestorePreviewBindings(){
-   RenderSettings.skybox=savedGlobalSky;
-   if(cameras!=null&&savedSky!=null)for(int i=0;i<cameras.Length&&i<savedSky.Length;i++){var c=cameras[i];if(!c)continue;var mode=c.GetComponent<AbstractEnvironment>();if(mode){mode.abstractSkybox=savedAbstract[i];}var sky=c.GetComponent<Skybox>();if(sky){sky.material=savedSky[i];sky.enabled=savedEnabled[i];}c.clearFlags=savedFlags[i];}
+   if(appliedGlobalSky&&RenderSettings.skybox==appliedGlobalSky)RenderSettings.skybox=savedGlobalSky;
+   if(BoundCameras!=null&&savedSky!=null)for(int i=0;i<BoundCameras.Length&&i<savedSky.Length;i++){var c=BoundCameras[i];if(!c)continue;var mode=c.GetComponent<AbstractEnvironment>();if(mode){mode.abstractSkybox=savedAbstract[i];}var sky=c.GetComponent<Skybox>();if(sky){sky.material=savedSky[i];sky.enabled=savedEnabled[i];}c.clearFlags=savedFlags[i];}
   }
   void OnDisable(){
-   if(Active==this)Active=null;
    RestorePreviewBindings();
+   instances.Remove(this);
    weather?.Dispose();weather=null;
    if(skyFill){skyFill.intensity=savedFillIntensity;skyFill.color=savedFillColor;}
    if(disc){if(Application.isPlaying)Destroy(disc);else DestroyImmediate(disc);}disc=null;

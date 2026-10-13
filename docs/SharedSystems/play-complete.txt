@@ -1,0 +1,1 @@
+PASS: returned to Edit mode after all three scenes.

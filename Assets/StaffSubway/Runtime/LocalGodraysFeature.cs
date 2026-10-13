@@ -11,7 +11,7 @@ namespace Staff.Subway {
   LocalPass pass;
   public override void Create(){pass?.Dispose();pass=new LocalPass(opticsShader,shadowShader){renderPassEvent=(RenderPassEvent)((int)RenderPassEvent.BeforeRenderingPostProcessing+2)};}
   public override void AddRenderPasses(ScriptableRenderer renderer,ref RenderingData data){
-   var sky=SubwayTimeOfDay.Active;var c=data.cameraData.camera;
+   var sky=SubwayTimeOfDay.ForCamera(data.cameraData.camera);var c=data.cameraData.camera;
    if(!sky||!sky.solarEffects.sunRays||!sky.solarEffects.localLights||sky.solarEffects.localRayIntensity<=0||sky.solarEffects.localRayDensity<=0||!opticsShader||!shadowShader||SubwayPlanarReflection.RenderingMirror||c.cameraType==CameraType.Preview||c.cameraType==CameraType.Reflection||c.orthographic)return;
    var mode=c.GetComponent<AbstractEnvironment>();if(mode&&mode.IsAbstract)return;
    pass.Setup(sky.solarEffects,shadowResolution);pass.ConfigureInput(ScriptableRenderPassInput.Depth|ScriptableRenderPassInput.Color);renderer.EnqueuePass(pass);

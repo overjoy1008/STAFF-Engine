@@ -7,9 +7,9 @@ namespace Staff.Subway {
   public SubwayTimeOfDay sky;
   void OnEnable(){VolumetricCloudsURP.CameraFilter+=Allows;VolumetricCloudsURP.ConfigureForCamera+=Configure;}
   void OnDisable(){VolumetricCloudsURP.CameraFilter-=Allows;VolumetricCloudsURP.ConfigureForCamera-=Configure;}
-  bool Allows(Camera c){var mode=c.GetComponent<AbstractEnvironment>();return (!sky||sky.skyWeather.clouds)&&(!mode||!mode.IsAbstract);}
+  bool Allows(Camera c){var selected=SubwayTimeOfDay.ForCamera(c);var mode=c.GetComponent<AbstractEnvironment>();return (!selected||selected.skyWeather.clouds)&&(!mode||!mode.IsAbstract);}
   void Configure(Material material,Camera c){
-   if(!sky||!sky.atmosphere||!sky.atmosphere.Ready)return;
+   if(SubwayTimeOfDay.ForCamera(c)!=sky||!sky||!sky.atmosphere||!sky.atmosphere.Ready)return;
    var a=sky.atmosphere;var d=a.SunDirection;
    // One shared weather clock for Game/Scene cameras; no per-camera accumulation.
    Vector2 wind=sky.CloudDisplacement;

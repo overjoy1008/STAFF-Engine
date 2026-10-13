@@ -1,0 +1,1 @@
+PASS: Actual Play mode entered; city camera and Input System navigation component active; all materials and scripts valid; three camera renders captured in Play mode.

@@ -1,0 +1,10 @@
+PASS Assets/Scenes/STAFF_Subway_Reference.unity: connected shared gameplay / sky; one camera; model and sky references intact.
+PASS train 2 cars: modules / door curves / collision gates.
+PASS train 3 cars: modules / door curves / collision gates.
+PASS train 4 cars: modules / door curves / collision gates.
+PASS train 5 cars: modules / door curves / collision gates.
+PASS train 6 cars: modules / door curves / collision gates.
+PASS train 7 cars: modules / door curves / collision gates.
+PASS train 8 cars: modules / door curves / collision gates.
+PASS Assets/Scenes/SampleScene.unity: connected shared gameplay / sky; one camera; model and sky references intact.
+PASS Assets/Scenes/STAFF_City_Reference.unity: connected shared gameplay / sky; one camera; model and sky references intact.

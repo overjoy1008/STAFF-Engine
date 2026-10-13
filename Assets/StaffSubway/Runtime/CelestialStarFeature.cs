@@ -10,7 +10,7 @@ namespace Staff.Subway {
   StarPass pass;
   public override void Create(){pass?.Dispose();pass=new StarPass {renderPassEvent=RenderPassEvent.AfterRenderingSkybox};}
   public override void AddRenderPasses(ScriptableRenderer renderer,ref RenderingData data){
-   var sky=SubwayTimeOfDay.Active;
+   var sky=SubwayTimeOfDay.ForCamera(data.cameraData.camera);
    if(!sky||!sky.atmosphere||!sky.skyWeather.stars||sky.skyWeather.starBackend!=NishitaSkyWeather.StarBackend.UnityStarRenderer||!catalog||!starMaterial)return;
    var c=data.cameraData.camera;var mode=c.GetComponent<AbstractEnvironment>();
    if((mode&&mode.IsAbstract)||c.cameraType==CameraType.Preview||c.orthographic)return;
