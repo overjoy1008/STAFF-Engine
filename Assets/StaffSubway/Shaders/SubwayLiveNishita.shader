@@ -2,7 +2,7 @@
 // intern/cycles/kernel/svm/sky.h, Blender Foundation, Apache-2.0.
 Shader "STAFF/Subway/Live Nishita Presets"
 {
- Properties { [HideInInspector] _StarMap("NASA celestial map",2D)="black"{} _SkyCurrent("Current atmosphere",2D)="black"{} _SkyPrevious("Previous atmosphere",2D)="black"{} }
+ Properties { [HideInInspector] _MoonMap("NASA Moon",2D)="white"{}  [HideInInspector] _StarMap("NASA celestial map",2D)="black"{} _SkyCurrent("Current atmosphere",2D)="black"{} _SkyPrevious("Previous atmosphere",2D)="black"{} }
  SubShader {
  Tags {"Queue"="Background" "RenderType"="Background" "PreviewType"="Skybox"}
  Cull Off ZWrite Off
@@ -21,6 +21,7 @@ Shader "STAFF/Subway/Live Nishita Presets"
  float4 _LutSize,_SunDir;
  float _Rotation,_Elevation,_Radius,_SunIntensity,_SunDisc,_Horizon,_Brightness,_Blend;
 #include "NishitaWeather.cginc"
+#include "CelestialMoon.cginc"
  struct v2f{float4 position:SV_POSITION;float3 direction:TEXCOORD0;};
  v2f vert(appdata_base v){v2f o;o.position=UnityObjectToClipPos(v.vertex);o.direction=v.vertex.xyz;return o;}
  float3 readSky(Texture2D<float4> tex,float2 uv){
@@ -49,7 +50,7 @@ Shader "STAFF/Subway/Live Nishita Presets"
   float3 display=agx(max(rgb,0)*_Brightness);
   display*=lerp(float3(1,1,1),float3(1.12,.82,.76),_StaffSunset);
   if(_SunDisc>0&&elevation>_Horizon)display*=lerp(float3(1,1,1),_StaffSunTint.rgb,coverage);
-  return float4(weatherComposite(display,d,i.position.xy),1);
+  return float4(moonComposite(weatherComposite(display,d,i.position.xy),d),1);
  }
  ENDCG
  }

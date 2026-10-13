@@ -1,0 +1,5 @@
+using System;using System.IO;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;using Staff.Subway;
+public static class MoonSoftGlowSetup {
+ [MenuItem("STAFF/Subway/Apply Soft Moon Glow")]
+ public static void Install(){if(EditorApplication.isPlaying)throw new Exception("Exit Play mode first.");var sky=UnityEngine.Object.FindFirstObjectByType<SubwayTimeOfDay>();if(!sky)throw new Exception("Open subway scene.");Directory.CreateDirectory("Library/StaffSubway");EditorSceneManager.SaveScene(sky.gameObject.scene,"Library/StaffSubway/before-soft-moon.unity",true);Undo.RecordObject(sky,"Soften moon glow and sun rays");sky.moon.radius=.75f;sky.moon.tint=new Color(.84f,.91f,1);sky.moon.glow=.01f;sky.moon.glowRadius=5.5f;sky.solarEffects.starRayOpacity=.65f;sky.ApplySky();EditorUtility.SetDirty(sky);EditorSceneManager.MarkSceneDirty(sky.gameObject.scene);EditorSceneManager.SaveScene(sky.gameObject.scene);Debug.Log("Soft Moon saved: radius .75, blue tint, glow .01 / 5.5, star ray opacity .65.");}
+}

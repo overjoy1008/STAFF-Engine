@@ -12,6 +12,8 @@ namespace Staff.Subway {
    [Range(.001f,.02f)] public float flareSize=.003f;
    [Range(2,8)] public int starPoints=5;
    [Header("Independent flare spokes")]
+   [Tooltip("Additive opacity of sun star rays; does not dim the central core or lens ghosts.")]
+   [Range(0,1)] public float starRayOpacity=.65f;
    public bool animateStarPoints=true;
    [Range(0,1)] public float starIntensityVariation=.75f;
    [Range(0,.8f)] public float starAnimationAmount=.35f;

@@ -12,7 +12,8 @@ float _LowestCloudAltitude;
 half4 _ShapeNoiseOffset;
 half _VerticalShapeNoiseOffset;
 half4 _WindDirection;
-half4 _WindVector;
+// Accumulated world-space displacement needs float precision on Metal.
+float4 _WindVector;
 half _VerticalShapeWindDisplacement;
 half _VerticalErosionWindDisplacement;
 half _MediumWindSpeed;

@@ -19862,7 +19862,7 @@ MonoBehaviour:
     cloudBaseMeters: 1400
     cloudThicknessMeters: 1800
     cloudScaleMeters: 6500
-    windMetersPerSecond: 1.2
+    windMetersPerSecond: 25
     windHeading: 75
     stars: 1
     starBackend: 0
@@ -19881,6 +19881,7 @@ MonoBehaviour:
     glareSize: 0.3
     flareSize: 0.003
     starPoints: 5
+    starRayOpacity: 0.65
     animateStarPoints: 1
     starIntensityVariation: 0.75
     starAnimationAmount: 0.35
@@ -19917,8 +19918,22 @@ MonoBehaviour:
     trainLampRange: 8
     trainLedColor: {r: 0.12, g: 0.4, b: 1, a: 1}
     trainLampColor: {r: 1, g: 0.85, b: 0.65, a: 1}
+  moon:
+    enabled: 1
+    surface: {fileID: 2800000, guid: 3deca633c634a4927b451deb05e5a0f1, type: 3}
+    phase: 0.5
+    followSolarDay: 1
+    elevation: 30
+    azimuth: 0
+    radius: 1.4
+    brightness: 1
+    tint: {r: 0.7028302, g: 0.833295, b: 1, a: 1}
+    earthshine: 0.025
+    glow: 0.01
+    glowRadius: 5.5
+    textureRotation: 0
   continuousSolarLighting: 1
-  exposure: -1.7695812
+  exposure: -2
 --- !u!114 &547016255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19932,7 +19947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Nishita.NishitaAtmosphere
   airDensity: 1.8
-  aerosolDensity: 2.6129317
+  aerosolDensity: 1
   ozoneDensity: 2.5
   altitude: 1523
   sunDisc: 1
@@ -19943,7 +19958,7 @@ MonoBehaviour:
   sunRotation: 180
   useDayCycle: 1
   animate: 1
-  timeOfDay: 18.448292
+  timeOfDay: 23.318977
   dayDurationSeconds: 240
   latitude: 37
   solarDeclination: 0
@@ -87128,8 +87143,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 1
-  m_Color: {r: 0.7304188, g: 0.6346084, b: 0.7603644, a: 1}
-  m_Intensity: 0.08451727
+  m_Color: {r: 0.5, g: 0.63, b: 1, a: 1}
+  m_Intensity: 0.02
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

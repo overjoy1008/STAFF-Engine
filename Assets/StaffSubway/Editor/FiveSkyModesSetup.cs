@@ -1,0 +1,5 @@
+using System;using System.IO;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;using Staff.Subway;
+public static class FiveSkyModesSetup {
+ [MenuItem("STAFF/Subway/Save Five Sky Modes")]
+ public static void Install(){if(EditorApplication.isPlaying)throw new Exception("Exit Play mode first.");var sky=UnityEngine.Object.FindFirstObjectByType<SubwayTimeOfDay>();if(!sky)throw new Exception("No sky");Directory.CreateDirectory("Library/StaffSubway");EditorSceneManager.SaveScene(sky.gameObject.scene,"Library/StaffSubway/before-five-sky-modes.unity",true);Undo.RecordObject(sky,"Save cloud settings and five sky modes");sky.skyWeather.clouds=true;sky.skyWeather.cloudMotionMultiplier=4;sky.skyWeather.windMetersPerSecond=25;sky.skyWeather.windHeading=75;sky.ApplySky();EditorUtility.SetDirty(sky);EditorSceneManager.MarkSceneDirty(sky.gameObject.scene);EditorSceneManager.SaveScene(sky.gameObject.scene);Debug.Log("Five sky modes saved; cloud wind 25 x 4, heading 75; Moon preserved.");}
+}

@@ -41,6 +41,7 @@ namespace Staff.Subway {
     matrix.SetColumn(0,rotation*meridian);matrix.SetColumn(1,pole);matrix.SetColumn(2,rotation*east);
     var props=new MaterialPropertyBlock();props.SetMatrix("_StaffCelestialRotation",matrix);
     props.SetFloat("_StaffStarVisibility",s.starBrightness*Mathf.Pow(2,s.starExposure)*(1-Mathf.SmoothStep(0,1,Mathf.InverseLerp(-12,-3,a.Elevation))));
+    props.SetVector("_StaffMoonDisc",CelestialMoon.Disc(sky.moon,a));props.SetFloat("_StaffMoonVisibility",CelestialMoon.Visibility(sky.moon,a));
     props.SetFloat("_StaffStarTime",(float)sky.StarElapsedSeconds);
     props.SetFloat("StarSize",s.starSize);props.SetVector("ViewerPosition",Vector3.zero);
     props.SetVector("CameraUp",camera.transform.up);props.SetVector("CameraRight",camera.transform.right);

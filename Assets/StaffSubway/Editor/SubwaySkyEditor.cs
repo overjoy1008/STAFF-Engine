@@ -9,11 +9,11 @@ namespace Staff.Subway.Editor {
   public override void OnInspectorGUI(){
    var sky=(SubwayTimeOfDay)target;
    if(sky.presets!=null&&sky.presets.Length>0){
-    var labels=System.Array.ConvertAll(sky.presets,p=>p.label);
-    EditorGUI.BeginChangeCheck();int next=EditorGUILayout.Popup("Time preset",sky.Current,labels);
+    var labels=new string[sky.ModeCount];for(int i=0;i<sky.presets.Length;i++)labels[i]=sky.presets[i].label;labels[sky.ContinuousModeIndex]="Continuous Solar Day";
+    EditorGUI.BeginChangeCheck();int next=EditorGUILayout.Popup("Sky mode (T)",sky.Current,labels);
     if(EditorGUI.EndChangeCheck()){
      Undo.RecordObject(sky,"Change sky preset");if(sky.atmosphere)Undo.RecordObject(sky.atmosphere,"Change sky preset");if(sky.skyFill)Undo.RecordObject(sky.skyFill,"Change sky preset");
-     sky.SetPreset(next);EditorUtility.SetDirty(sky);if(sky.atmosphere)EditorUtility.SetDirty(sky.atmosphere);
+     sky.SetMode(next);EditorUtility.SetDirty(sky);if(sky.atmosphere)EditorUtility.SetDirty(sky.atmosphere);
     }
    }
    DrawDefaultInspector();

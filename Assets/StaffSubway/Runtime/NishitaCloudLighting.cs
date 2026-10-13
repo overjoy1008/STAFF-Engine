@@ -11,7 +11,11 @@ namespace Staff.Subway {
   void Configure(Material material,Camera c){
    if(!sky||!sky.atmosphere||!sky.atmosphere.Ready)return;
    var a=sky.atmosphere;var d=a.SunDirection;
-   material.SetVector("_WindVector",material.GetVector("_WindVector")*sky.skyWeather.cloudMotionMultiplier);
+   // One shared weather clock for Game/Scene cameras; no per-camera accumulation.
+   Vector2 wind=sky.CloudDisplacement;
+   material.SetVector("_WindVector",new Vector4(wind.x,wind.y,0,0));
+   float heading=sky.skyWeather.windHeading*Mathf.Deg2Rad;
+   material.SetVector("_WindDirection",new Vector4(-Mathf.Cos(heading),-Mathf.Sin(heading),0,0));
    float day=Mathf.SmoothStep(0,1,Mathf.InverseLerp(-8,12,a.Elevation));
    float warm=1-Mathf.SmoothStep(0,1,Mathf.InverseLerp(0,20,a.Elevation));
    Color color=Color.Lerp(Color.white,new Color(1,.65f,.34f),warm)*day*1.25f;

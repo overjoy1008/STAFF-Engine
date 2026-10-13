@@ -12,7 +12,7 @@ namespace Staff.Subway
         public sealed class Settings
         {
             public bool clouds = true;
-            [Range(0,10)] public float cloudMotionMultiplier=3;
+            [Range(0,10)] public float cloudMotionMultiplier=4;
             public CloudTimePalette.Settings cloudColors = new CloudTimePalette.Settings();
             [HideInInspector] public int seed = 2718;
             [Range(0, 1)] [HideInInspector] public float cloudCoverage = .48f;
@@ -21,8 +21,9 @@ namespace Staff.Subway
             [Tooltip("Offsets the distant thin cloud layer above its base height.")]
             [Min(100)] [HideInInspector] public float cloudThicknessMeters = 1800;
             [Min(1000)] [HideInInspector] public float cloudScaleMeters = 6500;
-            [Range(0, 20)] [HideInInspector] public float windMetersPerSecond = 1.2f;
-            [Range(0, 360)] [HideInInspector] public float windHeading = 75;
+            [Tooltip("Cloud drift in meters/second before Cloud Motion Multiplier; independent of Solar Day speed.")]
+            [Range(0, 100)] public float windMetersPerSecond = 25f;
+            [Range(0, 360)] public float windHeading = 75;
             public bool stars = true;
             public StarBackend starBackend = StarBackend.UnityStarRenderer;
             [Range(0,6.5f)] public float starMagnitudeLimit = 6.5f;
@@ -39,12 +40,20 @@ namespace Staff.Subway
         }
 
         Texture2D stars;
-        double elapsed;
+        double elapsed, cloudX, cloudZ;
+        public Vector2 CloudDisplacement => new Vector2((float)cloudX, (float)cloudZ);
         public double ElapsedSeconds => elapsed;
 
         public void Advance(float deltaSeconds, Settings settings)
         {
-            if (settings.animate) elapsed += Math.Max(0, deltaSeconds);
+            if (!settings.animate) return;
+            double dt = Math.Max(0, deltaSeconds);
+            elapsed += dt;
+            // Integrate speed, not accumulated position: editing speed never teleports clouds.
+            double distance = dt * Math.Max(0, settings.windMetersPerSecond) * Math.Max(0, settings.cloudMotionMultiplier);
+            double heading = settings.windHeading * Math.PI / 180;
+            cloudX -= distance * Math.Cos(heading);
+            cloudZ -= distance * Math.Sin(heading);
         }
 
         // Explicit time also supports deterministic screenshots and frame-by-frame verification.

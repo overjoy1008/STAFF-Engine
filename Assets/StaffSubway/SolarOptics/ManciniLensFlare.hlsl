@@ -1,4 +1,5 @@
 float4 _SunStarTint;
+float _StarRayOpacity;
 float4 _GhostControls; // hex count, round count, hex opacity, round opacity
 float4 _GhostStyle; // hex size, round size
 // Altered HLSL port of Anderson Mancini's lensflare-threejs-vanilla (CC0).
@@ -75,7 +76,7 @@ float StaffSpokeGain(float2 p,float points){
         float coreOnly = pow(core * expgrad, exponent);
         // Do not animate the central disc; fade modulation in outside the singular core.
         float gain=lerp(1,StaffSpokeGain(p,internalStarPoints),smoothstep(.012,.04,lingrad));
-        comp=coreOnly+max(0,comp-coreOnly)*gain;
+        comp=coreOnly+max(0,comp-coreOnly)*gain*lerp(1,_StarRayOpacity,smoothstep(.012,.04,lingrad));
         
         if(flareSpeed > 0.0){
             return ((float3)(comp)) * colgrad;

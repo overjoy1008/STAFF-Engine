@@ -86,7 +86,7 @@ namespace Staff.Subway {
     cmd.SetGlobalTexture("_SolarSceneDepth",depth);cmd.SetGlobalMatrix("_SolarInvVP",d.invVP);cmd.SetGlobalMatrix("_SolarLightVP",d.lightVP);cmd.SetGlobalMatrix("_SolarLightView",d.lightView);
     cmd.SetGlobalVector("_SolarCamera",d.camera.transform.position);cmd.SetGlobalVector("_SolarSun",d.sun);cmd.SetGlobalVector("_SolarSunUV",d.sunUV);cmd.SetGlobalFloat("_SolarClouds",d.clouds?1:0);cmd.SetGlobalFloat("_SolarExtent",d.extent);
     m.SetVector("_SolarScreen",new Vector4(copy.rt.width,copy.rt.height,1f/copy.rt.width,1f/copy.rt.height));
-    m.SetColor("_SunStarTint",d.starTint);
+    m.SetColor("_SunStarTint",d.starTint);m.SetFloat("_StarRayOpacity",Mathf.Clamp01(s.starRayOpacity));
     m.SetVector("_FlareParameters",new Vector4(s.glareSize,s.flareSize,Mathf.Clamp(s.starPoints,2,8),s.ghostScale));m.SetVector("_FlareOptions",new Vector4(s.secondaryGhosts?1:0,s.anamorphic?1:0,d.time,s.lensFlare?s.flareIntensity*d.daylight:0));
     m.SetVector("_GhostControls",new Vector4(Mathf.Clamp(s.hexGhostCount,0,12),Mathf.Clamp(s.roundGhostCount,0,8),s.hexGhostOpacity,s.roundGhostOpacity));m.SetVector("_GhostStyle",new Vector4(s.hexGhostSize,s.roundGhostSize,0,0));
     m.SetVector("_RayParameters",new Vector4(s.rayDensity,s.rayMaxOpacity,s.raySteps,s.distanceAttenuation));m.SetColor("_RayColor",d.rayTint*d.daylight);m.SetFloat("_RaysEnabled",s.sunRays?1:0);m.SetFloat("_RayStrength",s.solarRayStrength);

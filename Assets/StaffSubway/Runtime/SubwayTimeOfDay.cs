@@ -13,6 +13,7 @@ namespace Staff.Subway {
   }
   public static SubwayTimeOfDay Active { get; private set; }
   public double StarElapsedSeconds => weather?.ElapsedSeconds ?? 0;
+  public Vector2 CloudDisplacement => weather?.CloudDisplacement ?? Vector2.zero;
   public NishitaAtmosphere atmosphere;
   public Texture2D agxLut;
   public Camera[] cameras;
@@ -24,12 +25,16 @@ namespace Staff.Subway {
    new Preset("Night",-12,300,1.8f,1,2.92f,.27f,-2)
   };
   [SerializeField,HideInInspector] int current=1;
-  public int Current=>current;
-  public string Label=>presets!=null&&presets.Length>0?presets[Mathf.Clamp(current,0,presets.Length-1)].label:"";
+  public int ContinuousModeIndex=>presets?.Length??0;
+  public int ModeCount=>ContinuousModeIndex+1;
+  public int Current=>atmosphere&&atmosphere.useDayCycle&&atmosphere.animate?ContinuousModeIndex:current;
+  public string Label=>Current==ContinuousModeIndex?"Continuous Solar Day":presets!=null&&presets.Length>0?presets[Mathf.Clamp(current,0,presets.Length-1)].label:"";
   [Header("Clouds and celestial stars")]
   public NishitaSkyWeather.Settings skyWeather = new NishitaSkyWeather.Settings();
   [Header("Sun optics — F9 flare / F10 rays")]
   public SolarEffects.Settings solarEffects = new SolarEffects.Settings();
+  [Header("Moon — NASA surface / phase / glow")]
+  public CelestialMoon.Settings moon=new CelestialMoon.Settings();
   NishitaSkyWeather weather;
   double weatherClock;
   [Tooltip("Blend atmospheric density, exposure and added sky fill continuously during Solar Day.")]
@@ -54,7 +59,14 @@ namespace Staff.Subway {
   }
   void Update(){if(!Application.isPlaying)return;HandleInput(Application.isFocused&&player&&player.InputCaptured&&!player.InputBlocked);}
   public bool HandleInput(bool accept){bool changed=SolarEffects.HandleInput(solarEffects,accept);if(!accept||Keyboard.current==null||!Keyboard.current.tKey.wasPressedThisFrame)return changed;Cycle();return true;}
-  public void Cycle(){if(presets!=null&&presets.Length>0)SetPreset((current+1)%presets.Length);}
+  public void Cycle(){if(presets!=null&&presets.Length>0)SetMode((Current+1)%ModeCount);}
+  public void SetMode(int index){
+   if(!atmosphere||presets==null||presets.Length==0)return;
+   if(index!=ContinuousModeIndex){SetPreset(index);return;}
+   // Resume the authored solar clock; fixed presets never overwrite Time Of Day.
+   atmosphere.useDayCycle=true;atmosphere.animate=true;continuousSolarLighting=true;
+   ApplySolarDay();atmosphere.Tick(true);ApplySky();
+  }
   public void SetPreset(int index){
    if(!atmosphere||presets==null||presets.Length==0)return;
    current=Mathf.Clamp(index,0,presets.Length-1);var p=presets[current];
@@ -66,7 +78,7 @@ namespace Staff.Subway {
    // Only the added sky fill varies. Fluorescents, station fill and reflection remain intact.
    if(skyFill){skyFill.intensity=current==0?.22f:current==1?.35f:current==2?.16f:.02f;skyFill.color=current==0?new Color(1,.88f,.65f):current==1?new Color(.85f,.92f,1):current==2?new Color(1,.64f,.48f):new Color(.5f,.63f,1);}
   }
-  void LateUpdate(){double now=Time.realtimeSinceStartupAsDouble;weather?.Advance(Application.isPlaying?Time.deltaTime:(float)Math.Min(.2,Math.Max(0,now-weatherClock)),skyWeather);weatherClock=now;ApplySolarDay();ApplySky();}
+  void LateUpdate(){double now=Time.realtimeSinceStartupAsDouble;weather?.Advance(Application.isPlaying?Time.deltaTime:(float)Math.Max(0,now-weatherClock),skyWeather);weatherClock=now;ApplySolarDay();ApplySky();}
   public void ApplySolarDay(){
    var a=atmosphere;if(!a||!a.useDayCycle||!continuousSolarLighting||presets==null||presets.Length<4)return;
    // All transitions are evaluated from the same continuous sun direction, never preset index.
@@ -88,7 +100,7 @@ namespace Staff.Subway {
   static float BlendDay(float night,float dawn,float noon,float dusk,float morning,float day,float awake){return Mathf.Lerp(night,Mathf.Lerp(Mathf.Lerp(dusk,dawn,morning),noon,day),awake);}
   public void ApplySky(){
    if(!atmosphere||!atmosphere.Ready||!agxLut)return;
-   var real=atmosphere.GetSky(true);
+   var real=atmosphere.GetSky(true);CelestialMoon.Apply(real,moon,atmosphere);
    float lowSun=1-Mathf.SmoothStep(0,1,Mathf.InverseLerp(2,20,atmosphere.Elevation));
    float west=1-Mathf.SmoothStep(0,1,Mathf.InverseLerp(-.2f,.2f,(Quaternion.Euler(0,-atmosphere.northRotation,0)*atmosphere.SunDirection).x));
    real.SetColor("_StaffSunTint",Color.Lerp(Color.white,new Color(1,.78f,.18f),lowSun));
