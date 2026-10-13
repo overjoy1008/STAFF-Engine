@@ -136,7 +136,44 @@ Unity에서의 실제 플레이 화면입니다.
 
 화면의 **더 헤르타**는 구현 확인용 캐릭터이며, STAFF의 이야기 속 한율·슈아와는 별개입니다. 스크린샷은 **CharacterToon (Smooth)** 셰이더가 적용된 상태입니다.
 
-환경은 두 가지 셰이더 표현(Real, Abstract)을 지원하는 방향으로 개발할 예정이며, 캐릭터 셰이더는 환경 전환의 영향을 받지 않도록 분리합니다. 현재는 지하철 배치와 조작을 확인하는 단계로, 환경 모드 전환·열차 문 상호작용·반사 품질 및 성능 개선은 후속 작업입니다.
+### 하늘 · 빛 · 열차 운행
+
+| 일출 | 낮 — 태양과 렌즈 고스트 |
+| --- | --- |
+| ![일출의 Nishita 하늘과 구름](docs/images/sky-sunrise.png) | ![태양을 향한 카메라에서 보이는 육각형·원형 렌즈 고스트](docs/images/sky-day-ghosts.png) |
+| **일몰** | **밤 — 달과 별** |
+| ![붉은 일몰과 구름](docs/images/sky-sunset.png) | ![푸른 달빛과 별이 보이는 밤하늘](docs/images/sky-night-moon.png) |
+
+Nishita 대기 산란을 GPU에서 계산하고, 태양 고도에 따라 오존·해 크기·구름·광선 색을 연결했습니다. 볼류메트릭 구름은 바람으로 이동하며, 실제 별 목록 기반 별빛에는 회전·반짝임을, NASA 달 표면에는 위상 그림자와 옅은 가우시안 glow를 더했습니다. **T**로 일출 → 낮 → 일몰 → 밤 → 연속 모드를 순환합니다.
+
+![열차 전조등의 발광과 볼류메트릭 광선](docs/images/train-headlights.png)
+
+태양과 열차 앞·뒤 램프에는 그림자 맵 기반 ray marching을 적용했습니다. 태양 flare는 독립적으로 밝기가 변하는 star ray와 육각형·원형 고스트를 합성하며, **F9 / F10**으로 flare / godrays를 각각 전환합니다.
+
+| 출발 — 가속 | 도착 — 감속 |
+| --- | --- |
+| ![승강장에서 바라본 열차 출발](docs/images/train-departure.gif) | ![승강장에서 바라본 열차 도착](docs/images/train-arrival.gif) |
+
+열차는 문 닫힘을 확인한 뒤 출발하고, 가속·감속 곡선으로 이동해 정차합니다. **] / [**로 출발 / 도착을 실행합니다. 위 영상은 실제 이동 로직을 캡처한 **2배속** 미리보기입니다.
+
+<details>
+<summary>하늘·광학 효과 출처 및 크레딧</summary>
+
+원본 코드의 Unity/HLSL 포팅·수정본과 공개 데이터를 사용했습니다. 달 위상·glow, 시간대 연동과 열차 운행 로직은 STAFF에서 추가했습니다.
+
+| 구성 | 출처 · 크레딧 |
+| --- | --- |
+| Nishita | [Blender sky](https://github.com/blender/blender/tree/v5.1.2/intern/sky/source) — Blender Authors, Fernando García Liñán. Single: Apache-2.0; Multiple 포팅: MIT 및 GPL-2.0-or-later. [포팅·라이선스 기록](Assets/StaffNishita/Provenance.txt) |
+| Ray | [three-good-godrays](https://github.com/Ameobea/three-good-godrays) — Casey Primozic, 원본 [N8python/goodGodRays](https://github.com/N8python/goodGodRays). zlib; Unity/HLSL 수정 포팅. |
+| Flare | [lensflare-threejs-vanilla](https://github.com/ektogamat/lensflare-threejs-vanilla) — Anderson Mancini. CC0-1.0; Unity/HLSL 수정 포팅. |
+| Moon | [NASA CGI Moon Kit](https://svs.gsfc.nasa.gov/4720/) — NASA Scientific Visualization Studio, Ernie Wright (USRA); LRO/LROC·NASA/GSFC/ASU 데이터. 2K 표면 텍스처 사용. |
+| Star | [Unity Star Renderer](https://github.com/tjbaron/unity-star-renderer) — Thomas Baron, MIT. [HYG Database](https://github.com/astronexus/HYG-Database) — Astronexus, 포함된 HYG v3 데이터 CC BY-SA 2.5; 8,912개 별로 추림. |
+| 별 대체 맵 | [NASA Deep Star Maps 2020](https://svs.gsfc.nasa.gov/4851/) — NASA/Goddard SVS, Ernie Wright; Gaia DR2: ESA/Gaia/DPAC. 선택형 별 배경 텍스처. |
+| Cloud | [UnityVolumetricCloudsURP](https://github.com/jiaozi158/UnityVolumetricCloudsURP) — jiaozi158, MIT; Unity HDRP 구름 렌더링의 URP 포팅에 시간대 색·이동을 추가. |
+
+원문 라이선스·크레딧은 각 에셋 폴더에 보존했습니다. NASA 항목은 코드 라이브러리가 아닌 시각화 데이터입니다.
+
+</details>
 
 ---
 
@@ -274,4 +311,8 @@ Unity의 **Project** 창에서 `Assets/Scenes/STAFF_Subway_Reference.unity`를 �
 | 마우스 / 휠 / 가운데 버튼 | 시점 회전 / 줌 / 시점 정렬 |
 | C | 캐릭터 선택 |
 | H | 캐릭터 셰이더 전환 |
+| T | 일출 → 낮 → 일몰 → 밤 → 연속 모드 |
+| F9 / F10 | Lens flare / Godrays 켜기·끄기 |
+| O | 열차 문 열기·닫기 |
+| ] / [ | 열차 출발 / 도착 |
 | Esc / 마우스 좌클릭 | 커서 해제 / 다시 잡기 |
