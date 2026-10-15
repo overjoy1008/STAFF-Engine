@@ -1,0 +1,14 @@
+{
+  "renderer": "Python port of current Unity equations; Pillow rasterization",
+  "contours_sha256": "335745f9c331d2c6f1f76b18fe7dd50d407735bdb45206bd620427ae6c97ad6f",
+  "timings": {
+    "write": 0.65,
+    "substitution": 0.85,
+    "uncreate": 0.35
+  },
+  "formula": "y=-0.40(x-5.00)-0.01",
+  "background": "#000000",
+  "ink": "#FFFFFF",
+  "frames": 240,
+  "fps": 60
+}

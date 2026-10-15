@@ -142,9 +142,9 @@ Unity에서의 실제 플레이 화면입니다.
 
 도시의 건물·고가 철도·열차를 접점으로 삼아 이동합니다. **Q**를 누르면 카메라 회전이 고정되고 마우스로 지팡이를 조준합니다. Q를 놓으면 직선으로 돌진하며, 벽에서 다시 Q로 다른 건물에 연결할 수 있습니다. **Space**는 이동을 즉시 취소하고 위로 점프합니다. 캐릭터·카메라·하늘·열차는 공통 prefab을 사용합니다.
 
-![접선 수식의 생성·대입·소멸](docs/images/tangent-equation.gif)
+![게임 수식의 생성·대입·소멸](docs/images/tangent-equation.gif)
 
-[수식 애니메이션 영상 (MP4)](docs/images/tangent-equation.mp4) — Unity의 실제 수식 UI renderer를 따로 캡처한 데모입니다.
+[수식 애니메이션 영상 (MP4)](docs/images/tangent-equation.mp4) — 게임의 수식 로직을 Python으로 옮겨 같은 Manim contour·easing 데이터와 생성 0.65초 / 대입 0.85초 / 소멸 0.35초로 렌더링했습니다. 검정 배경에 흰색 수식만 표시합니다. [Python 코드](Assets/StaffTraversal/Tools/RenderGameTangent.py)
 
 수식은 `y = f'(a)(x-a) + f(a)` 한 줄입니다. 3Blue1Brown의 **ManimGL + LaTeX**에서 추출한 glyph contour와 Write 데이터를 Unity UI에서 재생합니다. 이동 시작 시 실제 직선의 기울기 `tan(바닥과의 각도)`, 수평 거리, 타겟 높이를 대입합니다. 변경되는 glyph는 contour morph, 유지되는 glyph는 위치 이동만 합니다. 수식은 건물에 가려지지 않으며, 접점 원은 월드 공간에 남습니다. Imaginary에서는 접선·접점·수식을 검정으로 표시합니다.
 
@@ -163,7 +163,7 @@ miss / arrival / jump cancel → Uncreate(current contours)
 
 ![도시의 Real · Abstract · Imaginary 전환](docs/images/environment-modes.gif)
 
-[전환 영상 (MP4)](docs/images/environment-modes.mp4) — 실제 도시 씬 renderer를 고정 카메라로 캡처했습니다.
+[전환 영상 (MP4)](docs/images/environment-modes.mp4) — 도시의 기본 스폰 위치·각도에서 Game 화면을 60fps 간격으로 캡처했습니다. 영상은 전환을 보기 쉽도록 약 15% 느리게 재생합니다.
 
 **I**는 Real → Abstract → Imaginary → Real을 순환합니다. 캐릭터 위치에서 수평으로 퍼지는 그리드가 건물과 바닥에 먼저 생기고, 뒤따라 면이 바뀝니다. Real로 돌아올 때는 하늘을 먼저 복구하고, 바깥에서 캐릭터 쪽으로 재질이 돌아옵니다. 복구된 재질 위에 그리드가 잠깐 나타났다가 사라집니다. **N**의 썸네일 목록에서 도시·지하철·Animation Lab으로 이동할 수 있습니다.
 
