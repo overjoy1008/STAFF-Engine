@@ -68,3 +68,5 @@ STAFF 공용 씬 시스템
 - 세 씬 실제 Play 실행, 낮/밤 렌더, 연속 태양 주기 검사.
 - 실제 검수 이미지/결과: docs/SharedSystems.
 - 이전 씬 백업: Library/StaffShared/Backups (Unity Library는 Git에 저장되지 않음).
+
+F6 switches between the city and subway scenes using the shared gameplay rig. Both scenes must be enabled in Build Settings. Input is ignored during loading or when player input is blocked.

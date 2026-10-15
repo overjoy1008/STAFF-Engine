@@ -39,6 +39,8 @@ namespace Staff.Subway {
   void SetVisible(bool active){foreach(var t in movingParts)t.gameObject.SetActive(active);}
   void SetOffset(float value,bool carry){
    var p=Player();bool rider=carry&&OnBoard(p);
+   var traversal=p?p.GetComponent<Staff.Traversal.TangentTraversal>():null;
+   if(traversal&&traversal.OwnsMovement)rider=false; // Traversal follows its own moving contact point.
    float delta=value-Offset;Offset=value;
    for(int i=0;i<movingParts.Length;i++)movingParts[i].position=origins[i]+(motionSpace?motionSpace.TransformVector(Vector3.forward):Vector3.forward)*value;
    if(rider){var cc=p.GetComponent<CharacterController>();bool was=cc.enabled;cc.enabled=false;p.transform.position+=(motionSpace?motionSpace.TransformVector(Vector3.forward):Vector3.forward)*delta;cc.enabled=was;}

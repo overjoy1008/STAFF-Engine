@@ -11,7 +11,7 @@ public sealed class SharedGameplay:MonoBehaviour {
  public AdventureCamera cameraController;
  bool bound;
  void OnEnable(){bound=false;BindScene();}
- void Update(){if(!bound)BindScene();}
+ void Update(){if(!bound)BindScene();SceneTravel.HandleInput(this);}
  public void BindScene(){
   if(!gameObject.scene.IsValid()||!gameObject.scene.isLoaded||!cameraController)return;
   bound=true;var roots=gameObject.scene.GetRootGameObjects();

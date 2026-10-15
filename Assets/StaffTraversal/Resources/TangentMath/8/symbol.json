@@ -1,0 +1,12 @@
+{
+  "formula": "8",
+  "renderer": "TinyTeX LaTeX + dvisvgm (Manim toolchain)",
+  "source_sha256": "11ac2415e689d51303d205c3c7cbcea217a38bcaeb4fd961734656443be5d402",
+  "texture_sha256": "ea00fd4d6ee817b1e4080ec7c1d60d9944ea930f260301c33ee3d6874e8e9386",
+  "size": [
+    569,
+    899
+  ],
+  "color": "white",
+  "background": "transparent"
+}

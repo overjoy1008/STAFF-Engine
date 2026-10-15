@@ -1783,6 +1783,7 @@ GameObject:
   - component: {fileID: 9203678216638420248}
   - component: {fileID: 8614665480288217497}
   - component: {fileID: 916293367289300077}
+  - component: {fileID: 4575267812299104764}
   m_Layer: 30
   m_Name: SideDoor_L_03_FrontLeaf
   m_TagString: Untagged
@@ -1864,6 +1865,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4575267812299104764
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498510304363907228}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1589206118879448089, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &519201212988623333
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,6 +2614,7 @@ GameObject:
   - component: {fileID: 953449404671427327}
   - component: {fileID: 5835790782022079901}
   - component: {fileID: 6208602048941374187}
+  - component: {fileID: 5758581162039633277}
   m_Layer: 30
   m_Name: SideDoor_L_04_RearLeaf
   m_TagString: Untagged
@@ -2672,6 +2696,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5758581162039633277
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745851339591174820}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4995891588636017202, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &810005126315774345
 GameObject:
   m_ObjectHideFlags: 0
@@ -3224,6 +3270,7 @@ GameObject:
   - component: {fileID: 504641602750047377}
   - component: {fileID: 6501591214814804404}
   - component: {fileID: 5769609627061734300}
+  - component: {fileID: 712830113545690178}
   m_Layer: 30
   m_Name: SideDoor_L_02_RearLeaf
   m_TagString: Untagged
@@ -3305,6 +3352,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &712830113545690178
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959048617306023855}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4621193631630825085, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &1014197809709494824
 GameObject:
   m_ObjectHideFlags: 0
@@ -4637,6 +4706,7 @@ GameObject:
   - component: {fileID: 1561859398508936119}
   - component: {fileID: 1353890015297661955}
   - component: {fileID: 4695845510057513549}
+  - component: {fileID: 708601485070987791}
   m_Layer: 30
   m_Name: SideDoor_R_04_RearLeaf
   m_TagString: Untagged
@@ -4718,6 +4788,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &708601485070987791
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261533147059183550}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6294718628100810850, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &1272664694420412279
 GameObject:
   m_ObjectHideFlags: 0
@@ -5328,6 +5420,60 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1472077003527822811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2274678539697928675}
+  - component: {fileID: 8791180394188764067}
+  m_Layer: 30
+  m_Name: Traversal hull collision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2274678539697928675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472077003527822811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2254257005482271795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &8791180394188764067
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472077003527822811}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: de1033b8e01f54bbaa586680a8e4e371, type: 2}
 --- !u!1 &1479404520845164219
 GameObject:
   m_ObjectHideFlags: 0
@@ -6563,6 +6709,7 @@ GameObject:
   - component: {fileID: 258095634670820732}
   - component: {fileID: 1721127194900742513}
   - component: {fileID: 4460484304283197930}
+  - component: {fileID: 3931600994026508707}
   m_Layer: 30
   m_Name: SideDoor_R_04_FrontLeaf
   m_TagString: Untagged
@@ -6644,6 +6791,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3931600994026508707
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186207309627142604}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1361658237279878209, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &2190341600225754608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6798,6 +6967,7 @@ GameObject:
   - component: {fileID: 6552969828547997269}
   - component: {fileID: 5811299998279589361}
   - component: {fileID: 5483377567492589320}
+  - component: {fileID: 4833716391727419744}
   m_Layer: 30
   m_Name: SideDoor_R_01_RearLeaf
   m_TagString: Untagged
@@ -6879,6 +7049,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4833716391727419744
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2240879325127368212}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2204333124135163613, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &2261654715768175985
 GameObject:
   m_ObjectHideFlags: 0
@@ -7696,6 +7888,7 @@ GameObject:
   - component: {fileID: 2143592060543298100}
   - component: {fileID: 7144597535911896091}
   - component: {fileID: 1079354315491229353}
+  - component: {fileID: 3640961327918923436}
   m_Layer: 30
   m_Name: SideDoor_L_01_FrontLeaf
   m_TagString: Untagged
@@ -7777,6 +7970,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3640961327918923436
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2552981909956923194}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3883938310977234956, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &2625534904823244452
 GameObject:
   m_ObjectHideFlags: 0
@@ -8583,6 +8798,7 @@ GameObject:
   - component: {fileID: 5308134759617702406}
   - component: {fileID: 944433961858065215}
   - component: {fileID: 2391206671149855093}
+  - component: {fileID: 1410044505197170433}
   m_Layer: 30
   m_Name: SideDoor_L_02_FrontLeaf
   m_TagString: Untagged
@@ -8664,6 +8880,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1410044505197170433
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868934063161747197}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6470872027752746727, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &2883614368348705568
 GameObject:
   m_ObjectHideFlags: 0
@@ -10026,6 +10264,7 @@ GameObject:
   - component: {fileID: 4256073194245698803}
   - component: {fileID: 2154107163055289717}
   - component: {fileID: 8739157033685565170}
+  - component: {fileID: 6456318005459378576}
   m_Layer: 30
   m_Name: SideDoor_R_01_FrontLeaf
   m_TagString: Untagged
@@ -10107,6 +10346,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6456318005459378576
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350197251192454392}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6011030341114111903, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &3351186220511725125
 GameObject:
   m_ObjectHideFlags: 0
@@ -11432,6 +11693,7 @@ GameObject:
   - component: {fileID: 450335519655048358}
   - component: {fileID: 5241386163966524225}
   - component: {fileID: 5212781840186636895}
+  - component: {fileID: 1315728397967826379}
   m_Layer: 30
   m_Name: RearDoor_Leaf
   m_TagString: Untagged
@@ -11513,6 +11775,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1315728397967826379
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4112623002568770985}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 712477921377067502, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &4121121614017198590
 GameObject:
   m_ObjectHideFlags: 0
@@ -12387,6 +12671,7 @@ GameObject:
   - component: {fileID: 838348455402105031}
   - component: {fileID: 3013514842393856442}
   - component: {fileID: 8228520934032253408}
+  - component: {fileID: 9015804290150933161}
   m_Layer: 30
   m_Name: SideDoor_R_02_RearLeaf
   m_TagString: Untagged
@@ -12468,6 +12753,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &9015804290150933161
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457961326199093986}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1154653915794136702, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &4459560859110652864
 GameObject:
   m_ObjectHideFlags: 0
@@ -13681,6 +13988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2254257005482271795}
   - component: {fileID: 3300308422303422033}
+  - component: {fileID: 6117148335257064406}
   m_Layer: 0
   m_Name: Subway Front
   m_TagString: Untagged
@@ -13743,6 +14051,7 @@ Transform:
   - {fileID: 6495751381823471656}
   - {fileID: 347700649464162465}
   - {fileID: 980003695612487996}
+  - {fileID: 2274678539697928675}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3300308422303422033
@@ -16865,6 +17174,18 @@ MonoBehaviour:
   localBodyBounds:
     m_Center: {x: 0, y: 1.2974998, z: 0}
     m_Extent: {x: 2.3249998, y: 2.8874998, z: 15.149994}
+--- !u!114 &6117148335257064406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908000638988203544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79af5b0717dd4f34942fb9e3be3b0a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Traversal.TangentSurface
 --- !u!1 &4910692234269754174
 GameObject:
   m_ObjectHideFlags: 0
@@ -20396,6 +20717,7 @@ GameObject:
   - component: {fileID: 1662613760718254032}
   - component: {fileID: 8135824102661349400}
   - component: {fileID: 8894649654868980525}
+  - component: {fileID: 6521155401866708219}
   m_Layer: 30
   m_Name: SideDoor_L_04_FrontLeaf
   m_TagString: Untagged
@@ -20477,6 +20799,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6521155401866708219
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004882983510799363}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5630257731117705779, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &6033294494228368738
 GameObject:
   m_ObjectHideFlags: 0
@@ -20961,6 +21305,7 @@ GameObject:
   - component: {fileID: 6864703672211025862}
   - component: {fileID: 1778278814627621094}
   - component: {fileID: 8961622247936759974}
+  - component: {fileID: 8479756048420255378}
   m_Layer: 30
   m_Name: SideDoor_R_03_FrontLeaf
   m_TagString: Untagged
@@ -21042,6 +21387,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8479756048420255378
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6194253823042739145}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5928129890887703639, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &6265584977209578503
 GameObject:
   m_ObjectHideFlags: 0
@@ -21143,6 +21510,7 @@ GameObject:
   - component: {fileID: 2658937674637563257}
   - component: {fileID: 1582284435528869988}
   - component: {fileID: 445628033394948852}
+  - component: {fileID: 9082022378686817139}
   m_Layer: 30
   m_Name: SideDoor_L_01_RearLeaf
   m_TagString: Untagged
@@ -21224,6 +21592,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &9082022378686817139
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6304847488983461802}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1745329684339568525, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &6313368976325670490
 GameObject:
   m_ObjectHideFlags: 0
@@ -22255,6 +22645,7 @@ GameObject:
   - component: {fileID: 633032436748682546}
   - component: {fileID: 8261350706112392973}
   - component: {fileID: 1520706097589008551}
+  - component: {fileID: 4686535146626416256}
   m_Layer: 30
   m_Name: SideDoor_R_03_RearLeaf
   m_TagString: Untagged
@@ -22336,6 +22727,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4686535146626416256
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6837579141353937250}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8737291478898803056, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &6896122252410799941
 GameObject:
   m_ObjectHideFlags: 0
@@ -24017,6 +24430,7 @@ GameObject:
   - component: {fileID: 4891120512588153868}
   - component: {fileID: 8356108890699550187}
   - component: {fileID: 3712631054700005854}
+  - component: {fileID: 741408430428023693}
   m_Layer: 30
   m_Name: SideDoor_L_03_RearLeaf
   m_TagString: Untagged
@@ -24098,6 +24512,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &741408430428023693
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7441866383089866139}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3890377063552516176, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &7444967324399946652
 GameObject:
   m_ObjectHideFlags: 0
@@ -25618,6 +26054,7 @@ GameObject:
   - component: {fileID: 6881014302362662683}
   - component: {fileID: 5623751163592315292}
   - component: {fileID: 504250172324955831}
+  - component: {fileID: 3131712628763959572}
   m_Layer: 30
   m_Name: SideDoor_R_02_FrontLeaf
   m_TagString: Untagged
@@ -25699,6 +26136,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3131712628763959572
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8234786532175167815}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6583187666162994396, guid: 634f12b81814043908c1ba3d484f8e8f, type: 3}
 --- !u!1 &8238780882919236425
 GameObject:
   m_ObjectHideFlags: 0

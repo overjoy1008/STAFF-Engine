@@ -39,13 +39,13 @@ public static class MathCityBuilder {
         if(existing.IsValid() && existing.isLoaded)EditorSceneManager.CloseScene(existing,true);
         try {
             Random.InitState(7319); M.Clear();meshId=0;meshFolder=Root+"/Meshes/Build_"+DateTime.UtcNow.ToString("yyyyMMdd_HHmmss");Directory.CreateDirectory(meshFolder);font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            ConfigureTextures();Palette(); env=Group("Environment"); var street=Group("Streets and Sidewalks",env);
+            ConfigureTextures();Palette(); env=Group("Environment"); var street=Group("Streets and Sidewalks",env);street.gameObject.AddComponent<Staff.Traversal.TangentSurface>();
             RenderSettings.ambientMode=AmbientMode.Trilight;RenderSettings.ambientSkyColor=C("AAC4D5");RenderSettings.ambientEquatorColor=C("879BA6");RenderSettings.ambientGroundColor=C("5A6266");
             RenderSettings.fog=true;RenderSettings.fogMode=FogMode.Linear;RenderSettings.fogColor=C("BCCAD0");RenderSettings.fogStartDistance=65;RenderSettings.fogEndDistance=240;
             var sky=SaveMaterial("Afternoon Sky",new Material(Shader.Find("STAFF/City/Painted Sky")));RenderSettings.skybox=sky;
             // Reference composition: crossing, sage shop, apartment/bookshop, cables, ginkgo, railway.
             Box("Asphalt street",street,V(0,-.16f,53),V(8.8f,.3f,158),"asphalt",true);
-            Box("Cross street",street,V(0,-.15f,-8),V(160,.28f,9),"asphalt",true);
+            Box("Cross street",street,V(0,-.17f,-8),V(160,.28f,9),"asphalt",true);
             Box("Urban ground",street,V(0,-.48f,65),V(260,.35f,230),"concrete",true);
             foreach(float side in new[]{-1f,1f}){
                 Box("Raised pavement",street,V(side*6.15f,.02f,58),V(3.5f,.28f,142),"paving",true);
@@ -246,7 +246,7 @@ public static class MathCityBuilder {
         Bake(t);
     }
     static void Railway(){
-        var t=Group("Infinity Metro - elevated railway",env);float z=61;
+        var t=Group("Infinity Metro - elevated railway",env);t.gameObject.AddComponent<Staff.Traversal.TangentSurface>();float z=61;
         Box("Viaduct deck",t,V(0,8.55f,z),V(76,.65f,5.7f),"stone");
         foreach(float x in new[]{-25f,-12f,12f,25f}){Box("Railway pier",t,V(x,4.15f,z),V(1.1f,8.3f,2),"concrete");Box("Pier cap",t,V(x,8.1f,z),V(3.8f,.5f,3.8f),"curb");}
         for(int i=-35;i<36;i+=3)Box("Steel bridge rib",t,V(i,8.1f,z),V(.18f,.65f,5.6f),"metal");
@@ -262,7 +262,7 @@ public static class MathCityBuilder {
             var consist=train.GetComponent<Staff.Shared.SubwayConsist>();train.transform.localPosition=V(-consist.carSpacing*.55f,9.75f,z);train.transform.localRotation=Quaternion.Euler(0,90,0);train.transform.localScale=Vector3.one*.55f;consist.CarCount=3;
             PrefabUtility.RecordPrefabInstancePropertyModifications(train.transform);PrefabUtility.RecordPrefabInstancePropertyModifications(consist);
         }
-        var entrance=Group("Metro entrance",env);entrance.localPosition=V(7.3f,.16f,47);Box("Entrance canopy",entrance,V(0,2.75f,0),V(2.4f,.22f,3.5f),"sage");foreach(float x in new[]{-1f,1f})Box("Entrance post",entrance,V(x,1.4f,0),V(.1f,2.8f,.1f),"metal");Box("Station fascia",entrance,V(0,2.57f,-1.7f),V(2.35f,.46f,.07f),"navy");Label(entrance,"INFINITY METRO",V(0,2.57f,-1.75f),.15f,"white");Bake(entrance);
+        var entrance=Group("Metro entrance",env);entrance.gameObject.AddComponent<Staff.Traversal.TangentSurface>();entrance.localPosition=V(7.3f,.16f,47);Box("Entrance canopy",entrance,V(0,2.75f,0),V(2.4f,.22f,3.5f),"sage");foreach(float x in new[]{-1f,1f})Box("Entrance post",entrance,V(x,1.4f,0),V(.1f,2.8f,.1f),"metal");Box("Station fascia",entrance,V(0,2.57f,-1.7f),V(2.35f,.46f,.07f),"navy");Label(entrance,"INFINITY METRO",V(0,2.57f,-1.75f),.15f,"white");Bake(entrance);
     }
     [MenuItem("STAFF/City/Replace Elevated Train With Shared Prefab")]
     public static void UpgradeRailway(){
@@ -275,7 +275,7 @@ public static class MathCityBuilder {
         File.WriteAllText("Library/StaffShared/city-train.txt","PASS: city elevated railway now uses STAFF Subway prefab, 3 cars, shared modules; bridge and rails retained.");
     }
     static void Skyline(){
-        var t=Group("Distant city skyline",env);
+        var t=Group("Distant city skyline",env);t.gameObject.AddComponent<Staff.Traversal.TangentSurface>();
         for(int i=0;i<32;i++){
             float x=Random.Range(-88f,88f),z=Random.Range(148f,218f),w=Random.Range(6f,16f),d=Random.Range(7f,14f),h=Random.Range(21f,61f);
             Box("Distant tower",t,V(x,h*.5f,z),V(w,h,d),i%2==0?"stone":"plaster");

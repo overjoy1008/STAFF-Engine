@@ -346,6 +346,9 @@ namespace Staff.Characters
             tangentFov=Mathf.Lerp(tangentFov,ability?ability.CameraBoost:0,1-Mathf.Exp(-12*Mathf.Max(0,dt)));
             if(wafflus)wafflus.VirtualCamera.m_Lens.FieldOfView=60+tangentFov;
         }
+        Vector3 aimReleasePosition,aimReleaseTarget;Quaternion aimReleaseRotation;float aimReleaseTime;
+        public void ResumeAfterTangentAim(){aimReleasePosition=transform.position;aimReleaseRotation=transform.rotation;aimReleaseTarget=target?target.position:Vector3.zero;aimReleaseTime=.25f;}
+        void BlendAimRelease(float dt){if(aimReleaseTime<=0)return;float t=1-aimReleaseTime/.25f;t=t*t*(3-2*t);transform.SetPositionAndRotation(Vector3.Lerp(aimReleasePosition+(target.position-aimReleaseTarget),transform.position,t),Quaternion.Slerp(aimReleaseRotation,transform.rotation,t));aimReleaseTime=Mathf.Max(0,aimReleaseTime-Mathf.Max(0,dt));}
         public void Simulate(float dt)
         {
             if (!target) return;
@@ -353,9 +356,10 @@ namespace Staff.Characters
             var tangent=target.GetComponent<Staff.Traversal.TangentTraversal>();
             if(tangent && tangent.HoldAimCamera(output))return;
             UpdateTangentLens(dt);
-            if (IsFirstPerson) { UpdateFirstPerson(dt); output.fieldOfView=firstPersonFov+tangentFov*.5f; return; }
+            if (IsFirstPerson) { UpdateFirstPerson(dt); output.fieldOfView=firstPersonFov+tangentFov*.5f; BlendAimRelease(dt); return; }
             wafflus.Simulate(target, facing, FocusOffset(), dt);
             ApplyCharacterClearance(dt);
+            BlendAimRelease(dt);
             currentDistance = Vector3.Distance(FocusPoint, transform.position);
         }
     }

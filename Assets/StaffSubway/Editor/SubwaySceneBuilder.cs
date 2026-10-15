@@ -53,7 +53,7 @@ namespace Staff.Subway.Editor {
     var tactile=Surface("Warm tactile paving",new Color(.48f,.40f,.275f),.08f,.36f);
     var emission=Emissive("Neutral white LED",new Color(.86f,.93f,1f),3.5f);
     // One metre equals one Unity unit. Platform level is y=0.
-    var ground=Cube("Platform slab - 11.4m x 114m",architecture,new Vector3(-2.3f,-.22f,41),new Vector3(11.4f,.44f,114),floor);ground.layer=29;
+    var ground=Cube("Platform slab - 11.4m x 114m",architecture,new Vector3(-2.42f,-.22f,41),new Vector3(11.16f,.44f,114),floor);ground.layer=29;
     Cube("Track trench",architecture,new Vector3(5.15f,-1.24f,41),new Vector3(3.4f,.3f,114),ballast);
     Cube("Opposite track wall",architecture,new Vector3(7.35f,1.7f,41),new Vector3(.25f,5.9f,114),wall);
     Cube("Left concourse wall",architecture,new Vector3(-8.15f,2.2f,41),new Vector3(.25f,4.4f,114),wall);
