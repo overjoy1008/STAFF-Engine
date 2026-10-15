@@ -10,7 +10,7 @@ namespace Staff.Subway {
   // Lighting contains visible diffuser meshes as well as Light components. Include it
   // in old saved scenes too; only renderers are converted, never the lights themselves.
   IEnumerable<Transform> LightingRoots => gameObject.scene.IsValid() ? gameObject.scene.GetRootGameObjects().Where(g=>g.name=="Lighting").Select(g=>g.transform) : Enumerable.Empty<Transform>();
-  public IEnumerable<Renderer> EnvironmentRenderers => new[]{environmentRoot}.Concat(additionalEnvironmentRoots??new Transform[0]).Concat(LightingRoots).Where(t=>t).SelectMany(t=>t.GetComponentsInChildren<Renderer>(true)).Distinct().Where(r=>!r.GetComponentInParent<Staff.Characters.AdventurePlayer>());
+  public IEnumerable<Renderer> EnvironmentRenderers => new[]{environmentRoot}.Concat(additionalEnvironmentRoots??new Transform[0]).Concat(LightingRoots).Concat(UnityEngine.Object.FindObjectsByType<Staff.Shared.SubwayConsist>(FindObjectsSortMode.None).Where(t=>t.gameObject.scene==gameObject.scene).Select(t=>t.transform)).Where(t=>t).SelectMany(t=>t.GetComponentsInChildren<Renderer>(true)).Distinct().Where(r=>!r.GetComponentInParent<Staff.Characters.AdventurePlayer>());
   public Shader surfaceShader,geometryShader,edgeShader;
   // Optional camera-local sky: retain the solar disc without atmospheric color.
   public Material abstractSkybox;
@@ -57,6 +57,7 @@ namespace Staff.Subway {
     if(reflection)reflection.enabled=reflectionEnabled;IsAbstract=false;ReleaseRenderResources();
    }
   }
+  void LateUpdate(){if(!IsAbstract)return;foreach(var r in EnvironmentRenderers){if(originals.ContainsKey(r))continue;var mats=r.sharedMaterials;originals[r]=mats;r.sharedMaterials=mats.Select(m=>m?Convert(m):null).ToArray();}}
   Material Convert(Material original){
    
    if(replacements.TryGetValue(original,out var m))return m;

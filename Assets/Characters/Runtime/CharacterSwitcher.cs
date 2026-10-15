@@ -20,7 +20,7 @@ namespace Staff.Characters
         public bool PickerOpen => picker && picker.IsOpen;
         CharacterToonToggle shading;
         public CharacterShaderMode ShaderMode { get; private set; } = CharacterShaderMode.CharacterToonSmooth;
-        public bool PhysicsEnabled { get; private set; } = true;
+        public bool PhysicsEnabled { get; private set; } = false;
         public void TogglePhysics()
         {
             PhysicsEnabled = !PhysicsEnabled;

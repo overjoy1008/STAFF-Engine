@@ -8,7 +8,7 @@ namespace Staff.Characters
     {
         AnimatorOverrideController genshin;
         AdventurePlayer player;
-        public bool UseGenshin { get; private set; } = true;
+        public bool UseGenshin { get; private set; } = false;
         float labelUntil;
 
         void Awake()

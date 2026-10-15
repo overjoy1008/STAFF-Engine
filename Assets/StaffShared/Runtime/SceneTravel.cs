@@ -15,7 +15,10 @@ public static class SceneTravel {
   if(Keyboard.current.f6Key.wasPressedThisFrame)Switch(rig.gameObject.scene.path);
  }
  public static bool Switch(string current){
-  if(loading)return false;string path=Destination(current);
+  return Load(Destination(current));
+ }
+ public static bool Load(string path){
+  if(loading)return false;
   if(!Application.CanStreamedLevelBeLoaded(path)){Debug.LogError("Scene is missing from Build Settings: "+path);return false;}
   loading=true;
   try{var operation=SceneManager.LoadSceneAsync(path,LoadSceneMode.Single);if(operation==null){loading=false;return false;}operation.completed+=_=>loading=false;return true;}

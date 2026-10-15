@@ -25,7 +25,7 @@ public sealed class TangentTraversal:MonoBehaviour {
   if(!camera||player.InputBlocked||player.IsSeated||(State!=Phase.Idle&&State!=Phase.Wall))return false;
   aimCamera=camera;heldCameraPosition=camera.transform.position;heldPlayerPosition=transform.position;heldCameraRotation=camera.transform.rotation;heldCameraFov=camera.fieldOfView;
   AimScreenPosition=camera.pixelRect.center;IsScreenAiming=true;aimingFromWall=State==Phase.Wall;if(!aimingFromWall)State=Phase.Aiming;
-  player.GetComponent<AdventureDance>()?.StopDance();return true;
+  EnsureEquationUI();equationUI.BeginAim(camera,AimScreenPosition);player.GetComponent<AdventureDance>()?.StopDance();return true;
  }
  public void MoveScreenAim(Vector2 delta){
   if(!IsScreenAiming||!aimCamera)return;var rect=aimCamera.pixelRect;var p=AimScreenPosition+delta*aimSensitivity;
@@ -120,7 +120,7 @@ public sealed class TangentTraversal:MonoBehaviour {
   else if(flightAge>range/Mathf.Max(1,speed)+2)Cancel();
   return true;
  }
- void Arrive(){lastAnchorPoint=point;CompletedHops++;clock=0;wallNormal=normal;State=Mathf.Abs(normal.y)<.65f?Phase.Wall:Phase.Landing;HasTarget=false;Play(State==Phase.Wall?wallClip:landClip,State==Phase.Wall?.85f:.65f);if(player.Visual){var flat=Vector3.ProjectOnPlane(-normal,Vector3.up);if(flat.sqrMagnitude>.001f)player.Visual.rotation=Quaternion.LookRotation(flat);}}
+ void Arrive(){if(equationUI)equationUI.Dismiss();lastAnchorPoint=point;CompletedHops++;clock=0;wallNormal=normal;State=Mathf.Abs(normal.y)<.65f?Phase.Wall:Phase.Landing;HasTarget=false;Play(State==Phase.Wall?wallClip:landClip,State==Phase.Wall?.85f:.65f);if(player.Visual){var flat=Vector3.ProjectOnPlane(-normal,Vector3.up);if(flat.sqrMagnitude>.001f)player.Visual.rotation=Quaternion.LookRotation(flat);}}
  public bool CancelWithJump(){if(!OwnsMovement)return false;bool wall=State==Phase.Wall;var n=wallNormal;Cancel();var push=wall?Vector3.ProjectOnPlane(n,Vector3.up).normalized*6:Vector3.zero;player.SetTraversalVelocity(push+Vector3.up*cancelJumpSpeed);return true;}
  void ReleaseAimCamera(){if(IsScreenAiming&&aimCamera){var controller=aimCamera.GetComponent<AdventureCamera>();if(controller)controller.ResumeAfterTangentAim();}}
  public void Cancel(){ReleaseAimCamera();IsScreenAiming=false;aimCamera=null;State=Phase.Idle;HasTarget=false;aimingFromWall=false;anchor=null;lockedAnchor=null;StopPose();if(player){player.ClearInteractionMotion();if(player.Visual)player.Visual.rotation=Quaternion.Euler(0,player.Visual.eulerAngles.y,0);}if(effects)effects.gameObject.SetActive(false);if(staff)staff.gameObject.SetActive(false);if(equationUI)equationUI.Present(false,null,Vector3.zero,Vector3.zero);}
@@ -138,12 +138,13 @@ public sealed class TangentTraversal:MonoBehaviour {
   pose=AnimationClipPlayable.Create(graph,clip);pose.SetApplyFootIK(false);pose.SetTime(clip.length*phase);graph.Connect(pose,0,mixer,1);blendAge=0;mixer.SetInputWeight(0,previousPose.IsValid()?1:0);mixer.SetInputWeight(1,previousPose.IsValid()?0:1);currentClip=clip;
  }
  void StopPose(){if(graph.IsValid())graph.Destroy();pose=default;previousPose=default;if(poseAnimator){poseAnimator.runtimeAnimatorController=savedController;poseAnimator.Rebind();if(poseAnimator.HasState(0,Animator.StringToHash("Base Layer.Locomotion")))poseAnimator.Play("Base Layer.Locomotion");}poseAnimator=null;currentClip=null;}
+ public static Color InkColor(Camera camera){var mode=camera?camera.GetComponent<Staff.Subway.AbstractEnvironment>():null;return mode&&mode.Mode==Staff.Subway.AbstractEnvironment.EnvironmentMode.Imaginary?Color.black:Color.white;}
  void LateUpdate(){EnsureEquationUI();
   if(graph.IsValid()){if(player.Animator!=poseAnimator){Cancel();return;}if(State==Phase.Casting||State==Phase.Landing)pose.SetTime(System.Math.Min(currentClip.length-.01,pose.GetTime()+Time.deltaTime));if(State==Phase.Flying&&currentClip==flightClip)pose.SetTime(currentClip.length*Mathf.Lerp(.65f,.85f,Mathf.Clamp01(flightAge)));blendAge+=Time.deltaTime;float blend=previousPose.IsValid()?Mathf.SmoothStep(0,1,Mathf.Clamp01(blendAge/.08f)):1;mixer.SetInputWeight(0,1-blend);mixer.SetInputWeight(1,blend);graph.Evaluate(0);
    // Mixamo clips contain baked hip travel. Keep the sampled pose inside the controller.
    var hips=poseAnimator.GetBoneTransform(HumanBodyBones.Hips);if(hips)hips.position=transform.TransformPoint(body.center);
   }
-  if(!effects)CreateEffects();bool active=State!=Phase.Idle;effects.gameObject.SetActive(active);staff.gameObject.SetActive(active);if(!active){if(equationUI)equationUI.Present(false,null,Vector3.zero,Vector3.zero);return;}
+  if(!effects)CreateEffects();var color=InkColor(view?view.GetComponent<Camera>():Camera.main);ink.SetColor("_BaseColor",color);tangentInk.SetColor("_BaseColor",color);bool active=State!=Phase.Idle;effects.gameObject.SetActive(active);staff.gameObject.SetActive(active);if(!active){if(equationUI)equationUI.Present(false,null,Vector3.zero,Vector3.zero);return;}
   var hand=player.Animator&&player.Animator.isHuman?player.Animator.GetBoneTransform(HumanBodyBones.RightHand):null;
   staff.position=hand?hand.position:transform.position+Vector3.up*1.1f;
   if(hand&&(State==Phase.Aiming||State==Phase.Casting)){var arm=player.Animator.GetBoneTransform(HumanBodyBones.RightUpperArm);var fore=player.Animator.GetBoneTransform(HumanBodyBones.RightLowerArm);if(arm&&fore&&HasTarget){arm.rotation=Quaternion.FromToRotation(hand.position-arm.position,point-arm.position)*arm.rotation;fore.rotation=Quaternion.FromToRotation(hand.position-fore.position,point-fore.position)*fore.rotation;staff.position=hand.position;}}
@@ -168,6 +169,6 @@ public sealed class TangentTraversal:MonoBehaviour {
   staff=GameObject.CreatePrimitive(PrimitiveType.Cylinder).transform;staff.name="Tangent casting staff";Destroy(staff.GetComponent<Collider>());staff.localScale=new Vector3(.035f,.9f,.035f);staff.GetComponent<Renderer>().sharedMaterial=ink;staff.SetParent(transform.parent,true);
   effects.gameObject.SetActive(false);staff.gameObject.SetActive(false);
  }
- void OnGUI(){if(IsScreenAiming){var color=GUI.color;GUI.color=HasTarget?Color.white:new Color(1,.45f,.3f);GUI.DrawTexture(new Rect(AimScreenPosition.x-9,Screen.height-AimScreenPosition.y-1,18,2),Texture2D.whiteTexture);GUI.DrawTexture(new Rect(AimScreenPosition.x-1,Screen.height-AimScreenPosition.y-9,2,18),Texture2D.whiteTexture);GUI.color=color;}if(player&&player.InputCaptured)GUI.Label(new Rect(22,Screen.height-42,650,30),State==Phase.Wall?"Q hold / release: chain jump     Space: push off wall":"Q hold: lock rotation / mouse aims    Release Q: launch");}
+ void OnGUI(){if(IsScreenAiming){var color=GUI.color;GUI.color=HasTarget?InkColor(view?view.GetComponent<Camera>():Camera.main):new Color(1,.45f,.3f);GUI.DrawTexture(new Rect(AimScreenPosition.x-9,Screen.height-AimScreenPosition.y-1,18,2),Texture2D.whiteTexture);GUI.DrawTexture(new Rect(AimScreenPosition.x-1,Screen.height-AimScreenPosition.y-9,2,18),Texture2D.whiteTexture);GUI.color=color;}if(player&&player.InputCaptured)GUI.Label(new Rect(22,Screen.height-42,650,30),State==Phase.Wall?"Q hold / release: chain jump     Space: push off wall":"Q hold: lock rotation / mouse aims    Release Q: launch");}
 }
 }

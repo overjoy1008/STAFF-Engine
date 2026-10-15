@@ -136,6 +136,29 @@ Unity에서의 실제 플레이 화면입니다.
 
 화면의 **더 헤르타**는 구현 확인용 캐릭터이며, STAFF의 이야기 속 한율·슈아와는 별개입니다. 스크린샷은 **CharacterToon (Smooth)** 셰이더가 적용된 상태입니다.
 
+### 도시 · 접선의 방정식
+
+![도시 씬](docs/MathCity/City-Street.png)
+
+도시의 건물·고가 철도·열차를 접점으로 삼아 이동합니다. **Q**를 누르면 카메라 회전이 고정되고 마우스로 지팡이를 조준합니다. Q를 놓으면 직선으로 돌진하며, 벽에서 다시 Q로 다른 건물에 연결할 수 있습니다. **Space**는 이동을 즉시 취소하고 위로 점프합니다. 캐릭터·카메라·하늘·열차는 공통 prefab을 사용합니다.
+
+![접선 수식의 생성·대입·소멸](docs/images/tangent-equation.gif)
+
+[수식 애니메이션 영상 (MP4)](docs/images/tangent-equation.mp4) — Unity의 실제 수식 UI renderer를 따로 캡처한 데모입니다.
+
+수식은 `y = f'(a)(x-a) + f(a)` 한 줄입니다. 3Blue1Brown의 **ManimGL + LaTeX**에서 추출한 glyph contour와 Write 데이터를 Unity UI에서 재생합니다. 이동 시작 시 실제 직선의 기울기 `tan(바닥과의 각도)`, 수평 거리, 타겟 높이를 대입합니다. 변경되는 glyph는 contour morph, 유지되는 glyph는 위치 이동만 합니다. 수식은 건물에 가려지지 않으며, 접점 원은 월드 공간에 남습니다. Imaginary에서는 접선·접점·수식을 검정으로 표시합니다.
+
+```text
+Q down          → Write(symbolic equation)
+Q release + hit → launch along the straight tangent
+                  a → horizontal distance
+                  f(a) → target height
+                  f'(a) → signed slope
+miss / arrival / jump cancel → Uncreate(current contours)
+```
+
+[원본 Manim animation](Assets/StaffTraversal/Tools/TangentStudioReference.py) · [Unity UI 재생](Assets/StaffTraversal/Runtime/TangentEquationUI.cs)
+
 ### 하늘 · 빛 · 열차 운행
 
 | 일출 | 낮 — 태양과 렌즈 고스트 |
@@ -310,6 +333,12 @@ Unity의 **Project** 창에서 `Assets/Scenes/STAFF_Subway_Reference.unity`를 �
 | Shift 또는 마우스 우클릭 | 대시 |
 | 마우스 / 휠 / 가운데 버튼 | 시점 회전 / 줌 / 시점 정렬 |
 | C | 캐릭터 선택 |
+| N | 썸네일 씬 목록 열기 / 닫기 |
+| Q 누르기 / 놓기 | 접선 조준 / 돌진 |
+| Space (접선 이동 중) | 취소 후 위로 점프 |
+| I | Real / Abstract / Imaginary |
+| L | Unity Starter (기본) / Genshin animation |
+| P | Secondary physics 켜기·끄기 (기본 Off) |
 | H | 캐릭터 셰이더 전환 |
 | T | 일출 → 낮 → 일몰 → 밤 → 연속 모드 |
 | F9 / F10 | Lens flare / Godrays 켜기·끄기 |
