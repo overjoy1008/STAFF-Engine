@@ -13,7 +13,7 @@ public sealed class StaffRenderFeature:ScriptableRendererFeature {
  public override void AddRenderPasses(ScriptableRenderer renderer,ref RenderingData data){
   renderer.EnqueuePass(hoyo);
   var camera=data.cameraData.camera;var n=camera.GetComponent<Staff.Nishita.NishitaCamera>();var a=camera.GetComponent<Staff.Subway.AbstractEnvironment>();
-  if((n&&n.isActiveAndEnabled)||(a&&a.isActiveAndEnabled&&a.IsAbstract)){pass.ConfigureInput(ScriptableRenderPassInput.Color|ScriptableRenderPassInput.Depth);renderer.EnqueuePass(pass);}
+  if((n&&n.isActiveAndEnabled)||(a&&a.isActiveAndEnabled)){pass.ConfigureInput(ScriptableRenderPassInput.Color|ScriptableRenderPassInput.Depth);renderer.EnqueuePass(pass);}
  }
  protected override void Dispose(bool disposing){pass?.Dispose();}
  class HoyoPass:ScriptableRenderPass{
@@ -34,7 +34,7 @@ public sealed class StaffRenderFeature:ScriptableRendererFeature {
   Shader geometryShader;Dictionary<(Material,bool),Material> geometryMaterials=new Dictionary<(Material,bool),Material>();Material edge;
   public Pass(Shader shader){geometryShader=shader;}
   public void Dispose(){foreach(var m in geometryMaterials.Values)CoreUtils.Destroy(m);geometryMaterials.Clear();CoreUtils.Destroy(edge);}
-  class Data{public TextureHandle color,copy,geometry,geometryDepth;public Material tone,edge;public Camera camera;public Renderer[] renderers;public Material[][] mats;}
+  class Data{public TextureHandle color,copy,geometry,geometryDepth,entrySurface;public Material tone,edge;public Camera camera;public bool entering;public Renderer[] renderers;public Material[][] mats,entryMats;}
   Material Geometry(Material original,bool excluded){
    if(!geometryMaterials.TryGetValue((original,excluded),out var m)){m=new Material(geometryShader){hideFlags=HideFlags.HideAndDontSave};geometryMaterials.Add((original,excluded),m);}
    if(original.shader.name=="STAFF/Environment/Abstract Coordinate Plane")return original;
@@ -45,16 +45,19 @@ public sealed class StaffRenderFeature:ScriptableRendererFeature {
   }
   public override void RecordRenderGraph(RenderGraph graph,ContextContainer frame){
    var resources=frame.Get<UniversalResourceData>();var camera=frame.Get<UniversalCameraData>().camera;
-   var n=camera.GetComponent<Staff.Nishita.NishitaCamera>();var a=camera.GetComponent<Staff.Subway.AbstractEnvironment>();bool abstractMode=a&&a.isActiveAndEnabled&&a.IsAbstract;
+   var n=camera.GetComponent<Staff.Nishita.NishitaCamera>();var a=camera.GetComponent<Staff.Subway.AbstractEnvironment>();bool abstractMode=a&&a.isActiveAndEnabled&&(a.IsAbstract||a.IsEntering);
    using(var b=graph.AddUnsafePass<Data>("STAFF atmosphere / abstract composite",out var p)){
+    p.edge=null;p.entering=false;p.renderers=null;p.mats=null;p.entryMats=null;
     p.color=resources.activeColorTexture;var desc=p.color.GetDescriptor(graph);desc.msaaSamples=MSAASamples.None;desc.depthBufferBits=DepthBits.None;desc.name="STAFF color copy";p.copy=graph.CreateTexture(desc);p.camera=camera;p.tone=n&&n.isActiveAndEnabled?n.ToneMaterial:null;
     b.UseTexture(p.color,AccessFlags.ReadWrite);b.UseTexture(p.copy,AccessFlags.ReadWrite);b.AllowPassCulling(false);b.AllowGlobalStateModification(true);
     if(abstractMode){
      foreach(var stale in geometryMaterials.Keys.Where(k=>!k.Item1).ToArray()){CoreUtils.Destroy(geometryMaterials[stale]);geometryMaterials.Remove(stale);}
-     if(!edge)edge=CoreUtils.CreateEngineMaterial(a.edgeShader);p.edge=edge;edge.SetFloat("_Imaginary",a.Mode==Staff.Subway.AbstractEnvironment.EnvironmentMode.Imaginary?1:0);edge.SetFloat("_LineWidth",a.lineWidth);edge.SetFloat("_NormalThreshold",a.normalThreshold);edge.SetFloat("_DepthThreshold",a.depthThreshold);
+     if(!edge)edge=CoreUtils.CreateEngineMaterial(a.edgeShader);p.edge=edge;p.entering=a.IsEntering;edge.SetFloat("_EntryActive",p.entering?1:0);edge.SetFloat("_EntryProgress",a.EntryProgress);edge.SetFloat("_EntryFromAbstract",a.EntryFrom==Staff.Subway.AbstractEnvironment.EnvironmentMode.Real?0:1);edge.SetFloat("_EntryFromImaginary",a.EntryFrom==Staff.Subway.AbstractEnvironment.EnvironmentMode.Imaginary?1:0);edge.SetFloat("_EntryTargetAbstract",a.Mode==Staff.Subway.AbstractEnvironment.EnvironmentMode.Real?0:1);edge.SetVector("_EntryOrigin",a.EntryOrigin);edge.SetFloat("_EntryRange",a.EntryRange);edge.SetMatrix("_EntryInverseProjection",GL.GetGPUProjectionMatrix(camera.projectionMatrix,true).inverse);edge.SetMatrix("_EntryCameraToWorld",camera.cameraToWorldMatrix);edge.SetFloat("_EntryOrthographic",camera.orthographic?1:0);edge.SetFloat("_Imaginary",a.Mode==Staff.Subway.AbstractEnvironment.EnvironmentMode.Imaginary?1:0);edge.SetFloat("_LineWidth",a.lineWidth);edge.SetFloat("_NormalThreshold",a.normalThreshold);edge.SetFloat("_DepthThreshold",a.depthThreshold);
      desc.colorFormat=UnityEngine.Experimental.Rendering.GraphicsFormat.R32G32B32A32_SFloat;desc.depthBufferBits=DepthBits.None;desc.name="STAFF abstract geometry";desc.clearBuffer=true;desc.clearColor=Color.clear;p.geometry=graph.CreateTexture(desc);b.UseTexture(p.geometry,AccessFlags.ReadWrite);var dd=desc;dd.colorFormat=UnityEngine.Experimental.Rendering.GraphicsFormat.None;dd.depthBufferBits=DepthBits.Depth32;dd.name="STAFF geometry depth";p.geometryDepth=graph.CreateTexture(dd);b.UseTexture(p.geometryDepth,AccessFlags.ReadWrite);
      var env=new HashSet<Renderer>(a.EnvironmentRenderers);p.renderers=Enumerable.Range(0,UnityEngine.SceneManagement.SceneManager.sceneCount).Select(UnityEngine.SceneManagement.SceneManager.GetSceneAt).Where(s=>s.isLoaded).SelectMany(s=>s.GetRootGameObjects()).SelectMany(g=>g.GetComponentsInChildren<Renderer>(true)).Distinct().Where(x=>x.enabled&&x.gameObject.activeInHierarchy&&((camera.cullingMask&(1<<x.gameObject.layer))!=0)).ToArray();
      p.mats=p.renderers.Select(x=>x.sharedMaterials.Select(m=>m?Geometry(m,!env.Contains(x)):null).ToArray()).ToArray();
+     if(p.entering){var sd=p.color.GetDescriptor(graph);sd.msaaSamples=MSAASamples.None;sd.depthBufferBits=DepthBits.None;sd.clearBuffer=true;sd.clearColor=Color.black;sd.name="STAFF live abstract surfaces";p.entrySurface=graph.CreateTexture(sd);b.UseTexture(p.entrySurface,AccessFlags.ReadWrite);p.entryMats=p.renderers.Select(x=>env.Contains(x)?a.EntryMaterials(x):new Material[x.sharedMaterials.Length]).ToArray();}
+
     }
     b.SetRenderFunc((Data d,UnsafeGraphContext ctx)=>{
      var cmd=CommandBufferHelpers.GetNativeCommandBuffer(ctx.cmd);RTHandle color=d.color,copy=d.copy;
@@ -63,8 +66,9 @@ public sealed class StaffRenderFeature:ScriptableRendererFeature {
       for(int i=0;i<d.renderers.Length;i++)for(int j=0;j<d.mats[i].Length;j++)if(d.renderers[i]&&d.mats[i][j])cmd.DrawRenderer(d.renderers[i],d.mats[i][j],j,d.mats[i][j].shader.name=="STAFF/Environment/Abstract Coordinate Plane"?1:0);
       
 
+      if(d.entering){cmd.SetViewProjectionMatrices(d.camera.worldToCameraMatrix,d.camera.projectionMatrix);RTHandle surface=d.entrySurface;cmd.SetRenderTarget(surface,geometryDepth);cmd.ClearRenderTarget(true,true,Color.black);for(int i=0;i<d.renderers.Length;i++)for(int j=0;j<d.entryMats[i].Length;j++)if(d.renderers[i]&&d.entryMats[i][j])cmd.DrawRenderer(d.renderers[i],d.entryMats[i][j],j,0);cmd.SetGlobalTexture("_EntrySurface",surface);}
       cmd.SetGlobalTexture("_Geometry",geom);cmd.SetGlobalVector("_Geometry_TexelSize",new Vector4(1f/geom.rt.width,1f/geom.rt.height,geom.rt.width,geom.rt.height));cmd.Blit(copy,color,d.edge);
-     }else if(d.tone)cmd.Blit(copy,color,d.tone);
+     }else {if(d.tone)cmd.Blit(copy,color,d.tone);}
     });
    }
   }

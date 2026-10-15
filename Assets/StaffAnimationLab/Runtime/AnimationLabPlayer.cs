@@ -101,6 +101,7 @@ public sealed class AnimationLabPlayer : MonoBehaviour {
  }
  public void TogglePause()=>Playing=!Playing;
  void Update() {
+  if(Staff.Shared.ScenePicker.IsOpen)return;
   if(!graph.IsValid())return;
   if(Playing){var t=TimePosition+Time.deltaTime*Speed;if(t>=Current.clip.length){if(Repeat)t%=Current.clip.length;else {t=Current.clip.length;Playing=false;}}Seek(t);}
   var k=Keyboard.current;
@@ -141,6 +142,7 @@ public sealed class AnimationLabPlayer : MonoBehaviour {
   var old=GUI.color;GUI.color=new Color(.055f,.065f,.085f,1);GUI.DrawTexture(rect,Texture2D.whiteTexture);GUI.color=old;
  }
  void OnGUI() {
+  if(Staff.Shared.ScenePicker.IsOpen)return;
   if(catalog==null||!graph.IsValid())return;
   if(!labSkin){
    labSkin=Instantiate(GUI.skin);

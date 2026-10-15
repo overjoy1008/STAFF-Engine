@@ -35,8 +35,8 @@ namespace Staff.Subway {
   [SerializeField,HideInInspector] int current=1;
   public int ContinuousModeIndex=>presets?.Length??0;
   public int ModeCount=>ContinuousModeIndex+1;
-  public int Current=>atmosphere&&atmosphere.useDayCycle&&atmosphere.animate?ContinuousModeIndex:current;
-  public string Label=>Current==ContinuousModeIndex?"Continuous Solar Day":presets!=null&&presets.Length>0?presets[Mathf.Clamp(current,0,presets.Length-1)].label:"";
+  public int Current=>timeTransition?targetMode:atmosphere&&atmosphere.useDayCycle&&atmosphere.animate?ContinuousModeIndex:current;
+  public string Label=>Current==ContinuousModeIndex?"Continuous Solar Day":presets!=null&&presets.Length>0?presets[Mathf.Clamp(Current,0,presets.Length-1)].label:"";
   [Header("Clouds and celestial stars")]
   public NishitaSkyWeather.Settings skyWeather = new NishitaSkyWeather.Settings();
   [Header("Sun optics — F9 flare / F10 rays")]
@@ -74,8 +74,40 @@ namespace Staff.Subway {
   }
   void Update(){if(!Application.isPlaying)return;HandleInput(Application.isFocused&&player&&player.InputCaptured&&!player.InputBlocked);}
   public bool HandleInput(bool accept){bool changed=SolarEffects.HandleInput(solarEffects,accept);if(!accept||Keyboard.current==null||!Keyboard.current.tKey.wasPressedThisFrame)return changed;Cycle();return true;}
-  public void Cycle(){if(presets!=null&&presets.Length>0)SetMode((Current+1)%ModeCount);}
+  [Min(.1f)] public float timeTransitionSeconds=2.5f;
+  bool timeTransition;int targetMode;float transitionAge;Preset transitionFrom,transitionTo;
+  float fillFrom,fillTo;Color fillColorFrom,fillColorTo;
+  public bool IsTimeTransitioning=>timeTransition;
+  public void Cycle(){if(presets!=null&&presets.Length>0){int next=(Current+1)%ModeCount;if(Application.isPlaying)TransitionToMode(next);else SetMode(next);}}
+  Preset Snapshot()=>new Preset("",atmosphere.Elevation,Mathf.Repeat(Mathf.Atan2(atmosphere.SunDirection.x,atmosphere.SunDirection.z)*Mathf.Rad2Deg,360),atmosphere.airDensity,atmosphere.aerosolDensity,atmosphere.ozoneDensity,atmosphere.brightness,exposure);
+  public void TransitionToMode(int index){
+   if(!atmosphere||presets==null||presets.Length==0)return;
+   var from=Snapshot();float fi=skyFill?skyFill.intensity:0;Color fc=skyFill?skyFill.color:Color.white;
+   // Evaluate the destination without touching live atmosphere/LUT history.
+   index=Mathf.Clamp(index,0,ContinuousModeIndex);
+   if(index<ContinuousModeIndex){transitionTo=presets[index];fillTo=index==0?.22f:index==1?.35f:index==2?.16f:.02f;fillColorTo=index==0?new Color(1,.88f,.65f):index==1?new Color(.85f,.92f,1):index==2?new Color(1,.64f,.48f):new Color(.5f,.63f,1);}
+   else{
+    var a=atmosphere;var dir=NishitaAtmosphere.SolarDirection(a.timeOfDay,a.latitude,a.solarDeclination,a.northRotation);
+    float elevation=Mathf.Asin(Mathf.Clamp(dir.y,-1,1))*Mathf.Rad2Deg;
+    float morning=Mathf.SmoothStep(0,1,Mathf.InverseLerp(-.2f,.2f,(Quaternion.Euler(0,-a.northRotation,0)*dir).x));
+    float day=Mathf.SmoothStep(0,1,Mathf.InverseLerp(8,45,elevation)),awake=Mathf.SmoothStep(0,1,Mathf.InverseLerp(-12,2,elevation));
+    var dawn=presets[0];var noon=presets[1];var dusk=presets[2];var night=presets[3];
+    transitionTo=new Preset("",elevation,Mathf.Repeat(Mathf.Atan2(dir.x,dir.z)*Mathf.Rad2Deg,360),BlendDay(night.air,dawn.air,noon.air,dusk.air,morning,day,awake),BlendDay(night.aerosols,dawn.aerosols,noon.aerosols,dusk.aerosols,morning,day,awake),a.ozoneDensity,BlendDay(night.brightness,dawn.brightness,noon.brightness,dusk.brightness,morning,day,awake),BlendDay(night.exposure,dawn.exposure,noon.exposure,dusk.exposure,morning,day,awake));
+    fillTo=BlendDay(.02f,.22f,.35f,.16f,morning,day,awake);fillColorTo=Color.Lerp(new Color(.5f,.63f,1),Color.Lerp(Color.Lerp(new Color(1,.64f,.48f),new Color(1,.88f,.65f),morning),new Color(.85f,.92f,1),day),awake);
+   }
+   transitionFrom=from;fillFrom=fi;fillColorFrom=fc;targetMode=index;transitionAge=0;timeTransition=true;ApplyTransition(0);
+  }
+  void ApplyTransition(float t){
+   var a=atmosphere;var f=transitionFrom;var to=transitionTo;a.animate=false;a.useDayCycle=false;
+   // Forward azimuth travels through the sky instead of cross-fading sky images.
+   a.sunRotation=Mathf.Repeat(f.rotation+Mathf.Repeat(to.rotation-f.rotation,360)*t,360);a.sunElevation=Mathf.Lerp(f.elevation,to.elevation,t);
+   a.airDensity=Mathf.Lerp(f.air,to.air,t);a.aerosolDensity=Mathf.Lerp(f.aerosols,to.aerosols,t);a.ozoneDensity=Mathf.Lerp(f.ozone,to.ozone,t);a.brightness=Mathf.Lerp(f.brightness,to.brightness,t);exposure=Mathf.Lerp(f.exposure,to.exposure,t);a.sunDisc=true;
+   if(skyFill){skyFill.intensity=Mathf.Lerp(fillFrom,fillTo,t);skyFill.color=Color.Lerp(fillColorFrom,fillColorTo,t);}a.Tick(false);
+  }
+  public void AdvanceTimeTransition(float dt){if(!timeTransition)return;transitionAge+=Mathf.Max(0,dt);float t=Mathf.Clamp01(transitionAge/Mathf.Max(.1f,timeTransitionSeconds));ApplyTransition(Mathf.SmoothStep(0,1,t));if(t>=1){int target=targetMode;timeTransition=false;SetMode(target);}}
+
   public void SetMode(int index){
+   timeTransition=false;
    if(!atmosphere||presets==null||presets.Length==0)return;
    if(index!=ContinuousModeIndex){SetPreset(index);return;}
    // Resume the authored solar clock; fixed presets never overwrite Time Of Day.
@@ -83,6 +115,7 @@ namespace Staff.Subway {
    ApplySolarDay();atmosphere.Tick(true);ApplySky();
   }
   public void SetPreset(int index){
+   timeTransition=false;
    if(!atmosphere||presets==null||presets.Length==0)return;
    current=Mathf.Clamp(index,0,presets.Length-1);var p=presets[current];
    atmosphere.animate=false;atmosphere.useDayCycle=false;
@@ -93,7 +126,7 @@ namespace Staff.Subway {
    // Only the added sky fill varies. Fluorescents, station fill and reflection remain intact.
    if(skyFill){skyFill.intensity=current==0?.22f:current==1?.35f:current==2?.16f:.02f;skyFill.color=current==0?new Color(1,.88f,.65f):current==1?new Color(.85f,.92f,1):current==2?new Color(1,.64f,.48f):new Color(.5f,.63f,1);}
   }
-  void LateUpdate(){if(initializePending){if(!gameObject.scene.IsValid()||!gameObject.scene.isLoaded)return;InitializeSky();}double now=Time.realtimeSinceStartupAsDouble;weather?.Advance(Application.isPlaying?Time.deltaTime:(float)Math.Max(0,now-weatherClock),skyWeather);weatherClock=now;ApplySolarDay();ApplySky();}
+  void LateUpdate(){if(initializePending){if(!gameObject.scene.IsValid()||!gameObject.scene.isLoaded)return;InitializeSky();}if(Application.isPlaying)AdvanceTimeTransition(Time.unscaledDeltaTime);double now=Time.realtimeSinceStartupAsDouble;weather?.Advance(Application.isPlaying?Time.deltaTime*(timeTransition?12:1):(float)Math.Max(0,now-weatherClock),skyWeather);weatherClock=now;ApplySolarDay();ApplySky();}
   public void ApplySolarDay(){
    var a=atmosphere;if(!a||!a.useDayCycle||!continuousSolarLighting||presets==null||presets.Length<4)return;
    // All transitions are evaluated from the same continuous sun direction, never preset index.
@@ -125,7 +158,7 @@ namespace Staff.Subway {
    disc.CopyPropertiesFromMaterial(real);disc.SetFloat("_DiscOnly",1);
    if(Active==this){RenderSettings.skybox=real;appliedGlobalSky=real;}
    if(BoundCameras==null)return;
-   foreach(var c in BoundCameras){if(!c)continue;var mode=c.GetComponent<AbstractEnvironment>();if(mode)mode.abstractSkybox=disc;var sky=c.GetComponent<Skybox>();if(!sky)continue;sky.enabled=true;sky.material=mode&&mode.IsAbstract?disc:real;c.clearFlags=CameraClearFlags.Skybox;}
+   foreach(var c in BoundCameras){if(!c)continue;var mode=c.GetComponent<AbstractEnvironment>();if(mode)mode.abstractSkybox=disc;var sky=c.GetComponent<Skybox>();if(!sky)continue;sky.enabled=true;sky.material=mode&&mode.IsAbstract&&!(mode.IsEntering&&mode.Mode==AbstractEnvironment.EnvironmentMode.Real)?disc:real;c.clearFlags=CameraClearFlags.Skybox;}
   }
   public void ApplyToCamera(Camera c){
    if(!c||!atmosphere||!atmosphere.Ready)return;
@@ -134,7 +167,7 @@ namespace Staff.Subway {
     int count=boundCameras==null?0:boundCameras.Length;Array.Resize(ref boundCameras,count+1);Array.Resize(ref savedSky,count+1);Array.Resize(ref savedAbstract,count+1);Array.Resize(ref savedEnabled,count+1);Array.Resize(ref savedFlags,count+1);
     boundCameras[count]=c;savedSky[count]=box.material;savedAbstract[count]=mode?mode.abstractSkybox:null;savedEnabled[count]=box.enabled;savedFlags[count]=c.clearFlags;
    }
-   box.enabled=true;box.material=mode&&mode.IsAbstract?disc:atmosphere.GetSky(true);c.clearFlags=CameraClearFlags.Skybox;
+   box.enabled=true;box.material=mode&&mode.IsAbstract&&!(mode.IsEntering&&mode.Mode==AbstractEnvironment.EnvironmentMode.Real)?disc:atmosphere.GetSky(true);c.clearFlags=CameraClearFlags.Skybox;
   }
   // Editor save hooks restore serialized references before saving transient preview materials.
   public void RestorePreviewBindings(){

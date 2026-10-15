@@ -12,9 +12,9 @@ public sealed class TangentPlot {
 }
 // UI vector geometry, retaining the actual TeX contours, including counters/holes.
 public sealed class TangentContourGraphic:MaskableGraphic {
- public List<TangentPlot> plots=new List<TangentPlot>();public Vector2 scale=Vector2.one;public float baseline;
+ public List<TangentPlot> plots=new List<TangentPlot>();public Vector2 scale=Vector2.one;public float baseline;public float weight=1;
  struct Edge{public Vector2 a,b;public float middle;public float X(float y)=>Mathf.LerpUnclamped(a.x,b.x,(y-a.y)/(b.y-a.y));}
- protected override void OnPopulateMesh(VertexHelper vh){vh.Clear();foreach(var plot in plots){var paths=Partial(plot.paths,plot.coverage);if(plot.fill>0)Fill(vh,paths,plot.fill);if(plot.stroke>0)foreach(var path in paths)for(int i=0;i+1<path.Length;i++)Stroke(vh,path[i],path[i+1],plot.stroke*Mathf.Max(.12f,scale.y/135f));}}
+ protected override void OnPopulateMesh(VertexHelper vh){vh.Clear();foreach(var plot in plots){var paths=Partial(plot.paths,plot.coverage);if(plot.fill>0)Fill(vh,paths,plot.fill);if(plot.stroke>0||plot.fill>0)foreach(var path in paths)for(int i=0;i+1<path.Length;i++)Stroke(vh,path[i],path[i+1],weight*Mathf.Max(plot.stroke*Mathf.Max(.15f,scale.y/120f),plot.fill*Mathf.Clamp(scale.y/170f,.45f,.9f)));}}
  Vector2 Pixel(Vector2 p)=>new Vector2(p.x*scale.x,(p.y-baseline)*scale.y);
  void Quad(VertexHelper vh,Vector2 a,Vector2 b,Vector2 c,Vector2 d,float alpha){int n=vh.currentVertCount;if(n>64000)return;var ink=color;ink.a*=alpha;vh.AddVert(a,ink,Vector2.zero);vh.AddVert(b,ink,Vector2.zero);vh.AddVert(c,ink,Vector2.zero);vh.AddVert(d,ink,Vector2.zero);vh.AddTriangle(n,n+1,n+2);vh.AddTriangle(n,n+2,n+3);}
  void Stroke(VertexHelper vh,Vector2 a,Vector2 b,float width){a=Pixel(a);b=Pixel(b);var d=b-a;if(d.sqrMagnitude<.000001f)return;var n=new Vector2(-d.y,d.x).normalized*Mathf.Max(.2f,width*.5f);Quad(vh,a+n,b+n,b-n,a-n,1);}

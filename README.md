@@ -159,6 +159,14 @@ miss / arrival / jump cancel → Uncreate(current contours)
 
 [원본 Manim animation](Assets/StaffTraversal/Tools/TangentStudioReference.py) · [Unity UI 재생](Assets/StaffTraversal/Runtime/TangentEquationUI.cs)
 
+### I · 공간 전환
+
+![도시의 Real · Abstract · Imaginary 전환](docs/images/environment-modes.gif)
+
+[전환 영상 (MP4)](docs/images/environment-modes.mp4) — 실제 도시 씬 renderer를 고정 카메라로 캡처했습니다.
+
+**I**는 Real → Abstract → Imaginary → Real을 순환합니다. 캐릭터 위치에서 수평으로 퍼지는 그리드가 건물과 바닥에 먼저 생기고, 뒤따라 면이 바뀝니다. Real로 돌아올 때는 하늘을 먼저 복구하고, 바깥에서 캐릭터 쪽으로 재질이 돌아옵니다. 복구된 재질 위에 그리드가 잠깐 나타났다가 사라집니다. **N**의 썸네일 목록에서 도시·지하철·Animation Lab으로 이동할 수 있습니다.
+
 ### 하늘 · 빛 · 열차 운행
 
 | 일출 | 낮 — 태양과 렌즈 고스트 |
@@ -167,7 +175,7 @@ miss / arrival / jump cancel → Uncreate(current contours)
 | **일몰** | **밤 — 달과 별** |
 | ![붉은 일몰과 구름](docs/images/sky-sunset.png) | ![푸른 달빛과 별이 보이는 밤하늘](docs/images/sky-night-moon.png) |
 
-Nishita 대기 산란을 GPU에서 계산하고, 태양 고도에 따라 오존·해 크기·구름·광선 색을 연결했습니다. 볼류메트릭 구름은 바람으로 이동하며, 실제 별 목록 기반 별빛에는 회전·반짝임을, NASA 달 표면에는 위상 그림자와 옅은 가우시안 glow를 더했습니다. **T**로 일출 → 낮 → 일몰 → 밤 → 연속 모드를 순환합니다.
+Nishita 대기 산란을 GPU에서 계산하고, 태양 고도에 따라 오존·해 크기·구름·광선 색을 연결했습니다. 볼류메트릭 구름은 바람으로 이동하며, 실제 별 목록 기반 별빛에는 회전·반짝임을, NASA 달 표면에는 위상 그림자와 옅은 가우시안 glow를 더했습니다. **T**로 일출 → 낮 → 일몰 → 밤 → 연속 모드를 순환합니다. 약 2.5초 동안 태양·하늘빛·구름이 빠르게 이어지며 다음 시간대로 넘어갑니다.
 
 ![열차 전조등의 발광과 볼류메트릭 광선](docs/images/train-headlights.png)
 

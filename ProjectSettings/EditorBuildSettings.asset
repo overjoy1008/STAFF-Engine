@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/STAFF_City_Reference.unity
     guid: 454218705126043478f9ed09a4f01059
+  - enabled: 1
+    path: Assets/StaffAnimationLab/Scenes/Animation Test.unity
+    guid: bfabe808373d244ee8a247b87b14d712
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
