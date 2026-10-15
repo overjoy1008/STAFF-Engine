@@ -29,6 +29,13 @@ namespace Staff.Characters
         [SerializeField] LayerMask groundMask = ~0;
         CharacterController controller;
         AdventureDance dance;
+        Staff.Interaction.PlayerInteraction interaction;
+        Staff.Traversal.TangentTraversal tangent;
+        public void SetTraversalVelocity(Vector3 velocity) { horizontalVelocity = new Vector3(velocity.x,0,velocity.z); verticalVelocity=velocity.y; sinceGround=coyoteTime+1; sinceJumpPress=10; }
+        public bool IsSeated => interaction && interaction.IsSeated;
+        public void ClearInteractionMotion()
+        { horizontalVelocity = Vector3.zero; verticalVelocity = 0; dashRemaining = dashRecovery = 0; sinceJumpPress = 10; }
+        AdventureMotionVersion motionVersion;
         InputActionAsset actions;
         InputAction move, lookMouse, lookStick, jump, sprint, walk, zoom, recenter, cancel, capture;
         readonly RaycastHit[] groundHits = new RaycastHit[16];
@@ -58,10 +65,13 @@ namespace Staff.Characters
 
         public void ReplaceAnimator(Animator replacement)
         {
+            GetComponent<Staff.Traversal.TangentTraversal>()?.Cancel();
+            interaction?.CancelSeat(true);
             bool wasDancing = dance && dance.IsDancing;
             dance?.StopDance();
             var state = animator.GetCurrentAnimatorStateInfo(0);
             animator = replacement;
+            if (motionVersion) motionVersion.ApplyTo(animator);
             animator.applyRootMotion = false;
             animator.Rebind();
             animator.SetFloat("Speed", HorizontalSpeed);
@@ -73,10 +83,15 @@ namespace Staff.Characters
 
         void Awake()
         {
+            tangent = GetComponent<Staff.Traversal.TangentTraversal>();
+            interaction = GetComponent<Staff.Interaction.PlayerInteraction>();
+            if (!interaction) interaction = gameObject.AddComponent<Staff.Interaction.PlayerInteraction>();
             controller = GetComponent<CharacterController>(); spawn = transform.position;
             // Cinemachine's collision filter already ignores Player: mark our own
             // controller accordingly so a near-head orbit cannot hit the player.
             if (CompareTag("Untagged")) gameObject.tag = "Player";
+            motionVersion = GetComponent<AdventureMotionVersion>();
+            if (!motionVersion) motionVersion = gameObject.AddComponent<AdventureMotionVersion>();
             dance = GetComponent<AdventureDance>();
             if (!dance) dance = gameObject.AddComponent<AdventureDance>();
             if (!followCamera && Camera.main) followCamera = Camera.main.GetComponent<AdventureCamera>();
@@ -101,6 +116,7 @@ namespace Staff.Characters
         void Start() => CaptureInput();
         void OnDisable()
         {
+            interaction?.CancelSeat(true);
             ReleaseInput();
             if (actions) { actions.Disable(); Destroy(actions); }
         }
@@ -136,6 +152,7 @@ namespace Staff.Characters
             // Escape/unfocused Game view stops steering, but gravity keeps working.
             bool accept = !InputBlocked && inputCaptured && Application.isFocused;
             if (HandleResetInput(accept)) return;
+            if (motionVersion) motionVersion.HandleInput(accept && !IsSeated);
             if (followCamera) { followCamera.UpdateCursor(accept); followCamera.HandlePerspectiveInput(accept); }
             if (accept && followCamera)
                 followCamera.AddLook(lookMouse.ReadValue<Vector2>(), lookStick.ReadValue<Vector2>(),
@@ -150,10 +167,11 @@ namespace Staff.Characters
         // The runtime and deterministic verification use this same movement path.
         public void Simulate(Command command, float dt)
         {
-            if (dt <= 0) return;
+            if (dt <= 0 || IsSeated) return;
             if (!controller) controller = GetComponent<CharacterController>();
             if (!controller.enabled) return;
             dt = Mathf.Min(dt, .05f);
+            if (tangent && tangent.TickMovement(dt)) { Grounded=false; return; }
             bool dashPressed = command.sprint && !sprintWasHeld;
             sprintWasHeld = command.sprint;
             dashRecovery = Mathf.Max(0, dashRecovery - dt);
@@ -240,6 +258,8 @@ namespace Staff.Characters
         }
         public void Respawn()
         {
+            tangent?.Cancel();
+            interaction?.CancelSeat(false);
             dance?.StopDance();
             controller.enabled = false;
             transform.position = spawn;

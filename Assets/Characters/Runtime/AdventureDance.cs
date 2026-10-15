@@ -56,7 +56,7 @@ namespace Staff.Characters
         }
         public bool StartDance(int index)
         {
-            if(!catalog || index<0 || index>=Count || player.InputBlocked || gameplayIntent ||
+            if(!catalog || index<0 || index>=Count || player.InputBlocked || player.IsSeated || gameplayIntent ||
                 !player.Grounded || player.HorizontalSpeed>.05f || player.IsDashing ||
                 !player.Animator || !player.Animator.isHuman)return false;
             var entry=catalog.dances[index];

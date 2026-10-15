@@ -1,0 +1,12 @@
+{
+  "formula": "y-f(a)=f'(a)(x-a)",
+  "renderer": "TinyTeX LaTeX + dvisvgm (Manim toolchain)",
+  "source_sha256": "266f5b09809bdfda27d1affb8d7eaa557a7828f28282ddbfc325135886dcc867",
+  "texture_sha256": "96498babf545e2e53c32c8f0bc3aa57d1fd1327bc6ed45c1a6db413dffffe173",
+  "size": [
+    1058,
+    164
+  ],
+  "color": "white",
+  "background": "transparent"
+}

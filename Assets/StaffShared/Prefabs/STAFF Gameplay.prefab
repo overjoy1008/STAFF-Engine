@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abc7023edf96d485d96b69cdee924744, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Shared.SharedGameplay
   player: {fileID: 4757687225731916648}
   cameraController: {fileID: 5432651336365506349}
@@ -2390,6 +2390,7 @@ GameObject:
   - component: {fileID: 961915184605552407}
   - component: {fileID: 4757687225731916648}
   - component: {fileID: 6121322763204476016}
+  - component: {fileID: 7572947621844317731}
   m_Layer: 0
   m_Name: Player Humanoid
   m_TagString: Untagged
@@ -2448,7 +2449,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 342a0da84fddb4c71a23b746f9e5e935, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Characters.AdventurePlayer
   inputActions: {fileID: -944628639613478452, guid: 81265c4190f0f49e6be54a54b3e32709, type: 3}
   animator: {fileID: 2031544253437425667}
@@ -2479,7 +2480,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b3518740264e4e47a424b6fb6711e02, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Characters.CharacterSwitcher
   originalModel: {fileID: 2882981836700662893}
   characters:
@@ -2506,6 +2507,30 @@ MonoBehaviour:
   - {fileID: 5380902479309941193, guid: cd750b428855e4976ad4963e2ee32734, type: 3}
   - {fileID: 6803509737769195811, guid: 92b2006deeb264b8a8e24f48168799dc, type: 3}
   - {fileID: 1529237328299881785, guid: c83125aafb9524802be35c6f485c99f5, type: 3}
+--- !u!114 &7572947621844317731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524022140279637880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b0597228c408434abaacc9132530e6b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Staff.Traversal.TangentTraversal
+  castClip: {fileID: -203655887218126122, guid: a17f84c728339792d8075db67bbebf97, type: 3}
+  launchClip: {fileID: -203655887218126122, guid: 328eb2cc75390138dd1688299ba3d6fe, type: 3}
+  flightClip: {fileID: -203655887218126122, guid: c1a5b17da0099b2939ec10a7b0d9a721, type: 3}
+  wallClip: {fileID: -203655887218126122, guid: 3960136c45fd0ce48009f6f6d89eb2e8, type: 3}
+  landClip: {fileID: -203655887218126122, guid: fea4b11eec233f4b9c850f6bc46a1642, type: 3}
+  equationTexture: {fileID: 2800000, guid: bbcccf2dd04b04eb09c1f85c79bda58e, type: 3}
+  range: 75
+  speed: 48
+  wallHoldSeconds: 3
+  surfaceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &7700148589365513234
 GameObject:
   m_ObjectHideFlags: 0
@@ -2805,7 +2830,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: 
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 1
@@ -2849,7 +2874,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4d4bc915b1948da9256590016f53b6, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Characters.AdventureCamera
   target: {fileID: 1124764477218884623}
   facing: {fileID: 180275134057085019}
@@ -2877,7 +2902,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39e759afe6ae64b14b6a71b6151cf6e3, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.MathSpace.BuiltinCameraMatrices
 --- !u!114 &7265491412072516305
 MonoBehaviour:
@@ -2889,7 +2914,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2991a1157117c4e0daf1a8257132e90d, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.SubwayPlanarReflection
   floorMaterial: {fileID: 0}
   height: 0.004
@@ -2904,7 +2929,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c96859b0c3df4b2b9842186e0a145467, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Staff.Subway.AbstractEnvironment
   environmentRoot: {fileID: 0}
   additionalEnvironmentRoots: []

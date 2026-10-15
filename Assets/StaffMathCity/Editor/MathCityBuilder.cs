@@ -101,6 +101,7 @@ public static class MathCityBuilder {
             var data=cam.GetUniversalAdditionalCameraData();data.SetRenderer(EnsureRenderer());data.renderPostProcessing=true;data.antialiasing=AntialiasingMode.SubpixelMorphologicalAntiAliasing;data.antialiasingQuality=AntialiasingQuality.High;
             var fly=cam.gameObject.AddComponent<CityExploreCamera>();fly.homePosition=cam.transform.position;fly.homeEuler=cam.transform.eulerAngles;fly.speed=5;
             if(AssetDatabase.LoadAssetAtPath<GameObject>(Staff.Shared.Editor.SharedMigration.Gameplay))Staff.Shared.Editor.SharedMigration.Install(scene);
+            CityScaleMatching.MatchScene(scene,CityScaleMatching.ReferenceScale());
             AssetDatabase.SaveAssets();if(!EditorSceneManager.SaveScene(scene,ScenePath))throw new Exception("Could not save city scene.");
             // Do not close or save another dirty scene. Clean editor tabs can switch to the new city.
             if(!previousDirty){EditorSceneManager.OpenScene(ScenePath,OpenSceneMode.Single);}
@@ -124,11 +125,12 @@ public static class MathCityBuilder {
     static void Cable(Transform p,Vector3 a,Vector3 b,float sag,float r){Vector3 last=a;for(int j=1;j<=18;j++){float t=j/18f;var next=Vector3.Lerp(a,b,t)-Vector3.up*(4*sag*t*(1-t));Beam("Cable",p,last,next,r,"iron");last=next;}}
     static void Building(Transform parent,string name,float x,float z,float w,float d,int floors,float yaw,string wall,string awning,string title,bool balcony){
         var t=Group(name,parent);t.localPosition=V(x,.17f,z);t.localRotation=Quaternion.Euler(0,yaw,0);float h=floors*3.05f;
+        t.gameObject.AddComponent<Staff.Traversal.TangentSurface>();
         Box("Main plaster mass",t,V(0,h/2,0),V(w,h,d),wall,true);
         Box("Foundation",t,V(0,.2f,0),V(w+.10f,.4f,d+.1f),"stone");
         for(int fl=1;fl<=floors;fl++)Box("Floor belt",t,V(0,fl*3.05f-.07f,0),V(w+.16f,.16f,d+.16f),fl==floors?"white":wall);
-        Box("Roof slab",t,V(0,h+.13f,0),V(w+.38f,.22f,d+.36f),"curb");
-        foreach(float s in new[]{-1f,1f}){Box("Roof parapet",t,V(s*(w/2-.1f),h+.46f,0),V(.2f,.7f,d),wall);Box("Roof parapet",t,V(0,h+.46f,s*(d/2-.1f)),V(w,.7f,.2f),wall);}
+        Box("Roof slab",t,V(0,h+.13f,0),V(w+.38f,.22f,d+.36f),"curb",true);
+        foreach(float s in new[]{-1f,1f}){Box("Roof parapet",t,V(s*(w/2-.1f),h+.46f,0),V(.2f,.7f,d),wall,true);Box("Roof parapet",t,V(0,h+.46f,s*(d/2-.1f)),V(w,.7f,.2f),wall,true);}
         var front=Group("Street facade",t);front.localPosition=V(0,0,-d/2-.02f);Facade(front,w,floors,awning,title,balcony);
         foreach(float s in new[]{-1f,1f}){
             var side=Group("Side facade",t);side.localPosition=V(s*(w/2+.02f),0,0);side.localRotation=Quaternion.Euler(0,s<0?90:-90,0);
@@ -268,7 +270,7 @@ public static class MathCityBuilder {
         env=scene.GetRootGameObjects().Single(g=>g.name=="Environment").transform;
         foreach(string name in new[]{"Infinity Metro - elevated railway","Metro entrance","STAFF Subway - elevated"}){var old=env.Find(name);if(old)Object.DestroyImmediate(old.gameObject);}
         M.Clear();foreach(var path in Directory.GetFiles(Root+"/Materials","*.mat")){var mat=AssetDatabase.LoadAssetAtPath<Material>(path);M[Path.GetFileNameWithoutExtension(path)]=mat;}
-        meshId=0;meshFolder=Root+"/Meshes/Railway_"+DateTime.UtcNow.ToString("yyyyMMdd_HHmmss");Directory.CreateDirectory(meshFolder);Railway();
+        meshId=0;meshFolder=Root+"/Meshes/Railway_"+DateTime.UtcNow.ToString("yyyyMMdd_HHmmss");Directory.CreateDirectory(meshFolder);Railway();CityScaleMatching.MatchScene(scene,CityScaleMatching.ReferenceScale());
         AssetDatabase.SaveAssets();EditorSceneManager.MarkSceneDirty(scene);if(!EditorSceneManager.SaveScene(scene))throw new Exception("City save failed");
         File.WriteAllText("Library/StaffShared/city-train.txt","PASS: city elevated railway now uses STAFF Subway prefab, 3 cars, shared modules; bridge and rails retained.");
     }
@@ -289,7 +291,7 @@ public static class MathCityBuilder {
         foreach(var grouping in filters.GroupBy(f=>f.GetComponent<MeshRenderer>().sharedMaterial)){
             var combine=grouping.Select(f=>new CombineInstance{mesh=f.sharedMesh,transform=root.worldToLocalMatrix*f.transform.localToWorldMatrix}).ToArray();
             var mesh=new Mesh{name=root.name+" - "+grouping.Key.name,indexFormat=IndexFormat.UInt32};mesh.CombineMeshes(combine,true,true);mesh.RecalculateBounds();
-            var obj=Group("Geometry - "+grouping.Key.name,root);obj.gameObject.AddComponent<MeshFilter>().sharedMesh=SaveMesh(mesh);var renderer=obj.gameObject.AddComponent<MeshRenderer>();renderer.sharedMaterial=grouping.Key;if(grouping.Key.name.StartsWith("Sign_"))renderer.shadowCastingMode=ShadowCastingMode.Off;
+            var obj=Group("Geometry - "+grouping.Key.name,root);obj.gameObject.AddComponent<MeshFilter>().sharedMesh=SaveMesh(mesh);var renderer=obj.gameObject.AddComponent<MeshRenderer>();renderer.sharedMaterial=grouping.Key;if(root.GetComponent<Staff.Traversal.TangentSurface>())obj.gameObject.AddComponent<MeshCollider>().sharedMesh=mesh;if(grouping.Key.name.StartsWith("Sign_"))renderer.shadowCastingMode=ShadowCastingMode.Off;
         }
         foreach(var f in filters){if(f.GetComponent<Collider>()){Object.DestroyImmediate(f.GetComponent<MeshRenderer>());Object.DestroyImmediate(f);}else Object.DestroyImmediate(f.gameObject);}
     }

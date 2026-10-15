@@ -1,0 +1,681 @@
+[
+  {
+    "name": "afraid",
+    "frames": [
+      0.0,
+      62.0
+    ]
+  },
+  {
+    "name": "agree",
+    "frames": [
+      0.0,
+      96.0
+    ]
+  },
+  {
+    "name": "angry_01",
+    "frames": [
+      0.0,
+      84.0
+    ]
+  },
+  {
+    "name": "angry_02",
+    "frames": [
+      0.0,
+      52.0
+    ]
+  },
+  {
+    "name": "angry_03",
+    "frames": [
+      0.0,
+      86.0
+    ]
+  },
+  {
+    "name": "basketball_shot",
+    "frames": [
+      0.0,
+      158.0
+    ]
+  },
+  {
+    "name": "bow",
+    "frames": [
+      0.0,
+      144.0
+    ]
+  },
+  {
+    "name": "box_01",
+    "frames": [
+      0.0,
+      53.0
+    ]
+  },
+  {
+    "name": "box_02",
+    "frames": [
+      0.0,
+      67.0
+    ]
+  },
+  {
+    "name": "box_03",
+    "frames": [
+      0.0,
+      61.0
+    ]
+  },
+  {
+    "name": "cast_a_spell",
+    "frames": [
+      0.0,
+      129.0
+    ]
+  },
+  {
+    "name": "cheer",
+    "frames": [
+      0.0,
+      290.0
+    ]
+  },
+  {
+    "name": "chop",
+    "frames": [
+      0.0,
+      158.0
+    ]
+  },
+  {
+    "name": "clap",
+    "frames": [
+      0.0,
+      328.0
+    ]
+  },
+  {
+    "name": "climb",
+    "frames": [
+      0.0,
+      83.0
+    ]
+  },
+  {
+    "name": "complain_01",
+    "frames": [
+      0.0,
+      151.0
+    ]
+  },
+  {
+    "name": "complain_02",
+    "frames": [
+      0.0,
+      201.0
+    ]
+  },
+  {
+    "name": "crossover_dribble",
+    "frames": [
+      0.0,
+      235.0
+    ]
+  },
+  {
+    "name": "cry",
+    "frames": [
+      0.0,
+      189.0
+    ]
+  },
+  {
+    "name": "dance_01",
+    "frames": [
+      0.0,
+      556.0
+    ]
+  },
+  {
+    "name": "dance_02",
+    "frames": [
+      0.0,
+      307.0
+    ]
+  },
+  {
+    "name": "dance_03",
+    "frames": [
+      0.0,
+      307.0
+    ]
+  },
+  {
+    "name": "dance_04",
+    "frames": [
+      0.0,
+      259.0
+    ]
+  },
+  {
+    "name": "dance_05",
+    "frames": [
+      0.0,
+      69.0
+    ]
+  },
+  {
+    "name": "dance_06",
+    "frames": [
+      0.0,
+      261.0
+    ]
+  },
+  {
+    "name": "defeat_02",
+    "frames": [
+      0.0,
+      203.0
+    ]
+  },
+  {
+    "name": "defeat_03",
+    "frames": [
+      0.0,
+      133.0
+    ]
+  },
+  {
+    "name": "depressed",
+    "frames": [
+      0.0,
+      110.0
+    ]
+  },
+  {
+    "name": "dig",
+    "frames": [
+      0.0,
+      393.0
+    ]
+  },
+  {
+    "name": "dive",
+    "frames": [
+      0.0,
+      65.0
+    ]
+  },
+  {
+    "name": "dribble",
+    "frames": [
+      0.0,
+      223.0
+    ]
+  },
+  {
+    "name": "fall",
+    "frames": [
+      0.0,
+      72.0
+    ]
+  },
+  {
+    "name": "fire",
+    "frames": [
+      0.0,
+      36.0
+    ]
+  },
+  {
+    "name": "flee_01",
+    "frames": [
+      0.0,
+      64.0
+    ]
+  },
+  {
+    "name": "flee_02",
+    "frames": [
+      0.0,
+      88.0
+    ]
+  },
+  {
+    "name": "flip",
+    "frames": [
+      0.0,
+      107.0
+    ]
+  },
+  {
+    "name": "fold_arms",
+    "frames": [
+      0.0,
+      410.0
+    ]
+  },
+  {
+    "name": "football_catch",
+    "frames": [
+      0.0,
+      83.0
+    ]
+  },
+  {
+    "name": "football_pass",
+    "frames": [
+      0.0,
+      264.0
+    ]
+  },
+  {
+    "name": "football_save",
+    "frames": [
+      0.0,
+      79.0
+    ]
+  },
+  {
+    "name": "freaky",
+    "frames": [
+      0.0,
+      19.0
+    ]
+  },
+  {
+    "name": "frightened",
+    "frames": [
+      0.0,
+      81.0
+    ]
+  },
+  {
+    "name": "front_kick_01",
+    "frames": [
+      0.0,
+      60.0
+    ]
+  },
+  {
+    "name": "front_kick_02",
+    "frames": [
+      0.0,
+      33.0
+    ]
+  },
+  {
+    "name": "frustrated_01",
+    "frames": [
+      0.0,
+      85.0
+    ]
+  },
+  {
+    "name": "frustrated_02",
+    "frames": [
+      0.0,
+      259.0
+    ]
+  },
+  {
+    "name": "greet_01",
+    "frames": [
+      0.0,
+      84.0
+    ]
+  },
+  {
+    "name": "greet_02",
+    "frames": [
+      0.0,
+      134.0
+    ]
+  },
+  {
+    "name": "greet_03",
+    "frames": [
+      0.0,
+      218.0
+    ]
+  },
+  {
+    "name": "greet_04",
+    "frames": [
+      0.0,
+      67.0
+    ]
+  },
+  {
+    "name": "heart_pose",
+    "frames": [
+      0.0,
+      129.0
+    ]
+  },
+  {
+    "name": "hit_to_body_01",
+    "frames": [
+      0.0,
+      31.0
+    ]
+  },
+  {
+    "name": "hit_to_body_02",
+    "frames": [
+      0.0,
+      41.0
+    ]
+  },
+  {
+    "name": "hit_to_head",
+    "frames": [
+      0.0,
+      44.0
+    ]
+  },
+  {
+    "name": "hit_to_side",
+    "frames": [
+      0.0,
+      30.0
+    ]
+  },
+  {
+    "name": "hit_to_stomach",
+    "frames": [
+      0.0,
+      37.0
+    ]
+  },
+  {
+    "name": "hug",
+    "frames": [
+      0.0,
+      134.0
+    ]
+  },
+  {
+    "name": "idle",
+    "frames": [
+      0.0,
+      368.0
+    ]
+  },
+  {
+    "name": "jump",
+    "frames": [
+      0.0,
+      53.0
+    ]
+  },
+  {
+    "name": "jump_down",
+    "frames": [
+      0.0,
+      89.0
+    ]
+  },
+  {
+    "name": "jump_rope_01",
+    "frames": [
+      0.0,
+      232.0
+    ]
+  },
+  {
+    "name": "jump_rope_02",
+    "frames": [
+      0.0,
+      232.0
+    ]
+  },
+  {
+    "name": "laugh_01",
+    "frames": [
+      0.0,
+      134.0
+    ]
+  },
+  {
+    "name": "laugh_02",
+    "frames": [
+      0.0,
+      134.0
+    ]
+  },
+  {
+    "name": "lift_heavy",
+    "frames": [
+      0.0,
+      468.0
+    ]
+  },
+  {
+    "name": "look_around",
+    "frames": [
+      0.0,
+      374.0
+    ]
+  },
+  {
+    "name": "make_a_call_01",
+    "frames": [
+      0.0,
+      422.0
+    ]
+  },
+  {
+    "name": "make_a_call_02",
+    "frames": [
+      0.0,
+      415.0
+    ]
+  },
+  {
+    "name": "pitch_baseball",
+    "frames": [
+      0.0,
+      91.0
+    ]
+  },
+  {
+    "name": "play_mobile_game",
+    "frames": [
+      0.0,
+      427.0
+    ]
+  },
+  {
+    "name": "play_video_game",
+    "frames": [
+      0.0,
+      379.0
+    ]
+  },
+  {
+    "name": "press-up",
+    "frames": [
+      0.0,
+      47.0
+    ]
+  },
+  {
+    "name": "run",
+    "frames": [
+      0.0,
+      30.0
+    ]
+  },
+  {
+    "name": "run_upstairs",
+    "frames": [
+      0.0,
+      19.0
+    ]
+  },
+  {
+    "name": "scared_01",
+    "frames": [
+      0.0,
+      79.0
+    ]
+  },
+  {
+    "name": "scared_02",
+    "frames": [
+      0.0,
+      79.0
+    ]
+  },
+  {
+    "name": "scratch",
+    "frames": [
+      0.0,
+      331.0
+    ]
+  },
+  {
+    "name": "shoot",
+    "frames": [
+      0.0,
+      217.0
+    ]
+  },
+  {
+    "name": "shovel",
+    "frames": [
+      0.0,
+      372.0
+    ]
+  },
+  {
+    "name": "sing_01",
+    "frames": [
+      0.0,
+      372.0
+    ]
+  },
+  {
+    "name": "sing_02",
+    "frames": [
+      0.0,
+      362.0
+    ]
+  },
+  {
+    "name": "sing_03",
+    "frames": [
+      0.0,
+      324.0
+    ]
+  },
+  {
+    "name": "sing_04",
+    "frames": [
+      0.0,
+      420.0
+    ]
+  },
+  {
+    "name": "sit",
+    "frames": [
+      0.0,
+      172.0
+    ]
+  },
+  {
+    "name": "slash",
+    "frames": [
+      0.0,
+      158.0
+    ]
+  },
+  {
+    "name": "sob",
+    "frames": [
+      0.0,
+      134.0
+    ]
+  },
+  {
+    "name": "standing_relax",
+    "frames": [
+      0.0,
+      422.0
+    ]
+  },
+  {
+    "name": "surf",
+    "frames": [
+      0.0,
+      88.0
+    ]
+  },
+  {
+    "name": "swagger",
+    "frames": [
+      0.0,
+      88.0
+    ]
+  },
+  {
+    "name": "swim",
+    "frames": [
+      0.0,
+      137.0
+    ]
+  },
+  {
+    "name": "turn",
+    "frames": [
+      0.0,
+      92.0
+    ]
+  },
+  {
+    "name": "volleyball",
+    "frames": [
+      0.0,
+      206.0
+    ]
+  },
+  {
+    "name": "wait",
+    "frames": [
+      0.0,
+      144.0
+    ]
+  },
+  {
+    "name": "walk",
+    "frames": [
+      0.0,
+      56.0
+    ]
+  },
+  {
+    "name": "warm_up",
+    "frames": [
+      0.0,
+      439.0
+    ]
+  },
+  {
+    "name": "wave_goodbye_01",
+    "frames": [
+      0.0,
+      158.0
+    ]
+  },
+  {
+    "name": "wave_goodbye_02",
+    "frames": [
+      0.0,
+      141.0
+    ]
+  }
+]

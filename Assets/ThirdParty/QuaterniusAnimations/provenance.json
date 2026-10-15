@@ -1,0 +1,20 @@
+[
+  {
+    "file": "UAL1_Standard.fbx",
+    "author": "Quaternius and Gonzalo Furnier",
+    "license": "CC0-1.0",
+    "source": "https://quaternius.itch.io/universal-animation-library",
+    "sha256": "21b32d912da3cb93426d974fb945e86f5b2e86970acd2ce89905e0fbf9f1dcc2",
+    "variant": "Free Standard, in-place",
+    "downloaded": "2026-10-13"
+  },
+  {
+    "file": "UAL2_Standard.fbx",
+    "author": "Quaternius and Gonzalo Furnier",
+    "license": "CC0-1.0",
+    "source": "https://quaternius.itch.io/universal-animation-library-2",
+    "sha256": "d26d0e9f4a202d473194c056045143095a605a53ba1d823ef24055be4b86851d",
+    "variant": "Free Standard, in-place",
+    "downloaded": "2026-10-13"
+  }
+]

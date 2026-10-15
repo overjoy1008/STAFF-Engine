@@ -1,0 +1,19 @@
+<--- Hotaru7MMD --->
+
+Thanks for downloading this motion/pose data.
+
+-> You are of course, free to edit the data for the sole purpose of having it fit your specific character models.
+Prepare to do this anyway as there may be positioning differences from model to model. That's just how it is.
+----> Note that for this data to work properly, it requires your models to have the Mother, Groove and Center bones properly set up.
+----> There are plenty of tutorials on youtube that show you how to properly add these bones in PMXE. It's not very hard to do.
+
+-> If you use this motion/pose data in any of your online creations please credit me: Hotaru7MMD
+
+-> Please don't redistribute this, edited or not. Please link my original page that you downloaded this from instead
+if others seek a link.
+
+-> Keep in touch with my socials. Feel free to reach out if you have questions.
+	Twitter: @Hotaru7MMD   
+	DeviantArt: Hotaru7MMD
+	Pixiv: Hotaru7MMD
+	TikTok: @Hotaru7MMD

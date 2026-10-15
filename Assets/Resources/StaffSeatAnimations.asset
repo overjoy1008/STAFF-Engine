@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc8ba67371e46f8a05042ca5e0e3a2d, type: 3}
+  m_Name: StaffSeatAnimations
+  m_EditorClassIdentifier:
+  enter: {fileID: 7860179187555574969, guid: a98c127aea4a84a85800099a70961b3f, type: 3}
+  idle: {fileID: -6676812269523803463, guid: a98c127aea4a84a85800099a70961b3f, type: 3}
+  exit: {fileID: 497093190674883199, guid: a98c127aea4a84a85800099a70961b3f, type: 3}

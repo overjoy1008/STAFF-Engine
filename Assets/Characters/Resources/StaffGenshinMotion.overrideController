@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: StaffGenshinMotion
+  m_EditorClassIdentifier: 
+  m_Controller: {fileID: 9100000, guid: e2e872a98d66f4cc4bd7c56dc46d5b20, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: b2bc0e61e16554a89975ef069543f057, type: 2}
+    m_OverrideClip: {fileID: -623603649343465320, guid: 1ace6174309354cf885153111acc082f, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: a0667df20b5834cb095a8b54e6ea177b, type: 2}
+    m_OverrideClip: {fileID: -623603649343465320, guid: ce3dea7459dd04d25a1a76b9a742a581, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 9d13d393f426348a8a5ecc9a01da3bfd, type: 2}
+    m_OverrideClip: {fileID: -623603649343465320, guid: 1e8db0f3f2a6b404aab80dac3c2bc247, type: 3}

@@ -1,0 +1,8 @@
+{
+  "source": "User-provided /Users/gradient/Downloads/theherta.glb",
+  "generator": "Tripo",
+  "animation_count": 97,
+  "sha256": "1c935310dfe1c1f55c631f4fb6d0c29a76bb446dbdd1e0790c831e9756b7ad2f",
+  "conversion": "Blender 5.1.2 glTF import, armature-only FBX export, all 97 actions; Unity Humanoid retargeting",
+  "rights": "User-supplied export. No new license or redistribution rights asserted."
+}

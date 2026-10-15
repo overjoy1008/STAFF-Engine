@@ -28,7 +28,8 @@ namespace Staff.Characters
         Vector3 restEye, smoothEye;
         bool eyeReady, canLookAtCursor;
         float cursorGazeWeight;
-        public bool CursorGazeActive => !IsFirstPerson && canLookAtCursor && cursorHold.OptionHeld;
+        bool TangentAimLock => target && target.GetComponent<Staff.Traversal.TangentTraversal>() is Staff.Traversal.TangentTraversal ability && ability.BlocksCameraLook;
+        public bool CursorGazeActive => !TangentAimLock && !IsFirstPerson && canLookAtCursor && cursorHold.OptionHeld;
         public bool IsFirstPerson { get; private set; }
         public int FirstPersonFilteredRenderers => firstPersonBody.FilteredRenderers;
         readonly FirstPersonBody firstPersonBody = new FirstPersonBody();
@@ -83,7 +84,7 @@ namespace Staff.Characters
         public bool HandlePerspectiveInput(bool accept)
         {
             var player = target ? target.GetComponent<AdventurePlayer>() : null;
-            if (!accept || !player || player.InputBlocked || cursorHold.LookPaused || Keyboard.current == null) return false;
+            if (!accept || TangentAimLock || !player || player.InputBlocked || cursorHold.LookPaused || Keyboard.current == null) return false;
             if (!Keyboard.current[perspectiveKey].wasPressedThisFrame) return false;
             if (!IsFirstPerson)
             {
@@ -298,7 +299,7 @@ namespace Staff.Characters
         {
             canLookAtCursor = canCapture;
             cursorHold.Update(cursorHold.OptionHeld, canCapture);
-            if (wafflus) wafflus.SetLookPaused(cursorHold.LookPaused);
+            if (wafflus) wafflus.SetLookPaused(cursorHold.LookPaused || TangentAimLock);
         }
         public void NotifyMovement(AdventurePlayer.Command command, bool grounded, float speed)
         {
@@ -306,8 +307,8 @@ namespace Staff.Characters
         }
         public void AddLook(Vector2 mouse, Vector2 stick, float scroll, bool recenter, float dt)
         {
-            bool pause = cursorHold.LookPaused;
-            if (pause) { mouse = Vector2.zero; stick = Vector2.zero; recenter = false; }
+            bool pause = cursorHold.LookPaused || TangentAimLock;
+            if (pause) { mouse = Vector2.zero; stick = Vector2.zero; scroll=0; recenter = false; }
             EnsureRig();
             if (IsFirstPerson)
             {
@@ -338,11 +339,21 @@ namespace Staff.Characters
             clearance.Apply(output, target, player ? player.Animator : null, collisionMask, dt);
         }
         void LateUpdate() => Simulate(Time.deltaTime);
+        float tangentFov;
+        void UpdateTangentLens(float dt)
+        {
+            var ability=target?target.GetComponent<Staff.Traversal.TangentTraversal>():null;
+            tangentFov=Mathf.Lerp(tangentFov,ability?ability.CameraBoost:0,1-Mathf.Exp(-12*Mathf.Max(0,dt)));
+            if(wafflus)wafflus.VirtualCamera.m_Lens.FieldOfView=60+tangentFov;
+        }
         public void Simulate(float dt)
         {
             if (!target) return;
             if (!initialized) { Snap(); return; }
-            if (IsFirstPerson) { UpdateFirstPerson(dt); return; }
+            var tangent=target.GetComponent<Staff.Traversal.TangentTraversal>();
+            if(tangent && tangent.HoldAimCamera(output))return;
+            UpdateTangentLens(dt);
+            if (IsFirstPerson) { UpdateFirstPerson(dt); output.fieldOfView=firstPersonFov+tangentFov*.5f; return; }
             wafflus.Simulate(target, facing, FocusOffset(), dt);
             ApplyCharacterClearance(dt);
             currentDistance = Vector3.Distance(FocusPoint, transform.position);
