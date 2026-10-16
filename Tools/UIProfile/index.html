@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#eeeeec">
+  <meta name="description" content="CYCLICAL. An interactive, animated orbital composition, reconstructed from a monochrome graphic reference.">
+  <title>CYCLICAL — Orbital Study</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="navigation.css">
+  <link rel="stylesheet" href="vital.css">
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <nav class="study-nav" aria-label="작품 섹션"><a href="#cyclical" class="active" aria-current="location">01 <span>CYCLICAL</span></a><span class="nav-slash">/</span><a href="#vital">02 <span>VITAL ARCS</span></a><span class="nav-slash">/</span><a href="#profile">03 <span>PROFILE</span></a></nav>
+  <main>
+  <section class="study" id="cyclical" aria-label="첫 번째 작품: Cyclical">
+    <div class="poster" id="poster">
+      <svg id="art" viewBox="0 0 736 1040" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="art-title art-description">
+        <title id="art-title">CYCLICAL — Orbital Study</title>
+        <desc id="art-description">흑백의 동심원과 열여덟 개의 가느다란 축, 반투명한 행성들이 서로 다른 속도로 공전하는 키네틱 포스터.</desc>
+        <defs>
+          <radialGradient id="paper"><stop stop-color="#e9e9e7"/><stop offset="1" stop-color="#eeeeec"/></radialGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation=".45"/></filter>
+        </defs>
+        <rect width="736" height="1040" fill="url(#paper)"/>
+        <g id="outer"></g>
+        <g id="dial"></g>
+        <g id="arms"></g>
+        <g id="hub"></g>
+        <g fill="#10100e" class="masthead">
+          <text x="39" y="62" font-size="27" font-weight="300" textLength="110" lengthAdjust="spacingAndGlyphs">CYCLICAL</text>
+          <text x="40" y="72" font-size="5.1" letter-spacing=".12">OCCURRING IN CYCLES;</text>
+          <text x="40" y="79" font-size="5.1" letter-spacing=".14">RECURRENT.</text>
+          <text x="672" y="48" font-size="2.6" text-anchor="end">KINETIC SYSTEMS</text>
+          <text x="672" y="52" font-size="2.6" text-anchor="end">NO. 014 — 2026</text>
+          <g transform="translate(688 52)">
+            <circle r="10.5"/>
+            <g fill="#eeeeec"><path d="M0 0 -7 -6 A9 9 0 0 1 4 -8Z"/><path d="M0 0 8 -3 A9 9 0 0 1 5 8Z"/><path d="M0 0 -1 9 A9 9 0 0 1 -9 -2Z"/></g>
+            <circle r="2.6"/>
+          </g>
+        </g>
+      </svg>
+      <img class="reference" id="reference" src="assets/reference.png" alt="첨부한 CYCLICAL 원본 포스터" draggable="false" hidden>
+      <div class="mode-note" id="mode-note" hidden>ORIGINAL REFERENCE</div>
+    </div>
+    <div class="readout" aria-hidden="true"><span class="status-light"></span><span id="status">SYSTEM IN MOTION</span><span class="readout-line"></span><span id="time">000.00</span></div>
+    <nav class="controls" aria-label="애니메이션 제어">
+      <button id="play" type="button" aria-label="일시정지" title="재생 / 일시정지 · Space"><svg viewBox="0 0 16 16" aria-hidden="true"><path id="play-icon" d="M5 3V13M11 3V13"/></svg><span id="play-label">PAUSE</span></button>
+      <span class="divider"></span>
+      <label class="speed"><span>SPEED</span><input id="speed" aria-label="애니메이션 속도" type="range" min="0.1" max="12" value="4" step="0.1"><output id="speed-value" for="speed">4.0×</output></label>
+      <span class="divider"></span>
+      <button id="compare" type="button" aria-pressed="false" title="원본과 비교 · C">ORIGINAL<span class="compare-dot"></span></button>
+      <button id="reset" class="icon-button" type="button" aria-label="처음으로 되돌리기" title="초기화 · R"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6a5.3 5.3 0 1 1 .3 5M3 2v4h4"/></svg></button>
+      <button id="fullscreen" class="icon-button" type="button" aria-label="전체 화면" title="전체 화면 · F"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
+    </nav>
+    <p class="caption">AN ORBITAL STUDY <span>18 AXES / INFINITE RECURRENCE</span></p>
+
+  </section>
+  <section class="study vital-study" id="vital" aria-labelledby="vital-title">
+    <header class="vital-heading"><h2 id="vital-title">STAFF / VITAL ARCS</h2><p>ONE ARC. ONE HIT POINT.</p></header>
+    <div class="vital-themes">
+      <div class="vital-theme vital-white"><h3>WHITE</h3><div id="vital-light-grid"></div></div>
+      <div class="vital-theme vital-black"><h3>BLACK</h3><div id="vital-dark-grid"></div></div>
+    </div>
+    <div class="vital-interaction" aria-label="체력 조절">
+      <div class="vital-presets" role="group" aria-label="체력 프리셋"><span>PRESET</span><button type="button" data-vital-preset="1" aria-pressed="false">1</button><button type="button" data-vital-preset="4" aria-pressed="false">4</button><button type="button" data-vital-preset="8" aria-pressed="false">8</button><button type="button" data-vital-preset="12" aria-pressed="true">12</button></div>
+      <label class="vital-health-control"><span>HEALTH</span><input id="vital-hp" type="range" min="0" max="12" step="1" value="12" aria-label="현재 체력"><output id="vital-hp-value" for="vital-hp">12 / 12</output></label>
+      <div class="vital-actions"><button id="vital-damage" type="button">− DAMAGE</button><button id="vital-heal" type="button">+ HEAL</button><button id="vital-restore" type="button">RESTORE</button><span class="vital-action-divider"></span><button id="vital-play" type="button" aria-label="체력 호 애니메이션 일시정지" aria-pressed="false">Ⅱ PAUSE</button></div>
+      <label class="speed vital-speed"><span>SPEED</span><input id="vital-speed" type="range" min="0.1" max="4" step="0.1" value="1" aria-label="체력 호 회전 속도"><output id="vital-speed-value" for="vital-speed">1.0×</output></label>
+      <span id="vital-announcement" class="sr-only" aria-live="polite"></span>
+    </div>
+    <footer class="vital-footer">12 HIT POINTS / 6 ORBITS / WHITE & BLACK</footer>
+  </section>
+  <section class="study profile-study" id="profile" aria-labelledby="profile-title">
+    <header class="vital-heading"><h2 id="profile-title">STAFF / PROFILE</h2><p>VITALS · CHARGES · ENERGY</p></header>
+    <div class="profile-stage">
+      <div class="profile-stage-meta"><span>PROFILE 01 / VITAL SYSTEM</span><span>12 HP · 8 CHARGES · 100 ENERGY</span></div>
+      <div class="profile-composition">
+        <div class="profile-health" id="profile-health"></div>
+        <div class="profile-geometry-wrap"><svg id="profile-geometry" class="profile-geometry" viewBox="-10 35 1050 200" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="충전 삼각형과 에너지 게이지"></svg></div>
+      </div>
+      <div class="profile-parameters">
+        <label><span>CHARGES</span><input id="profile-charges" type="range" min="0" max="8" step="1" value="0" aria-label="켜진 작은 삼각형 개수"><output id="profile-charges-value" for="profile-charges">0 / 8</output></label>
+        <label><span>ENERGY</span><input id="profile-energy" type="range" min="0" max="100" step="1" value="0" aria-label="평행사변형 에너지 게이지"><output id="profile-energy-value" for="profile-energy">0%</output></label>
+      </div>
+    </div>
+    <div class="vital-interaction" aria-label="프로필 체력 조절">
+      <div class="vital-presets" role="group" aria-label="프로필 체력 프리셋"><span>PRESET</span><button type="button" data-vital-preset="1" aria-pressed="false">1</button><button type="button" data-vital-preset="4" aria-pressed="false">4</button><button type="button" data-vital-preset="8" aria-pressed="false">8</button><button type="button" data-vital-preset="12" aria-pressed="false">12</button></div>
+      <label class="vital-health-control"><span>HEALTH</span><input id="profile-hp" type="range" min="0" max="12" step="1" value="9" aria-label="프로필 현재 체력"><output id="profile-hp-value" for="profile-hp">9 / 12</output></label>
+      <div class="vital-actions"><button id="profile-damage" type="button">− DAMAGE</button><button id="profile-heal" type="button">+ HEAL</button><button id="profile-restore" type="button">RESTORE</button><span class="vital-action-divider"></span><button id="profile-play" type="button" aria-label="프로필 체력 애니메이션 일시정지" aria-pressed="false">Ⅱ PAUSE</button></div>
+      <label class="speed vital-speed"><span>SPEED</span><input id="profile-speed" type="range" min="0.1" max="4" step="0.1" value="1" aria-label="프로필 호 회전 속도"><output id="profile-speed-value" for="profile-speed">1.0×</output></label>
+      <span id="profile-announcement" class="sr-only" aria-live="polite"></span>
+    </div>
+    <footer class="vital-footer">VITALS / EIGHT CHARGES / THREE TRIANGLES</footer>
+  </section>
+  </main>
+  <script src="app.js"></script>
+  <script src="navigation.js"></script>
+  <script src="orbit-motion.js"></script>
+  <script src="vital-component.js"></script>
+  <script src="vital.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

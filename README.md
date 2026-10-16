@@ -23,6 +23,7 @@
   <a href="#story">인물과 이야기</a> ·
   <a href="#weapons">무기 디자인</a> ·
   <a href="#development">개발 현황</a> ·
+  <a href="#profile-ui">프로필 UI</a> ·
   <a href="#pipeline">제작 파이프라인</a> ·
   <a href="#getting-started">실행하기</a>
 </p>
@@ -128,19 +129,21 @@ Story Bible은 다음과 같은 확장을 구상하고 있습니다.
 
 ## 개발 현황
 
-Unity에서의 실제 플레이 화면입니다.
+지하철과 도시, 두 개의 씬을 만들었습니다.
 
-![개발 현황](docs/images/the-herta-subway.png)
+| 지하철 | 도시 |
+| --- | --- |
+| ![지하철 씬](docs/images/the-herta-subway.png) | ![도시 씬](docs/MathCity/City-Street.png) |
 
-현재 지하철 씬에서는 사람 크기에 맞춘 에셋 배치, 캐릭터 이동·점프·대시, 추적 카메라, 캐릭터 교체와 충돌을 확인할 수 있습니다. 열차·기둥·안내판을 반복 배치하고, 청색 발광과 실시간 바닥 반사를 적용했습니다.
-
-화면의 **더 헤르타**는 구현 확인용 캐릭터이며, STAFF의 이야기 속 한율·슈아와는 별개입니다. 스크린샷은 **CharacterToon (Smooth)** 셰이더가 적용된 상태입니다.
-
-### 도시 · 접선의 방정식
-
-![도시 씬](docs/MathCity/City-Street.png)
+### 접선의 방정식
 
 도시의 건물·고가 철도·열차를 접점으로 삼아 이동합니다. **Q**를 누르면 카메라 회전이 고정되고 마우스로 지팡이를 조준합니다. Q를 놓으면 직선으로 돌진하며, 벽에서 다시 Q로 다른 건물에 연결할 수 있습니다. **Space**는 이동을 즉시 취소하고 위로 점프합니다. 캐릭터·카메라·하늘·열차는 공통 prefab을 사용합니다.
+
+| 지하철을 향한 접선 이동 | 이동 중 점프 캔슬 |
+| --- | --- |
+| ![지하철로 접선 이동](docs/images/tangent-train.gif) | ![접선 이동 중 점프 캔슬](docs/images/tangent-jump-cancel.gif) |
+
+[접선 이동 영상](docs/images/tangent-train.mp4) · [점프 캔슬 영상](docs/images/tangent-jump-cancel.mp4)
 
 ![게임 수식의 생성·대입·소멸](docs/images/tangent-equation.gif)
 
@@ -166,6 +169,28 @@ miss / arrival / jump cancel → Uncreate(current contours)
 [전환 영상 (MP4)](docs/images/environment-modes.mp4) — 도시의 기본 스폰 위치·각도에서 Game 화면을 60fps 간격으로 캡처했습니다. 영상은 전환을 보기 쉽도록 약 15% 느리게 재생합니다.
 
 **I**는 Real → Abstract → Imaginary → Real을 순환합니다. 캐릭터 위치에서 수평으로 퍼지는 그리드가 건물과 바닥에 먼저 생기고, 뒤따라 면이 바뀝니다. Real로 돌아올 때는 하늘을 먼저 복구하고, 바깥에서 캐릭터 쪽으로 재질이 돌아옵니다. 복구된 재질 위에 그리드가 잠깐 나타났다가 사라집니다. **N**의 썸네일 목록에서 도시·지하철·Animation Lab으로 이동할 수 있습니다.
+
+<a id="profile-ui"></a>
+
+### 프로필 UI · Vital Arcs
+
+![체력 원과 빨강·파랑·보라 자원 프로필 UI](docs/images/staff-ui-profile.png)
+
+체력과 전투 자원을 한 줄에 배치한 **HTML/SVG 웹 프로토타입**입니다. 왼쪽 원은 체력 12를 6개 궤도의 호로 표현하고, 오른쪽은 빨강 정삼각형 8개·파랑 평행사변형 게이지·보라 정삼각형 3개로 구성했습니다. 삼각형과 게이지는 60도 사선을 맞추고, 뾰족한 획과 네온 glow·스캔라인으로 충전을 표시합니다. 위 이미지는 효과를 보여주기 위해 일부 자원을 켠 상태이며, 기본은 체력 9/12와 빈 자원입니다.
+
+- **체력**: 같은 궤도의 호들은 함께 움직이며, 궤도별로 다른 패턴의 가속·감속·역회전을 반복합니다. 피해 시 전체가 흔들리고 잃은 호가 빨갛게 짧아집니다. 회복 시 호가 길어지며 빠르게 회전한 뒤 원래 패턴으로 돌아옵니다. 회색 부채꼴은 별도로 회전합니다.
+- **자원**: 빨강 8개와 파랑 100%가 채워지면 둘을 소모해 보라 하나를 켭니다. 보라는 최대 3개이며, 모두 차 있으면 빨강·파랑을 유지합니다.
+- **직접 조작**: 체력 프리셋 `1 / 4 / 8 / 12`, 피해·회복·전체 회복, 빨강 다중 터치/드래그, 파랑 게이지 직접 터치/드래그를 지원합니다. 게이지는 늘거나 줄 때 부드럽게 움직입니다.
+
+체력 원은 `createVitalDisplay` 공통 컴포넌트를 재사용합니다. **02 VITAL ARCS**는 White/Black 비교, **03 PROFILE**은 위 프로필 구성입니다. 현재 Unity HUD와 전투 획득 조건에 연결된 상태는 아니며, 브라우저에서 모양과 반응을 검토합니다.
+
+저장소 루트에서 아래 명령을 실행하고 [로컬 프로필](http://127.0.0.1:4179/#profile)을 엽니다. 설치·빌드 없이 HTML/CSS/JS를 수정하고 새로고침할 수 있습니다.
+
+```sh
+python3 Tools/UIProfile/serve.py
+```
+
+[프로토타입 HTML](Tools/UIProfile/index.html) · [공통 체력 컴포넌트](Tools/UIProfile/vital-component.js) · [프로필·자원 로직](Tools/UIProfile/profile.js) · [조작·파일 구성·레퍼런스 기록](Tools/UIProfile/README.md)
 
 ### 하늘 · 빛 · 열차 운행
 
